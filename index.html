@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏆 بطولة العائلة</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFF8F0;--bg3:#FFF3E8;--card:#FFFFFF;--border:#F0E4D4;
+  --shadow:rgba(255,107,53,.10);--orange:#FF6B35;--yellow:#FFD93D;
+  --green:#6BCB77;--blue:#4D96FF;--pink:#FF6B9D;--purple:#C77DFF;
+  --text:#2D1B0E;--text2:#9B7B5E;--text3:#C4A882;--red:#FF4545;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Cairo',sans-serif;min-height:100vh;direction:rtl}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle at 15% 20%,rgba(255,217,61,.12) 0%,transparent 40%),radial-gradient(circle at 85% 80%,rgba(255,107,53,.10) 0%,transparent 40%);pointer-events:none;z-index:0}
+.screen{display:none;position:relative;z-index:1}
+.screen.active{display:block;animation:fadeIn .4s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes popIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes trophyBounce{0%,100%{transform:scale(1) rotate(-4deg)}50%{transform:scale(1.12) rotate(4deg)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,107,53,.4)}50%{box-shadow:0 0 0 12px rgba(255,107,53,0)}}
+.header{background:var(--card);border-bottom:3px solid var(--border);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px var(--shadow)}
+.logo{font-size:19px;font-weight:900;color:var(--orange);display:flex;align-items:center;gap:8px}
+.logo-icon{font-size:26px;animation:bounce 2s ease infinite;display:inline-block}
+.phase-badge{background:linear-gradient(135deg,var(--orange),var(--yellow));color:#fff;font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:1px}
+.scoreboard{display:flex;gap:8px;flex-wrap:wrap;padding:10px 20px;background:var(--bg3);border-bottom:2px solid var(--border);justify-content:center}
+.score-chip{display:flex;align-items:center;gap:8px;padding:7px 14px;border-radius:20px;font-size:13px;font-weight:700;background:var(--card);border:2px solid var(--border);box-shadow:0 2px 8px var(--shadow);transition:all .3s}
+.score-chip.leading{box-shadow:0 4px 16px rgba(255,107,53,.25);transform:scale(1.05)}
+.dot{width:11px;height:11px;border-radius:50%}
+.container{max-width:940px;margin:0 auto;padding:22px 18px}
+.card{background:var(--card);border:2px solid var(--border);border-radius:20px;padding:22px;margin-bottom:16px;box-shadow:0 4px 20px var(--shadow)}
+.card-title{font-size:16px;font-weight:900;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.card-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:11px 22px;border-radius:14px;border:none;cursor:pointer;font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;transition:all .2s}
+.btn:active{transform:scale(.96)}
+.btn-orange{background:linear-gradient(135deg,var(--orange),#FF8C5A);color:#fff;box-shadow:0 4px 14px rgba(255,107,53,.35)}
+.btn-orange:hover{box-shadow:0 6px 20px rgba(255,107,53,.5);transform:translateY(-1px)}
+.btn-green{background:linear-gradient(135deg,var(--green),#4CAF50);color:#fff;box-shadow:0 4px 14px rgba(107,203,119,.35)}
+.btn-green:hover{transform:translateY(-1px)}
+.btn-blue{background:linear-gradient(135deg,var(--blue),#2979FF);color:#fff;box-shadow:0 4px 14px rgba(77,150,255,.35)}
+.btn-blue:hover{transform:translateY(-1px)}
+.btn-pink{background:linear-gradient(135deg,var(--pink),#E91E8C);color:#fff}
+.btn-yellow{background:linear-gradient(135deg,var(--yellow),#FFC107);color:var(--text);box-shadow:0 4px 14px rgba(255,217,61,.35)}
+.btn-red{background:linear-gradient(135deg,var(--red),#D32F2F);color:#fff;box-shadow:0 4px 14px rgba(255,69,69,.35)}
+.btn-purple{background:linear-gradient(135deg,var(--purple),#9C27B0);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text2)}
+.btn-outline:hover{border-color:var(--orange);color:var(--orange)}
+.btn-lg{padding:14px 32px;font-size:16px;border-radius:17px}
+.btn-xl{padding:18px 42px;font-size:19px;border-radius:20px}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none!important;box-shadow:none!important}
+input,select{background:var(--bg3);border:2px solid var(--border);border-radius:13px;color:var(--text);padding:10px 15px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:600;outline:none;transition:border-color .2s;width:100%;direction:rtl}
+input:focus,select:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,107,53,.12)}
+.player-item{display:flex;align-items:center;gap:11px;padding:9px 13px;background:var(--bg3);border-radius:12px;border:2px solid var(--border);margin-bottom:7px;animation:fadeIn .3s ease}
+.player-avatar{width:33px;height:33px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;flex-shrink:0}
+.teams-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:13px}
+.team-card{background:var(--bg3);border:3px solid var(--border);border-radius:16px;padding:15px;transition:all .3s}
+.team-member-item{font-size:12px;color:var(--text2);padding:4px 0;border-bottom:1px solid var(--border)}
+.team-member-item:last-child{border-bottom:none}
+.timer-wrap{display:flex;justify-content:center;margin:14px 0}
+.timer-circle{position:relative;width:130px;height:130px}
+.timer-circle svg{transform:rotate(-90deg)}
+.timer-circle .track{fill:none;stroke:var(--border);stroke-width:10}
+.timer-circle .progress{fill:none;stroke-width:10;stroke-linecap:round;stroke-dasharray:346;stroke-dashoffset:0;transition:stroke-dashoffset 1s linear,stroke .5s}
+.timer-number{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:46px;font-weight:900}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(45,27,14,.55);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--card);border:3px solid var(--border);border-radius:24px;padding:30px;max-width:460px;width:92%;animation:popIn .35s cubic-bezier(.34,1.56,.64,1);box-shadow:0 20px 60px rgba(45,27,14,.2)}
+.display-board{background:linear-gradient(135deg,#1a1a2e,#16213e);border:3px solid rgba(255,107,53,.4);border-radius:22px;padding:28px;margin-bottom:16px;color:#fff;box-shadow:0 8px 32px rgba(0,0,0,.2)}
+.display-label{font-size:11px;font-weight:700;letter-spacing:3px;color:rgba(255,255,255,.5);margin-bottom:16px;text-align:center}
+.display-main{font-size:26px;font-weight:900;text-align:center;line-height:1.4;color:#fff}
+.display-cat{font-size:14px;font-weight:700;color:var(--yellow);text-align:center;margin-bottom:10px}
+.choices-display{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.choice-btn-disp{background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.15);border-radius:14px;padding:16px 12px;font-size:15px;font-weight:700;color:#fff;text-align:center;cursor:pointer;font-family:'Cairo',sans-serif;transition:all .2s}
+.choice-btn-disp:hover{background:rgba(255,255,255,.15)}
+.choice-btn-disp.chosen{background:rgba(107,203,119,.3);border-color:var(--green)}
+.display-timer-big{font-size:64px;font-weight:900;text-align:center;color:var(--yellow);margin-top:14px;line-height:1}
+.host-panel{background:rgba(255,107,53,.06);border:2px dashed rgba(255,107,53,.3);border-radius:16px;padding:18px;margin-top:12px}
+.host-label{font-size:11px;font-weight:700;letter-spacing:2px;color:var(--orange);margin-bottom:10px}
+.secret-box{background:linear-gradient(135deg,#FFF8E1,#FFF3E0);border:2px solid rgba(255,107,53,.3);border-radius:14px;padding:16px;text-align:center;margin-bottom:12px}
+.team-turn-header{border-radius:18px;padding:20px;text-align:center;margin-bottom:16px;border:3px solid}
+.turn-team-name{font-size:28px;font-weight:900;margin-bottom:4px}
+.phase-progress{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:14px 18px;margin-bottom:16px}
+.progress-steps{display:flex;align-items:center;justify-content:center;flex-wrap:wrap}
+.p-step{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 7px;border-radius:10px;min-width:56px}
+.p-step.done{background:rgba(107,203,119,.1)}
+.p-step.cur{background:rgba(255,107,53,.1);animation:pulse 2s infinite}
+.p-conn{width:14px;height:2px;background:var(--border);margin-bottom:10px;flex-shrink:0}
+.p-conn.done{background:var(--green)}
+.summary-row{display:flex;align-items:center;gap:14px;padding:13px 16px;background:var(--bg3);border-radius:13px;margin-bottom:9px;border:2px solid var(--border)}
+.results-table{width:100%;border-collapse:separate;border-spacing:0 8px}
+.results-table th{font-size:11px;font-weight:700;letter-spacing:2px;color:var(--text2);padding:7px 15px;text-align:right}
+.results-table td{padding:13px 15px;background:var(--bg3);font-weight:700;font-size:14px}
+.results-table td:first-child{border-radius:13px 0 0 13px}
+.results-table td:last-child{border-radius:0 13px 13px 0}
+.rank-gold{color:#FF9500}.rank-silver{color:#9B9B9B}.rank-bronze{color:#CD7F32}
+.confetti-piece{position:fixed;top:-20px;border-radius:3px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:var(--text);color:#fff;padding:12px 24px;border-radius:50px;font-size:14px;font-weight:700;z-index:999;animation:fadeIn .3s ease;white-space:nowrap;box-shadow:0 6px 24px rgba(45,27,14,.25)}
+.tc{text-align:center}.row{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap}.col{flex:1;min-width:0}
+.mt8{margin-top:8px}.mt12{margin-top:12px}.mt16{margin-top:16px}.mt24{margin-top:24px}.mb16{margin-bottom:16px}
+.label{font-size:12px;font-weight:700;color:var(--text2);letter-spacing:1px;margin-bottom:6px}
+.rules-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:10px}
+.rule-item{background:white;border-radius:11px;padding:10px 7px;text-align:center;border:1px solid var(--border)}
+.rule-icon{font-size:19px}.rule-text{font-size:11px;font-weight:700;color:var(--text2);margin-top:4px;line-height:1.3}
+@media(max-width:600px){
+  .container{padding:14px 12px}.display-main{font-size:20px}.choices-display{grid-template-columns:1fr}
+  .display-timer-big{font-size:48px}.btn-xl{padding:14px 28px;font-size:16px}.rules-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+
+
+<!-- ══ هيدر ══ -->
+<div class="header" id="globalHeader" style="display:none">
+  <div class="logo"><span class="logo-icon">🏆</span> بطولة العائلة</div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+    <div id="phaseBadge" class="phase-badge">إعداد</div>
+    <div id="headerDots" style="display:flex;gap:4px;direction:ltr"></div>
+  </div>
+</div>
+<div class="scoreboard" id="scoreboardEl" style="display:none"></div>
+
+<!-- ══ شاشة الإعداد ══ -->
+<div id="setupScreen" class="screen active">
+  <div style="text-align:center;padding:38px 20px 14px">
+    <div style="font-size:66px;animation:trophyBounce 2s ease infinite;display:inline-block">🏆</div>
+    <div style="font-size:36px;font-weight:900;color:var(--orange);margin-top:10px">بطولة العائلة</div>
+    <p style="color:var(--text2);font-size:14px;font-weight:600;margin-top:8px">٥ مراحل + الصدمة النهائية</p>
+  </div>
+  <div class="container">
+    <div class="card">
+      <div class="card-title"><div class="card-icon" style="background:rgba(255,107,53,.1)">➕</div>إضافة المشاركين</div>
+      <div class="row">
+        <div class="col"><div class="label">اسم اللاعب</div><input type="text" id="playerNameInput" placeholder="أدخل الاسم..." maxlength="20"/></div>
+        <div style="padding-top:26px"><button class="btn btn-orange" onclick="addPlayer()">إضافة ➕</button></div>
+      </div>
+      <div id="playerList" class="mt12"></div>
+      <div id="playerCount" style="font-size:12px;font-weight:700;color:var(--text2);margin-top:7px"></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon" style="background:rgba(77,150,255,.1)">⊞</div>تشكيل الفرق</div>
+      <div class="row" style="align-items:flex-end">
+        <div class="col"><div class="label">عدد الفرق</div>
+          <select id="numTeamsSelect"><option value="2">2 فرق</option><option value="3">3 فرق</option><option value="4">4 فرق</option></select>
+        </div>
+        <button class="btn btn-blue" onclick="randomizeTeams()">🔀 عشوائي</button>
+      </div>
+      <div id="teamsPreview" class="teams-grid mt12"></div>
+    </div>
+    <div class="tc mt16 mb16">
+      <button class="btn btn-orange btn-xl" onclick="startTournament()">🏆 ابدأ البطولة!</button>
+      <p style="font-size:12px;color:var(--text2);margin-top:8px;font-weight:600">يلزم لاعبان على الأقل</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ شاشة مقدمة المرحلة ══ -->
+<div id="phaseIntroScreen" class="screen">
+  <div class="container">
+    <div class="phase-progress">
+      <div style="font-size:11px;font-weight:700;letter-spacing:2px;color:var(--text2);text-align:center;margin-bottom:10px">🗺️ مراحل البطولة</div>
+      <div class="progress-steps" id="progressSteps"></div>
+    </div>
+    <div id="phaseIntroCard" class="card tc" style="padding:30px"></div>
+    <div id="choicesModeCard" class="card" style="display:none">
+      <div class="card-title"><div class="card-icon" style="background:rgba(255,217,61,.15)">⚙️</div>مستوى الصعوبة</div>
+      <div class="label mb8">هل تعرض خيارات للتخمين؟</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button id="btnWith" class="btn btn-green" onclick="setChoicesMode('with')" style="flex:1">✅ مع خيارات (أسهل)</button>
+        <button id="btnWithout" class="btn btn-outline" onclick="setChoicesMode('without')" style="flex:1">🔥 بدون خيارات (أصعب)</button>
+      </div>
+    </div>
+    <div class="tc mt8 mb16">
+      <button class="btn btn-orange btn-xl" onclick="startPhase()">▶ ابدأ المرحلة!</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ شاشة دور الفريق ══ -->
+<div id="turnScreen" class="screen">
+  <div class="container">
+    <div id="turnHeader" class="team-turn-header" style="border-color:var(--orange)"></div>
+
+    <!-- 📺 شاشة العرض المشتركة — دائماً ظاهرة -->
+    <div class="display-board" id="displayBoard">
+      <div class="display-label">📺 الشاشة المشتركة — الجميع يشوف</div>
+      <div id="dispCat" class="display-cat"></div>
+      <div id="dispMain" class="display-main"></div>
+      <div id="dispChoices" class="choices-display" style="display:none"></div>
+      <div id="dispTimer" class="display-timer-big" style="display:none">60</div>
+    </div>
+
+    <!-- 🔒 قسم المنسّق -->
+    <div class="host-panel">
+      <div class="host-label">🔒 للمنسّق فقط — لا تُرِ للفريق</div>
+      <div id="hostSecret" class="secret-box" style="display:none"></div>
+      <div id="hostControls" class="mt8"></div>
+    </div>
+
+    <!-- المؤقت -->
+    <div class="card mt12">
+      <div class="card-title"><div class="card-icon" style="background:rgba(107,203,119,.1)">⏱</div>المؤقت</div>
+      <div class="timer-wrap">
+        <div class="timer-circle">
+          <svg viewBox="0 0 130 130" width="130" height="130">
+            <circle class="track" cx="65" cy="65" r="55"/>
+            <circle class="progress" id="timerProg" cx="65" cy="65" r="55" style="stroke:var(--orange)"/>
+          </svg>
+          <div class="timer-number" id="timerNum" style="color:var(--orange)">60</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:center">
+        <button class="btn btn-green" onclick="startTurnTimer()">▶ ابدأ</button>
+        <button class="btn btn-outline" onclick="stopTurnTimer()">⏸ إيقاف</button>
+        <button class="btn btn-outline" onclick="resetTurnTimer()">↺ إعادة</button>
+      </div>
+    </div>
+
+    <!-- النتيجة -->
+    <div class="card" id="awardCard">
+      <div class="card-title"><div class="card-icon" style="background:rgba(255,217,61,.15)">🏆</div>النتيجة</div>
+      <div id="awardSection"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ملخص المرحلة ══ -->
+<div id="phaseSummaryScreen" class="screen">
+  <div class="container tc">
+    <div style="font-size:54px;margin-bottom:8px" id="sumEmoji">🏁</div>
+    <div style="font-size:26px;font-weight:900;color:var(--text);margin-bottom:4px" id="sumTitle"></div>
+    <div style="font-size:13px;font-weight:700;color:var(--text2);margin-bottom:20px" id="sumSub"></div>
+    <div id="sumRows" class="mb16" style="text-align:right"></div>
+    <div class="card" id="sumScores" style="text-align:right"></div>
+    <div class="mt16 mb16">
+      <button class="btn btn-orange btn-xl" id="sumNextBtn" onclick="goNextPhase()"></button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ شاشة الصدمة ══ -->
+<div id="shockScreen" class="screen">
+  <div class="container">
+    <!-- العنوان -->
+    <div class="tc" style="padding:18px 0 12px">
+      <div style="font-size:52px">💥</div>
+      <div style="font-size:32px;font-weight:900;background:linear-gradient(135deg,var(--red),var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent">الصدمة النهائية!</div>
+      <div id="shockRoundLabel" style="font-size:14px;font-weight:700;color:var(--text2);margin-top:4px">الجولة 1 من 3</div>
+    </div>
+
+    <!-- التحدي -->
+    <div class="display-board" style="border-color:rgba(255,69,69,.5)">
+      <div id="shockTypeLabel" class="display-label" style="color:rgba(255,150,100,.7)">💥 التحدي — الكل معاً!</div>
+      <div id="shockChallenge" class="display-main" style="font-size:22px;line-height:1.5"></div>
+      <div id="shockHint" style="font-size:13px;color:rgba(255,255,255,.55);margin-top:8px;font-weight:600"></div>
+      <div id="shockTarget" style="margin-top:10px;font-size:15px;color:var(--yellow);font-weight:800"></div>
+      <div id="shockDispTimer" class="display-timer-big">30</div>
+    </div>
+
+    <!-- العدّاد -->
+    <div class="card">
+      <div class="card-title"><div class="card-icon" style="background:rgba(255,69,69,.1)">⏱</div>العدّ التنازلي</div>
+      <div class="timer-wrap">
+        <div class="timer-circle">
+          <svg viewBox="0 0 130 130" width="130" height="130">
+            <circle class="track" cx="65" cy="65" r="55"/>
+            <circle class="progress" id="shockProg" cx="65" cy="65" r="55" style="stroke:var(--red)"/>
+          </svg>
+          <div class="timer-number" id="shockNum" style="color:var(--red)">30</div>
+        </div>
+      </div>
+      <div class="tc"><button class="btn btn-red btn-lg" onclick="startShockTimer()">🔥 ابدأ العدّ!</button></div>
+    </div>
+
+    <!-- منح النقاط -->
+    <div class="card">
+      <div class="card-title"><div class="card-icon" style="background:rgba(255,217,61,.15)">🏆</div>من أنجز التحدي؟ — منح النقاط</div>
+      <div style="font-size:13px;color:var(--text2);margin-bottom:12px;font-weight:600">اضغط على الفريق لمنحه النقاط (يمكن منح أكثر من فريق)</div>
+      <div id="shockAward"></div>
+    </div>
+
+    <!-- نتائج الجولة -->
+    <div class="card" id="shockResultsCard" style="display:none">
+      <div class="card-title"><div class="card-icon" style="background:rgba(0,200,150,.1)">📊</div>نتائج الجولة</div>
+      <div id="shockScoreRows"></div>
+      <div id="shockNextBtn" class="tc mt12"></div>
+    </div>
+
+    <!-- إنهاء -->
+    <div class="tc mt8 mb16">
+      <button class="btn btn-orange btn-xl" onclick="endTournament()">🏆 عرض النتائج النهائية!</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ شاشة البطل ══ -->
+<div id="championScreen" class="screen">
+  <div style="background:linear-gradient(135deg,#FFF8F0,#FFF3E0,#FFFDE7);min-height:100vh;padding:40px 20px;position:relative;z-index:1">
+    <div class="tc" style="max-width:660px;margin:0 auto">
+      <div style="font-size:88px;animation:trophyBounce 1s ease infinite;display:inline-block">🏆</div>
+      <div style="font-size:12px;font-weight:700;letter-spacing:3px;color:var(--text2);margin-top:14px">بطل البطولة</div>
+      <div id="champName" style="font-size:40px;font-weight:900;background:linear-gradient(135deg,var(--orange),var(--yellow),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:12px 0;line-height:1.1"></div>
+      <p style="font-size:15px;font-weight:700;color:var(--text2)">🎉 تهانينا لجميع المشاركين! 🎉</p>
+      <div class="card mt16" style="text-align:right">
+        <div class="card-title"><div class="card-icon" style="background:rgba(255,217,61,.15)">📊</div>النتائج النهائية</div>
+        <table class="results-table">
+          <thead><tr><th>المركز</th><th>الفريق</th><th>النقاط</th></tr></thead>
+          <tbody id="finalBody"></tbody>
+        </table>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;max-width:340px;margin:0 auto">
+  <button class="btn btn-orange btn-xl" onclick="restartGame()">👥 بطولة جديدة — نفس اللاعبين</button>
+  <button class="btn btn-outline" style="padding:14px;font-size:15px;border-radius:14px" onclick="restartFresh()">🗑 ابدأ من الصفر — مسح الكل</button>
+</div>
+    </div>
+  </div>
+</div>
+
+<!-- مودال كشف السر -->
+<div id="secretModal" class="modal-overlay">
+  <div class="modal">
+    <div style="font-size:19px;font-weight:900;color:var(--orange);margin-bottom:14px">🔒 للمنسّق فقط!</div>
+    <div style="background:linear-gradient(135deg,#FFF8E1,#FFF3E0);border:2px dashed var(--yellow);border-radius:14px;padding:24px;text-align:center;margin-bottom:14px">
+      <div style="font-size:11px;color:var(--text2);letter-spacing:2px;margin-bottom:8px" id="modalCat"></div>
+      <div style="font-size:28px;font-weight:900;color:var(--orange)" id="modalSecret"></div>
+    </div>
+    <button class="btn btn-orange" onclick="document.getElementById('secretModal').classList.remove('open')">✓ أغلق</button>
+  </div>
+</div>
+
+<!-- مودال نقاط الذاكرة -->
+<div id="memModal" class="modal-overlay">
+  <div class="modal">
+    <div style="font-size:19px;font-weight:900;color:var(--purple);margin-bottom:14px">🧠 كم إجابة صحيحة؟</div>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:14px" id="memInfo"></p>
+    <div class="label">عدد الإجابات الصحيحة</div>
+    <input type="number" id="memInput" min="0" max="20" style="font-size:22px;text-align:center;font-weight:900"/>
+    <button class="btn btn-purple btn-lg mt12" onclick="submitMem()">✅ تأكيد</button>
+  </div>
+</div>
+
+<div id="confettiWrap" style="position:fixed;inset:0;pointer-events:none;z-index:500"></div>
+
+
+<script>
+var LIB = {
+
+  characters:{
+
+    "تاريخية عربية وإسلامية":[
+      {q:"الخليفة العادل في عهد بني أمية المشهور بعدله",           a:"عمر بن عبدالعزيز", w:["هارون الرشيد","الوليد بن عبدالملك","عبدالملك بن مروان"]},
+      {q:"الصحابي الملقب بسيف الله المسلول قائد معركة اليرموك",    a:"خالد بن الوليد",   w:["عمرو بن العاص","سعد بن أبي وقاص","أبو عبيدة عامر"]},
+      {q:"محرر القدس من الصليبيين ومؤسس الدولة الأيوبية",          a:"صلاح الدين الأيوبي",w:["نور الدين زنكي","بيبرس","قلاوون"]},
+      {q:"الخليفة العباسي الذي اشتهرت في عهده ألف ليلة وليلة",     a:"هارون الرشيد",     w:["المأمون","المعتصم","المتوكل"]},
+      {q:"الرحالة المغربي الذي جاب العالم في القرن الرابع عشر",    a:"ابن بطوطة",        w:["ابن جبير","الإدريسي","المسعودي"]},
+      {q:"الطبيب والفيلسوف المسلم صاحب كتاب القانون في الطب",      a:"ابن سينا",         w:["الرازي","ابن النفيس","ابن رشد"]},
+      {q:"مؤسس علم الجبر الذي سميت الخوارزميات باسمه",             a:"الخوارزمي",        w:["ابن الهيثم","البيروني","الكندي"]},
+      {q:"مؤسس علم الاجتماع صاحب كتاب المقدمة الشهير",             a:"ابن خلدون",        w:["ابن رشد","المقريزي","الطبري"]},
+      {q:"الفارس الشاعر الجاهلي المشهور بحبه لعبلة",               a:"عنترة بن شداد",    w:["امرؤ القيس","طرفة بن العبد","زهير بن أبي سلمى"]},
+      {q:"ملكة تدمر العربية التي تحدت الرومان",                    a:"الزباء",           w:["شجرة الدر","بلقيس","أروى بنت أحمد"]},
+      {q:"أول خليفة راشد وصاحب النبي في الغار",                    a:"أبو بكر الصديق",  w:["عمر بن الخطاب","عثمان بن عفان","علي بن أبي طالب"]},
+      {q:"الخليفة الثاني الملقب بالفاروق الذي فتح بيت المقدس",     a:"عمر بن الخطاب",   w:["أبو بكر الصديق","عثمان بن عفان","علي بن أبي طالب"]},
+      {q:"الأمير الأموي الذي أسس الدولة الأموية في الأندلس",       a:"عبدالرحمن الداخل",w:["موسى بن نصير","طارق بن زياد","يوسف بن تاشفين"]},
+      {q:"العالم المسلم الذي يعد مؤسس علم البصريات",               a:"ابن الهيثم",       w:["الخوارزمي","البيروني","الكندي"]},
+      {q:"شاعر العرب الكبير صاحب الديوان الأشهر",                  a:"المتنبي",          w:["أبو نواس","أبو تمام","البحتري"]},
+      {q:"الشاعر العباسي المعروف بمجونه وخمرياته",                 a:"أبو نواس",         w:["المتنبي","أبو تمام","البحتري"]},
+      {q:"الشخصية الشعبية الظريف المشهور بنوادره وحكمه",           a:"جحا",             w:["أبو دلامة","أشعب","البهلول"]},
+      {q:"قائد جيوش المسلمين الذي فتح مصر وشمال أفريقيا",          a:"عمرو بن العاص",   w:["خالد بن الوليد","سعد بن أبي وقاص","عقبة بن نافع"]},
+      {q:"الخليفة الراشد الرابع ابن عم النبي وزوج فاطمة",          a:"علي بن أبي طالب", w:["عثمان بن عفان","الحسن بن علي","الزبير بن العوام"]},
+      {q:"الحاكم الأموي الذي بنى قبة الصخرة في القدس",             a:"عبدالملك بن مروان",w:["هارون الرشيد","المنصور","عمر بن عبدالعزيز"]},
+    ],
+
+    "مسلسلات خليجية وسعودية":[
+      {q:"أبو عصام زعيم حارة الضبع المحبوب في باب الحارة",         a:"أبو عصام",        w:["أبو جاسم","أبو صالح","أبو غانم"]},
+      {q:"أم وليد الأم الحنون التي تجمع الجيران في باب الحارة",    a:"أم وليد",         w:["أم جاسم","أم عصام","أم غانم"]},
+      {q:"معتصم الشاب الرئيسي في مسلسل العاصوفة السعودي",          a:"معتصم",           w:["الضاوي","الحمدان","سلطان"]},
+      {q:"الضاوي شخصية البادية الغامضة في مسلسل عاصوف",            a:"الضاوي",          w:["معتصم","الحمدان","خلف"]},
+      {q:"أبو جاسم الجد الصارم في المسلسلات العائلية الكويتية",    a:"أبو جاسم",        w:["أبو عصام","أبو غانم","أبو صالح"]},
+      {q:"أبو صالح الشخصية الكوميدية في طاش ما طاش",               a:"أبو صالح",        w:["أبو عبدالله","أبو جاسم","أبو عصام"]},
+      {q:"سلمى بطلة مسلسل أم هارون الكويتي الشهير",                a:"سلمى",            w:["نورا","مريم","فاطمة"]},
+      {q:"ناصر بطل مسلسل مسافة أمان السعودي",                      a:"ناصر",            w:["خلف","معتصم","فهد"]},
+      {q:"أم حمدان الأم المحورية في مسلسل ولد الغلا السعودي",      a:"أم حمدان",        w:["أم وليد","أم جاسم","أم صالح"]},
+      {q:"عبدالعزيز أحد بطلي مسلسل سيلفي الكوميدي",               a:"عبدالعزيز",       w:["تركي","ناصر","فهد"]},
+      {q:"تركي الشريك الثاني في مسلسل سيلفي الكوميدي",             a:"تركي",            w:["عبدالعزيز","ناصر","خالد"]},
+      {q:"أبو غانم الأب الطيب في مسلسل البيت الكبير الإماراتي",    a:"أبو غانم",        w:["أبو عصام","أبو جاسم","أبو صالح"]},
+      {q:"خلف بطل مسلسل خرج ولم يعد السعودي",                      a:"خلف",             w:["ناصر","معتصم","فهد"]},
+      {q:"أبو عبدالله الشخصية الكوميدية الذكورية في طاش ما طاش",   a:"أبو عبدالله",    w:["أبو صالح","أبو جاسم","أبو عصام"]},
+      {q:"أم عبدالله المرأة الشعبية التي يجسدها عبدالله السدحان",  a:"أم عبدالله",     w:["أم وليد","أم حمدان","أم جاسم"]},
+      {q:"فهد بطل مسلسل تراب الماس السعودي",                       a:"فهد",             w:["خلف","ناصر","معتصم"]},
+      {q:"الحمدان الشخصية الغامضة المؤثرة في مسلسل عاصوف",         a:"الحمدان",         w:["الضاوي","معتصم","سلطان"]},
+      {q:"سالم الشخصية المرحة الشقية في مسلسل درب الزلق",          a:"سالم",            w:["فيصل","خالد","جاسم"]},
+      {q:"فيصل بطل مسلسل درب الزلق الكويتي",                       a:"فيصل",            w:["سالم","خالد","جاسم"]},
+      {q:"نورا بطلة المسلسل السعودي الذي يحمل اسمها",              a:"نورا",            w:["سلمى","فاطمة","مريم"]},
+    ],
+
+    "كرتون وأفلام أنيميشن":[
+      {q:"الأسد الصغير الذي فقد أباه وعاد ليسترد عرشه",            a:"سيمبا",           w:["موفاسا","سكار","كيارا"]},
+      {q:"الشاب الفقير الذي وجد المصباح السحري وقابل الجني",        a:"علاء الدين",      w:["سيمبا","هرقل","موانا"]},
+      {q:"أميرة الثلج التي تجمد كل ما تلمسه في مملكة أرنديل",      a:"إيلسا",           w:["آنا","ميريدا","رابونزيل"]},
+      {q:"فتاة المحيط الشجاعة التي أبحرت لإنقاذ جزيرتها",          a:"موانا",           w:["إيلسا","تيانا","ميريدا"]},
+      {q:"الغول الأخضر الطيب الذي يعيش في المستنقع",                a:"شريك",            w:["فيونا","الحمار","الملك فاركواد"]},
+      {q:"دب الباندا الذي أصبح بطل الكونغ فو",                     a:"بو",              w:["شيفو","تايغرس","كراب"]},
+      {q:"الصبي العنكبوتي الذي يتأرجح بين ناطحات نيويورك",          a:"سبايدرمان",       w:["باتمان","سوبرمان","فلاش"]},
+      {q:"أميرة الشعر الطويل الذهبي المحبوسة في البرج العالي",      a:"رابونزيل",        w:["إيلسا","موانا","ميريدا"]},
+      {q:"السمكة التي تنسى كل شيء وتبحث عن أصحابها",               a:"دوري",            w:["نيمو","بيرل","كورال"]},
+      {q:"لعبة الرعاة البلاستيكية بطل سلسلة لعبة القصة",           a:"وودي",            w:["باز لايتير","جيسي","ريكس"]},
+      {q:"الفيل الصغير ذو الأذنين الكبيرتين الذي يطير",             a:"دمبو",            w:["باندا","سيمبا","بامبي"]},
+      {q:"الأميرة الشجاعة ذات الشعر الأحمر التي تتحول لدبة",       a:"ميريدا",          w:["إيلسا","موانا","رابونزيل"]},
+      {q:"الروبوت الصغير الذي يقع في حب إيف في كوكب مهجور",         a:"وول-إي",          w:["إيف","ريل","هال"]},
+      {q:"الفتاة اليابانية التي تدخل عالم الأرواح لإنقاذ أهلها",    a:"شيهيرو",          w:["يوباابا","هاكو","لين"]},
+      {q:"البطة الغاضبة دائما صاحبة الصوت الحاد من ديزني",          a:"دونالد داك",      w:["ميكي ماوس","غوفي","بلوتو"]},
+      {q:"الفأر الموهوب الذي يطبخ في مطعم باريسي راقٍ",             a:"ريمي",            w:["إيمايل","غوستو","سكينر"]},
+      {q:"الأسرة ذات القدرات الخارقة التي تعيش بشكل سري",           a:"مستر إنكريدبل",   w:["سوبرمان","باتمان","هالك"]},
+      {q:"السمكة البرتقالية الصغيرة التي يبحث عنها أبوه في البحر",  a:"نيمو",            w:["دوري","مارلين","بيرل"]},
+      {q:"الأميرة التي تتحول لضفدعة في نيو أورليانز",               a:"تيانا",           w:["موانا","ميريدا","رابونزيل"]},
+      {q:"الكابوي الفضائي رفيق وودي في سلسلة لعبة القصة",           a:"باز لايتير",      w:["وودي","جيسي","ريكس"]},
+    ],
+
+    "شخصيات رياضية":[
+      {q:"الأرجنتيني الذي فاز بكأس العالم 2022 ويلعب في إنتر ميامي",a:"ميسي",            w:["رونالدو","نيمار","مبابي"]},
+      {q:"النجم البرتغالي الذي يلعب في الدوري السعودي مع النصر",    a:"كريستيانو رونالدو",w:["ميسي","نيمار","بنزيمة"]},
+      {q:"ملك كرة القدم البرازيلي صاحب ثلاثة كؤوس عالم",            a:"بيليه",           w:["رونالدينيو","زيكو","سقراط"]},
+      {q:"نجم الهلال السعودي البرازيلي القادم من باريس سان جيرمان", a:"نيمار",           w:["بنزيمة","كانتي","روبينيو"]},
+      {q:"الملاكم الأمريكي الأسطورة الملقب بالأعظم",                a:"محمد علي كلاي",   w:["مايك تايسون","جو فريزر","جورج فورمان"]},
+      {q:"أسطورة كرة السلة صاحب ست بطولات مع شيكاغو بولز",          a:"مايكل جوردان",    w:["كوبي براينت","ليبرون جيمس","شاكيل أونيل"]},
+      {q:"أسرع رجل في العالم الجامايكي صاحب الأرقام القياسية",       a:"يوسين بولت",      w:["أسافا باول","يوهان بليك","تايسون غاي"]},
+      {q:"أسطورة المنتخب السعودي الهداف التاريخي للأخضر",            a:"ماجد عبدالله",    w:["ياسر القحطاني","سامي الجابر","محمد الدعيع"]},
+      {q:"حارس المرمى الإيطالي الأشهر الذي لعب مع يوفنتوس",         a:"بوفون",           w:["بارتيز","كاسياس","نوير"]},
+      {q:"النجم الفرنسي الذي ضرب ماتيراتسي بصدره في نهائي 2006",    a:"زيدان",           w:["هنري","ريبيري","بلان"]},
+      {q:"لاعب التنس السويسري الحاصل على 20 لقب غراند سلام",         a:"روجر فيدرر",      w:["رافاييل نادال","ديوكوفيتش","بيت سامبراس"]},
+      {q:"لاعب الغولف الأمريكي الأسود الذي غير تاريخ الرياضة",       a:"تايغر وودز",      w:["فيل ميكلسون","جاك نيكلاوس","أرنولد بالمر"]},
+      {q:"السباح الأمريكي صاحب أكبر رصيد ميداليات أولمبية",          a:"مايكل فيلبس",     w:["مارك سبيتز","رايان لوكت","إيان ثورب"]},
+      {q:"المصري الذي يلعب في ليفربول ويلقب بالفرعون",               a:"محمد صلاح",       w:["تريزيغيه","عمر مرموش","رمضان صبحي"]},
+      {q:"المدرب الفرنسي الذي قاد السعودية لهزيمة الأرجنتين 2022",   a:"هيرفي رينار",     w:["مانشيني","فان مارفيك","بيليتش"]},
+      {q:"أسطورة الأهلي المصري الملقب بالقائد",                      a:"محمد أبو تريكة",  w:["حسام حسن","أحمد حسن","وائل جمعة"]},
+      {q:"لاعبة التنس الأمريكية صاحبة أكبر عدد ألقاب غراند سلام",   a:"سيرينا ويليامز",  w:["فينيس ويليامز","شارابوفا","شتيفي غراف"]},
+      {q:"حارس مرمى المنتخب السعودي الأشهر في التاريخ",              a:"محمد الدعيع",     w:["ياسر المسيلم","وليد عبدالله","ماجد عبدالله"]},
+      {q:"النجم الإماراتي الهداف التاريخي للدوري الإماراتي",         a:"علي مبخوت",       w:["الكمالي","محمد خليل","عمر عبدالرحمن"]},
+      {q:"النجم المغربي الذي قاد المنتخب لنصف نهائي كأس العالم 2022",a:"أشرف حكيمي",     w:["حكيم زياش","النصيري","بوفال"]},
+    ],
+
+    "مسلسلات وأفلام مصرية":[
+      {q:"الكوميدي المصري الكبير بطل أفلام الجيش والطيران والشرطة",  a:"إسماعيل ياسين",  w:["فريد شوقي","شكري سرحان","رشدي أباظة"]},
+      {q:"أبو كريم الأب المصري الطيب المحبوب في مسلسل أبو العروسة", a:"أبو كريم",        w:["الكبير","رأفت الهجان","العجمي"]},
+      {q:"الشخصية الكوميدية الرئيسية في مسلسل الكبير أوي",           a:"الكبير",          w:["بوحة","اللمبي","سعيد العشري"]},
+      {q:"نعيمة الزوجة الشريرة في يوميات زوجة مفروسة",               a:"نعيمة",           w:["أم علي","مدام صافيناز","بسمة"]},
+      {q:"رأفت الهجان الجاسوس المصري الشهير في إسرائيل",             a:"رأفت الهجان",     w:["يحيى الفخراني","نور الشريف","عزت العلايلي"]},
+      {q:"الزعيم الكوميدي المصري الأشهر بطل أفلام لا تعد",           a:"عادل إمام",       w:["نور الشريف","يحيى الفخراني","محمود عبدالعزيز"]},
+      {q:"كوكب الشرق التي صور مسلسل ضخم عن قصة حياتها",              a:"أم كلثوم",        w:["صباح","فيروز","شادية"]},
+      {q:"الشيخ حسني الضرير الظريف في فيلم الكيت كات",               a:"الشيخ حسني",      w:["حمادة","زكي","بدر"]},
+      {q:"نور الشريف في دور الضابط المصري الوطني الشهير",             a:"نور الشريف",      w:["عزت العلايلي","محمود ياسين","هشام سليم"]},
+      {q:"الممثل المصري المشهور بأدوار الشرير الكلاسيكية",            a:"المليجي",         w:["زكي رستم","عبدالوارث عسر","توفيق الدقن"]},
+      {q:"زكي بك بطل رواية وفيلم عمارة يعقوبيان",                   a:"زكي بك",          w:["حاتم رشيد","تاها الشاذلي","بثينة"]},
+      {q:"الضابط الشجاع الذي يجسده أحمد عز في مسلسل الاختيار",       a:"أحمد المنسي",     w:["عمر مكرم","علي حسن","مصطفى الدبيكي"]},
+      {q:"المأمور كريم عادل الذي يلاحق المجرمين في مسلسل كلبش",      a:"كريم عادل",       w:["عمر فاروق","سعيد الشامي","حازم متولي"]},
+      {q:"عم علي كبير الحارة في مسلسل ليالي الحلمية الشهير",         a:"عم علي",          w:["عم يوسف","عم حسن","عم سيد"]},
+      {q:"سيد الغنيم الشاب الفاشل الكوميدي في فيلم اللمبي",          a:"اللمبي",          w:["بوحة","تيتو","ريكو"]},
+      {q:"هاني المحقق الذي يدخل عالم الأسرار في فيلم الفيل الأزرق",  a:"هاني",            w:["ياسين","مازن","كريم"]},
+      {q:"الشاب الصعيدي الكوميدي الذي يأتي للجامعة في القاهرة",       a:"سعيد الصعيدي",    w:["اللمبي","بوحة","أحمد حلمي"]},
+      {q:"حمزة بطل مسلسل النهاية في مصر المستقبلية",                 a:"حمزة",            w:["عمر","ياسين","مازن"]},
+      {q:"فريد شوقي ملك الترسو الممثل المصري الأسطورة",              a:"فريد شوقي",       w:["رشدي أباظة","إسماعيل ياسين","شكري سرحان"]},
+      {q:"المحقق الذي يطارد الحشاشين في المسلسل التاريخي الضخم",     a:"الراصد",          w:["الأمين","الفضل","الرشيد"]},
+    ],
+
+  },
+
+  films:{
+    "أفلام مصرية":["إسماعيل ياسين في الجيش","اللمبي","عمارة يعقوبيان","الكيت كات","إبراهيم الأبيض","الفيل الأزرق","الممر","حسن ومرقص","ليه لأ","جريمة في الحي الهادئ","بحب السيما","هيبة رجل","المصلحة","رسائل البحر","أبو علي"],
+    "مسلسلات مصرية":["ليالي الحلمية","رأفت الهجان","الحساسين","كلبش","الاختيار","يوميات زوجة مفروسة","الكبير أوي","أبو العروسة","لأعلى سعر","نسل الأغراب","جزيرة","النهاية","بيت الرفاعي","العهد","أبو عمر المصري"],
+    "مسلسلات وأفلام خليجية وسعودية":["باب الحارة","طاش ما طاش","سيلفي","العاصوفة","تراب الماس","درب الزلق","ذئاب الليل","خرج ولم يعد","أم هارون","النهاية","مسافة أمان","ولد الغلا","سيلفي 2","جاك عقلك","البيت الكبير"],
+    "كرتون مشهور في العالم العربي":["أسد الملك","علاء الدين","فروزن","موانا","شريك","كونغ فو باندا","الحيوانات المتحضرة","كوكو","كبار المشاعر","فيلق الكواكب","سوبر ماريو","روبوتات","حرب النجوم","باز لايتير","الإنكريدبلز"],
+    "أفلام ومسلسلات عالمية مشهورة":["تايتانيك","هاري بوتر","أفاتار","جوكر","إنتر ستيلار","عالم الديناصورات","حرب النجوم","الرجل العنكبوت","المنتقمون","باتمان","رجل الحديد","كابتن أمريكا","الجوكر","سوبرمان","مدغشقر"],
+    "برامج تلفزيونية عربية وعالمية":["من سيربح المليون","أراب أيدول","ذا فويس","هيك فاميلي","رامز في الشلال","مسابقة MBC","كاميرا خفية","سلم أو اقفز","الحلقة الأخيرة","في بيتنا روبوت","صباح السعودية","إكس فاكتور","ستار أكاديمي"],
+  },
+
+  questions:{
+    "ثقافة عامة":[
+      {q:"ما عاصمة المملكة العربية السعودية؟",                    a:"الرياض"},
+      {q:"كم عدد دول مجلس التعاون الخليجي؟",                    a:"ستة"},
+      {q:"ما اسم أطول نهر في العالم؟",                          a:"النيل"},
+      {q:"ما أكبر دولة في العالم مساحةً؟",                     a:"روسيا"},
+      {q:"ما أصغر دولة في العالم؟",                             a:"الفاتيكان"},
+      {q:"ما الطائر الذي لا يطير ويعيش في القطب الجنوبي؟",      a:"البطريق"},
+      {q:"كم كوكباً في المجموعة الشمسية؟",                      a:"ثمانية"},
+      {q:"ما أعمق نقطة في المحيطات؟",                          a:"خندق ماريانا"},
+      {q:"من اخترع الهاتف؟",                                    a:"غراهام بيل"},
+      {q:"ما عاصمة البرازيل؟",                                  a:"برازيليا"},
+      {q:"في أي سنة اكتشف كولومبس أمريكا؟",                    a:"1492"},
+      {q:"كم يوماً في السنة الكبيسة؟",                         a:"366"},
+      {q:"ما أسرع حيوان بري في العالم؟",                       a:"الفهد"},
+      {q:"كم عدد أضلاع الإنسان؟",                              a:"24 ضلعاً"},
+      {q:"من هو مخترع مصباح الكهرباء؟",                        a:"إديسون"},
+      {q:"ما عاصمة اليابان؟",                                   a:"طوكيو"},
+      {q:"كم عدد ساعات اليوم؟",                                a:"24 ساعة"},
+      {q:"ما أثقل عضو في جسم الإنسان؟",                       a:"الكبد"},
+      {q:"في أي قارة توجد مصر؟",                               a:"أفريقيا"},
+      {q:"ما العملة المستخدمة في الإمارات؟",                   a:"الدرهم"},
+    ],
+    "تاريخ وجغرافيا":[
+      {q:"في أي عام فتح صلاح الدين القدس؟",                    a:"1187"},
+      {q:"ما عاصمة إسبانيا؟",                                   a:"مدريد"},
+      {q:"ما أطول سور في العالم؟",                              a:"سور الصين العظيم"},
+      {q:"في أي بلد تقع برج بيزا المائل؟",                     a:"إيطاليا"},
+      {q:"في أي سنة فُتحت القسطنطينية؟",                       a:"1453"},
+      {q:"ما اسم النهر الذي تقع عليه القاهرة؟",                a:"النيل"},
+      {q:"في كم قارة ينقسم العالم؟",                           a:"سبع قارات"},
+      {q:"ما أعلى قمة جبلية في العالم؟",                      a:"إيفرست"},
+      {q:"في أي دولة يقع برج إيفل؟",                          a:"فرنسا"},
+      {q:"ما العاصمة الأولى للإسلام؟",                         a:"المدينة المنورة"},
+      {q:"في أي عام تأسست المملكة العربية السعودية؟",           a:"1932"},
+      {q:"ما أقدم حضارة في التاريخ؟",                         a:"حضارة بلاد الرافدين"},
+      {q:"ما عاصمة روسيا؟",                                    a:"موسكو"},
+      {q:"من هو مكتشف القارة الأمريكية؟",                      a:"كولومبس"},
+      {q:"في أي قارة تقع الأرجنتين؟",                         a:"أمريكا الجنوبية"},
+      {q:"ما عاصمة الأردن؟",                                   a:"عمان"},
+      {q:"ما اسم البحر الذي تطل عليه مكة المكرمة؟",            a:"البحر الأحمر"},
+      {q:"في أي عام كانت الحرب العالمية الثانية؟",             a:"1939-1945"},
+      {q:"ما أقدم مدينة مسكونة في العالم؟",                   a:"أريحا"},
+      {q:"ما عاصمة كندا؟",                                    a:"أوتاوا"},
+    ],
+    "دين وقرآن":[
+      {q:"كم عدد سور القرآن الكريم؟",                          a:"114 سورة"},
+      {q:"ما اسم أطول سورة في القرآن الكريم؟",                 a:"سورة البقرة"},
+      {q:"كم عدد أركان الإسلام؟",                              a:"خمسة"},
+      {q:"ما اسم آخر سورة في القرآن الكريم؟",                  a:"سورة الناس"},
+      {q:"كم عدد أنبياء الله المذكورين في القرآن؟",            a:"25 نبياً"},
+      {q:"ما اسم والدة النبي عيسى عليه السلام؟",               a:"مريم"},
+      {q:"في أي شهر نزل القرآن الكريم؟",                      a:"رمضان"},
+      {q:"كم ركعة في صلاة الفجر؟",                            a:"ركعتان"},
+      {q:"ما اسم أول سورة في القرآن الكريم؟",                 a:"الفاتحة"},
+      {q:"ما اسم أحد الصحابة الملقب بالصديق؟",               a:"أبو بكر"},
+      {q:"كم عدد أشهر السنة الهجرية؟",                       a:"12 شهراً"},
+      {q:"ما اسم السورة التي تُسمى قلب القرآن؟",              a:"يس"},
+      {q:"كم عدد الصلوات المفروضة في اليوم؟",                a:"خمس صلوات"},
+      {q:"في أي مدينة يقع المسجد الحرام؟",                   a:"مكة المكرمة"},
+      {q:"ما اسم النبي الذي بنى السفينة؟",                   a:"نوح"},
+      {q:"كم عدد أيام شهر رمضان في الغالب؟",                 a:"29 أو 30 يوماً"},
+      {q:"ما اسم أقدس مدينة في الإسلام؟",                   a:"مكة المكرمة"},
+      {q:"ما اسم الملاك الذي نزل بالوحي على النبي؟",         a:"جبريل"},
+      {q:"كم مرة يتكرر اسم النبي محمد في القرآن؟",           a:"4 مرات"},
+      {q:"ما اسم السورة التي لا يبدأ بالبسملة؟",             a:"التوبة"},
+    ],
+    "رياضة":[
+      {q:"كم لاعباً في فريق كرة القدم على الملعب؟",            a:"11 لاعباً"},
+      {q:"في أي بلد أقيمت كأس العالم 2022؟",                  a:"قطر"},
+      {q:"كم دورة أولمبية صيفية أقيمت حتى 2024؟",            a:"33"},
+      {q:"من فاز بكأس العالم 2022؟",                          a:"الأرجنتين"},
+      {q:"ما اسم الملعب الشهير لنادي برشلونة؟",               a:"كامب نو"},
+      {q:"كم مدة مباراة كرة القدم النظامية؟",                 a:"90 دقيقة"},
+      {q:"ما اسم بطولة كرة القدم الأوروبية؟",                a:"يورو"},
+      {q:"كم طول ملعب كرة القدم القياسي؟",                   a:"105 متر"},
+      {q:"من هو الهداف التاريخي لكأس العالم؟",               a:"ميرسلاف كلوسه"},
+      {q:"في أي مدينة سعودية يلعب نادي الهلال؟",            a:"الرياض"},
+      {q:"كم سيم في ملعب التنس للتنس الأرضي؟",             a:"78 قدماً"},
+      {q:"ما اسم بطولة التنس الأشهر في العالم؟",            a:"ويمبلدون"},
+      {q:"في أي سنة فاز المنتخب السعودي على الأرجنتين؟",    a:"2022"},
+      {q:"من فاز بأول كأس عالم في التاريخ؟",               a:"أوروغواي"},
+      {q:"كم عدد اللاعبين في فريق كرة السلة؟",             a:"5 لاعبين"},
+      {q:"ما اسم القفازات المستخدمة في الملاكمة؟",         a:"جلوفز"},
+      {q:"في أي عام بدأ دوري أبطال أوروبا؟",              a:"1955"},
+      {q:"كم مرة فاز البرازيل بكأس العالم؟",              a:"5 مرات"},
+      {q:"ما اسم الكأس التي يتنافس عليها الأندية الخليجية؟",a:"كأس الخليج العربي"},
+      {q:"من هو أكثر لاعب حائز على جائزة أفضل لاعب FIFA؟", a:"ميسي"},
+    ],
+    "فن وترفيه":[
+      {q:"ما اسم المطرب السعودي الأشهر في التاريخ؟",           a:"محمد عبده"},
+      {q:"من هو فنان المليار في الوطن العربي؟",                a:"عمرو دياب"},
+      {q:"ما اسم أشهر مسلسل رمضاني سعودي؟",                   a:"طاش ما طاش"},
+      {q:"من أطول مسيرة في تاريخ الموسيقى العربية؟",          a:"فيروز"},
+      {q:"من هو صاحب أغنية يا زهرة في البستان؟",              a:"محمد عبده"},
+      {q:"ما اسم برنامج مواهب الغناء الأشهر عربياً؟",         a:"عرب أيدول"},
+      {q:"من هو الزعيم في الفن المصري؟",                      a:"عادل إمام"},
+      {q:"ما اسم أشهر فيلم في تاريخ السينما العالمية؟",       a:"تايتانيك"},
+      {q:"من هي نجمة الطرب اللبنانية الأشهر؟",               a:"فيروز"},
+      {q:"ما اسم المغني البرازيلي الأشهر عالمياً؟",          a:"روبيرو كارلوس"},
+      {q:"من هو الفنان الكويتي الأشهر؟",                     a:"نبيل شعيل"},
+      {q:"ما اسم فرقة الروك الأشهر عالمياً؟",               a:"البيتلز"},
+      {q:"من قدم مسرحية مدرسة المشاغبين المصرية؟",          a:"عادل إمام"},
+      {q:"من هي ملكة الموسيقى العربية؟",                    a:"أم كلثوم"},
+      {q:"ما اسم أشهر أغنية في تاريخ اليوتيوب؟",           a:"ديسباسيتو"},
+      {q:"من هو المخرج الأشهر في هوليوود؟",                a:"ستيفن سبيلبرغ"},
+      {q:"ما اسم أشهر مسرح في العالم؟",                   a:"الأوبرا الملكية"},
+      {q:"من قدم فيلم شكسبير العربي؟",                    a:"يوسف وهبي"},
+      {q:"ما اسم أشهر برنامج ترفيهي سعودي؟",             a:"هيلا هيلا"},
+      {q:"من هو الفنان الأردني الأشهر؟",                  a:"سامي يوسف"},
+    ],
+    "علوم وتكنولوجيا":[
+      {q:"ما اسم مؤسس شركة أبل؟",                              a:"ستيف جوبز"},
+      {q:"من اخترع شبكة الإنترنت؟",                            a:"تيم بيرنرز-لي"},
+      {q:"ما أسرع حاسوب في العالم؟",                          a:"فرونتير"},
+      {q:"ما اسم أشهر محرك بحث في العالم؟",                  a:"جوجل"},
+      {q:"من اخترع الطائرة؟",                                  a:"الأخوان رايت"},
+      {q:"ما اسم مؤسس تسلا وسبيس إكس؟",                      a:"إيلون ماسك"},
+      {q:"ما أول دولة أطلقت إنساناً للفضاء؟",                 a:"الاتحاد السوفيتي"},
+      {q:"كم سرعة الضوء تقريباً؟",                            a:"300 ألف كم/ثانية"},
+      {q:"ما اسم نظام تشغيل الآيفون؟",                        a:"iOS"},
+      {q:"من اخترع التلفزيون؟",                               a:"جون بيرد"},
+      {q:"ما اسم أشهر منصة تواصل اجتماعي؟",                  a:"فيسبوك"},
+      {q:"كم عدد بايتات في الكيلوبايت؟",                     a:"1024"},
+      {q:"ما اسم العنصر الكيميائي للماء؟",                   a:"H2O"},
+      {q:"من اخترع السيارة؟",                                 a:"كارل بنز"},
+      {q:"ما أكبر كوكب في المجموعة الشمسية؟",               a:"المشتري"},
+      {q:"ما اسم مؤسس مايكروسوفت؟",                         a:"بيل غيتس"},
+      {q:"كم حرف يحتوي DNA الإنسان؟",                      a:"3 مليارات زوج"},
+      {q:"ما اسم أول قمر صناعي في الفضاء؟",                a:"سبوتنيك"},
+      {q:"من اخترع الراديو؟",                               a:"ماركوني"},
+      {q:"ما اسم الغاز المسؤول عن الاحترار العالمي؟",      a:"ثاني أكسيد الكربون"},
+    ],
+  },
+
+  memory:[
+    {cat:"دول عربية",items:["السعودية","مصر","الإمارات","الكويت","البحرين","قطر","عمان","الأردن","سوريا","لبنان"],target:6,hint:"سمّوا 6 دول عربية!"},
+    {cat:"مدن سعودية",items:["الرياض","جدة","مكة","المدينة","الدمام","الطائف","أبها","تبوك","حائل","نجران"],target:6,hint:"سمّوا 6 مدن سعودية!"},
+    {cat:"لاعبو المنتخب السعودي",items:["محمد الدعيع","ماجد عبدالله","سامي الجابر","ياسر القحطاني","سلطان غنام","مرزوق السهلاوي","محمد كنو","يوسف القرني"],target:5,hint:"سمّوا 5 لاعبين سعوديين!"},
+    {cat:"أندية الدوري السعودي",items:["الهلال","النصر","الاتحاد","الأهلي","الشباب","التعاون","الفيصلي","أبها","القادسية","الرائد"],target:6,hint:"سمّوا 6 أندية سعودية!"},
+    {cat:"أكلات سعودية",items:["كبسة","مندي","جريش","هريسة","مرقوق","سليق","شاكرية","تشريب"],target:5,hint:"سمّوا 5 أكلات سعودية!"},
+    {cat:"أكلات خليجية",items:["مجبوس","هريس","بلاليط","قوزي","ثريد","مشكاك","لقيمات","مقبوس"],target:5,hint:"سمّوا 5 أكلات خليجية!"},
+    {cat:"مسلسلات رمضانية",items:["باب الحارة","طاش ما طاش","العاصوفة","سيلفي","تراب الماس","ولد الغلا","مسافة أمان","جاك عقلك"],target:5,hint:"سمّوا 5 مسلسلات رمضانية!"},
+    {cat:"ممثلون مصريون",items:["عادل إمام","نور الشريف","يحيى الفخراني","أحمد زكي","محمود عبدالعزيز","عزت العلايلي","محمود حميدة","أحمد السقا"],target:5,hint:"سمّوا 5 ممثلين مصريين!"},
+    {cat:"مطربون عرب",items:["محمد عبده","عمرو دياب","فيروز","كاظم الساهر","راشد الماجد","عبدالمجيد عبدالله","وائل كفوري","ماجد المهندس"],target:5,hint:"سمّوا 5 مطربين عرب!"},
+    {cat:"دول أوروبية",items:["فرنسا","ألمانيا","إيطاليا","إسبانيا","البرتغال","هولندا","بلجيكا","السويد","النرويج","الدنمارك"],target:6,hint:"سمّوا 6 دول أوروبية!"},
+    {cat:"عواصم عربية",items:["الرياض","القاهرة","أبوظبي","الكويت","المنامة","الدوحة","مسقط","عمان","دمشق","بيروت"],target:6,hint:"سمّوا 6 عواصم عربية!"},
+    {cat:"حيوانات الغابة",items:["أسد","نمر","فيل","زرافة","فرس النهر","تمساح","قرد","ذئب"],target:5,hint:"سمّوا 5 حيوانات الغابة!"},
+    {cat:"حيوانات الصحراء",items:["جمل","ثعلب فنك","أفعى","عقرب","ضب","وبر","جرذ","أرنب بري"],target:5,hint:"سمّوا 5 حيوانات الصحراء!"},
+    {cat:"فواكه استوائية",items:["مانغو","أناناس","جوافة","بابايا","كوكوز","رمبوتان","دوريان","ليتشي"],target:5,hint:"سمّوا 5 فواكه استوائية!"},
+    {cat:"خضروات",items:["طماطم","خيار","بصل","ثوم","جزر","فلفل","كوسا","باذنجان","سبانخ","قثاء"],target:6,hint:"سمّوا 6 خضروات!"},
+    {cat:"أفلام كرتون ديزني",items:["أسد الملك","علاء الدين","فروزن","موانا","كوكو","رابونزيل","جماليون","الجميلة والوحش","سنو وايت","بياض الثلج"],target:5,hint:"سمّوا 5 أفلام ديزني!"},
+    {cat:"رياضيون عرب",items:["محمد صلاح","رامي عاشور","أشرف حكيمي","عمر مرموش","ماجد عبدالله","علي مبخوت","حكيم زياش","عمر عبدالرحمن"],target:5,hint:"سمّوا 5 رياضيين عرب!"},
+    {cat:"دول آسيوية",items:["اليابان","الصين","الهند","كوريا","إندونيسيا","ماليزيا","تايلاند","فيليبين"],target:5,hint:"سمّوا 5 دول آسيوية!"},
+    {cat:"أسماء أنبياء",items:["محمد","إبراهيم","موسى","عيسى","نوح","يوسف","داود","سليمان"],target:6,hint:"سمّوا 6 أسماء أنبياء!"},
+    {cat:"مواد دراسية",items:["رياضيات","علوم","لغة عربية","إنجليزي","تاريخ","جغرافيا","تربية إسلامية","حاسب"],target:6,hint:"سمّوا 6 مواد دراسية!"},
+    {cat:"وسائل مواصلات",items:["سيارة","طائرة","قطار","سفينة","حافلة","مترو","دراجة","تاكسي"],target:5,hint:"سمّوا 5 وسائل مواصلات!"},
+    {cat:"ألوان قوس قزح",items:["أحمر","برتقالي","أصفر","أخضر","أزرق","نيلي","بنفسجي"],target:7,hint:"سمّوا ألوان قوس القزح السبعة!"},
+    {cat:"أشهر ميلادية",items:["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"],target:8,hint:"سمّوا 8 أشهر ميلادية!"},
+    {cat:"أجهزة إلكترونية",items:["جوال","حاسوب","تلفزيون","لابتوب","تابلت","سماعات","ساعة ذكية","كاميرا"],target:5,hint:"سمّوا 5 أجهزة إلكترونية!"},
+    {cat:"مهن وأعمال",items:["طبيب","مهندس","معلم","محامي","طيار","محاسب","ممرض","مبرمج","مصمم","صيدلاني"],target:6,hint:"سمّوا 6 مهن!"},
+  ],
+
+  shock:[
+    {type:'list', q:"سمّوا 5 دول عربية مع عاصمتها!", target:5, hint:"مثال: السعودية - الرياض"},
+    {type:'list', q:"سمّوا 7 لاعبين في تاريخ المنتخب السعودي!", target:7, hint:"لاعبون حاليون أو سابقون"},
+    {type:'list', q:"سمّوا 8 مدن سعودية!", target:8, hint:"أي مدينة في المملكة العربية السعودية"},
+    {type:'list', q:"سمّوا 6 مطربين خليجيين!", target:6, hint:"من السعودية أو الكويت أو الإمارات"},
+    {type:'act',  q:"قلّدوا شخصية مشهورة والفرق الأخرى تخمن!", target:0, hint:"ممثل أو رياضي أو شخصية تاريخية"},
+    {type:'act',  q:"كل عضو يكمل جملة العضو اللي قبله بدون توقف!", target:0, hint:"أول من يتوقف يخسر"},
+    {type:'act',  q:"غنّوا معاً أغنية سعودية أو خليجية شهيرة!", target:0, hint:"الجمهور يصوت للأحسن"},
+    {type:'act',  q:"كل عضو يقول مثل شعبي مختلف بدون تكرار!", target:0, hint:"أول من يتوقف أو يكرر يخسر"},
+    {type:'act',  q:"قلّدوا إعلاناً تجارياً مشهوراً والفرق الأخرى تخمن!", target:0, hint:"أي إعلان تلفزيوني"},
+    {type:'qa',   q:"أجيبوا على 5 أسئلة سريعة متتالية!", target:5, hint:"المنسق يسأل والفريق يجاوب"},
+    {type:'order',q:"رتّبوا من الأقدم للأحدث: بدر - الهجرة - فتح مكة - بناء الكعبة", target:0, hint:"الكعبة - بدر - الهجرة - فتح مكة"},
+    {type:'qa',   q:"سمّوا 5 اختراعات وأصحابها!", target:5, hint:"مثال: الهاتف - غراهام بيل"},
+    {type:'qa',   q:"سمّوا 5 دول وعملاتها!", target:5, hint:"مثال: مصر - الجنيه"},
+    {type:'fill',  q:"أكملوا أسماء المسلسلات: باب ___ - طاش ما ___ - يوميات ___ - العاصو___", target:4, hint:"الحارة - طاش - زوجة مفروسة - العاصوفة"},
+  ],
+
+};
+
+// == حالة اللعبة ==
+// -- localStorage helpers --
+function savePlayersLS(players){ try{localStorage.setItem('btPlayers', JSON.stringify(players));}catch(e){} }
+function loadPlayersLS(){ try{const d=localStorage.getItem('btPlayers');return d?JSON.parse(d):[]}catch(e){return []} }
+
+var shockRound = 0;
+var shockUsedIdx = [];
+var SHOCK_ROUNDS = 3;
+var GS = {
+  players: loadPlayersLS(), teams:[], numTeams:2,
+  phases:[
+    {id:'acting',  icon:'🎭',name:'تمثيل الشخصيات', hex:'#FF6B9D',hasChoices:true, timerMax:60},
+    {id:'silent',  icon:'🎬',name:'التمثيل الصامت',  hex:'#4D96FF',hasChoices:false,timerMax:60},
+    {id:'decision',icon:'⚡',name:'القرارات السريعة',hex:'#CC8800',hasChoices:false,timerMax:30},
+    {id:'memory',  icon:'🧠',name:'الذاكرة الجماعية',hex:'#C77DFF',hasChoices:false,timerMax:30},
+    {id:'shock',   icon:'💥',name:'الصدمة النهائية', hex:'#FF4545',hasChoices:false,timerMax:0},
+  ],
+  curPhase:0, curTeam:0, curPlayer:0, curRound:0, phaseTurns:[], choicesMode:'with',
+  teamHex:['#FF9500','#FF6B35','#00C896','#4D96FF'],
+  teamNames:['الفريق الذهبي 🌟','الفريق المرجاني 🪸','الفريق الزمردي 💚','الفريق السماوي 💙'],
+  teamEmojis:['🌟','🪸','💚','💙'],
+};
+var ph  = ()=> GS.phases[GS.curPhase];
+var tm  = ()=> GS.teams[GS.curTeam];
+var pts = (left,max)=> left>max*.67?15:left>max*.33?10:5;
+
+
+
+
+// ══ لاعبون وفرق ══
+function addPlayer(){
+  const inp=document.getElementById('playerNameInput'), name=inp.value.trim();
+  if(!name){showToast('أدخل اسماً!');return}
+  if(GS.players.length>=15){showToast('الحد الأقصى 15!');return}
+  if(GS.players.find(p=>p.name===name)){showToast('الاسم موجود!');return}
+  GS.players.push({name,id:Date.now()}); savePlayersLS(GS.players); inp.value=''; inp.focus(); renderPlayers();
+}
+document.getElementById('playerNameInput').addEventListener('keydown',e=>{if(e.key==='Enter')addPlayer()});
+
+function removePlayer(id){GS.players=GS.players.filter(p=>p.id!==id);savePlayersLS(GS.players);renderPlayers();if(GS.teams.length)randomizeTeams()}
+
+function renderPlayers(){
+  const list=document.getElementById('playerList'), cnt=document.getElementById('playerCount');
+  cnt.textContent=`${GS.players.length} / 15 لاعب`;
+  const colors=['#FF9500','#FF6B35','#00C896','#4D96FF','#FF6B9D','#C77DFF','#FFD93D','#6BCB77'];
+  list.innerHTML=GS.players.length
+    ? GS.players.map((p,i)=>`<div class="player-item"><div class="player-avatar" style="background:${colors[i%8]}22;color:${colors[i%8]};border:2px solid ${colors[i%8]}44">${p.name[0]}</div><span style="font-weight:700;flex:1">${p.name}</span><button class="btn btn-outline" style="padding:3px 10px;font-size:11px" onclick="removePlayer(${p.id})">✕</button></div>`).join('')
+    : '<p style="text-align:center;color:var(--text2);padding:16px;font-size:13px">لم يُضَف لاعبون بعد 🎮</p>';
+}
+
+function randomizeTeams(){
+  if(GS.players.length<2){showToast('يلزم لاعبان!');return}
+  const num=parseInt(document.getElementById('numTeamsSelect').value); GS.numTeams=num;
+  const shuffled=[...GS.players].sort(()=>Math.random()-.5);
+  GS.teams=Array.from({length:num},(_,i)=>({id:i,name:GS.teamNames[i],hex:GS.teamHex[i],emoji:GS.teamEmojis[i],members:[],score:0,curPlayerIdx:0}));
+  shuffled.forEach((p,i)=>GS.teams[i%num].members.push(p));
+  renderTeamsPreview(); showToast('🎲 تم التشكيل!');
+}
+
+function renderTeamsPreview(){
+  var el=document.getElementById('teamsPreview');
+  if(!GS.teams.length){el.innerHTML='';return;}
+  el.innerHTML=GS.teams.map(function(t,i){
+    var members=t.members.map(function(m){return '<div class="team-member-item">'+m.name+'</div>';}).join('') || '<div style="font-size:12px;color:var(--text2)">لا أعضاء</div>';
+    return '<div class="team-card" style="border-color:'+t.hex+'44">'
+      +'<div style="font-size:11px;color:'+t.hex+';font-weight:700;margin-bottom:4px">✏️ اسم الفريق</div>'
+      +'<input id="tnm'+i+'" type="text" data-idx="'+i+'" value="'+t.name.replace(/"/g,'&quot;')+'"'
+      +' style="width:100%;box-sizing:border-box;font-size:15px;font-weight:900;color:'+t.hex
+      +';background:'+t.hex+'18;border:2px solid '+t.hex+'66;border-radius:10px;padding:8px 12px'
+      +';text-align:right;font-family:Cairo,sans-serif;direction:rtl;outline:none;margin-bottom:10px"/>'
+      +members
+      +'</div>';
+  }).join('');
+  // ربط listeners بعد الرسم
+  GS.teams.forEach(function(t,i){
+    var inp=document.getElementById('tnm'+i);
+    if(!inp) return;
+    inp.addEventListener('input',function(){GS.teams[i].name=this.value;});
+    inp.addEventListener('change',function(){GS.teams[i].name=this.value;});
+  });
+}
+
+// ══ بدء البطولة ══
+function startTournament(){
+  if(GS.players.length<2){showToast('يلزم لاعبان!');return}
+  if(!GS.teams.length){randomizeTeams();if(!GS.teams.length)return}
+  GS.curPhase=0; GS.curTeam=0; GS.phaseTurns=[];
+  document.getElementById('globalHeader').style.display='flex';
+  document.getElementById('scoreboardEl').style.display='flex';
+  updateScoreboard(); showPhaseIntro();
+}
+
+// ══ نقاط ══
+function updateScoreboard(){
+  const sorted=[...GS.teams].sort((a,b)=>b.score-a.score);
+  document.getElementById('scoreboardEl').innerHTML=GS.teams.map(t=>`
+    <div class="score-chip ${t.id===sorted[0].id&&t.score>0?'leading':''}" style="border-color:${t.hex}44">
+      <div class="dot" style="background:${t.hex}"></div>
+      <span style="color:${t.hex};font-weight:900">${t.name.split(' ')[0]}</span>
+      <span class="pts" style="color:${t.hex};font-weight:900;font-size:15px">${t.score}</span>
+    </div>`).join('');
+  document.getElementById('phaseBadge').textContent=ph().name;
+  updateDots();
+}
+
+function updateDots(){
+  document.getElementById('headerDots').innerHTML=GS.phases.map((p,i)=>{
+    const d=i<GS.curPhase,c=i===GS.curPhase;
+    return `<div style="width:${c?12:8}px;height:${c?12:8}px;border-radius:50%;background:${d?'var(--green)':c?'var(--orange)':'var(--border)'};transition:all .3s" title="${p.name}"></div>`;
+  }).join('<div style="width:7px;height:2px;background:var(--border);margin:auto"></div>');
+}
+
+// ══ مقدمة المرحلة ══
+function showPhaseIntro(){
+  const p=ph();
+  renderProgressSteps();
+  const descs={acting:'كل فريق بدوره يمثّل شخصية — فريقه يخمّن',silent:'كل فريق يمثّل فيلماً بدون كلام — فريقه يخمّن',decision:'كل فريق يجاوب سؤالاً مختلفاً',memory:'كل فريق يسمّي أشياء من فئة في 30 ثانية',shock:'الكل معاً — تحدي واحد — نقاط مضاعفة!'};
+  const rulesets={
+    acting:[[p.hasChoices?'✅':'🔥','مع خيارات لا؟ المنسّق يحدد'],['⚡','أسرع إجابة = نقاط أكثر'],['🔒','المنسّق يرى الإجابة سراً']],
+    silent:[['🤐','ممنوع الكلام والأصوات'],['👀','فريقه يخمّن الفيلم'],['📉','النقاط تنقص مع الوقت']],
+    decision:[['❓','سؤال مختلف لكل فريق'],['⏱','30 ثانية للإجابة'],['✅','المنسّق يحكم صح/غلط']],
+    memory:[['🧠','سمّوا أشياء من الفئة'],['⏱','30 ثانية فقط'],['🔢','كل إجابة = نقطتان']],
+    shock:[['💥','تحدي واحد للجميع'],['⏱','30 ثانية'],['×2','نقاط مضاعفة!']],
+  };
+  document.getElementById('phaseIntroCard').innerHTML=`
+    <div style="font-size:60px;margin-bottom:10px">${p.icon}</div>
+    <div style="font-size:11px;font-weight:700;letter-spacing:3px;color:var(--text2);margin-bottom:6px">المرحلة ${GS.curPhase+1} من ${GS.phases.length}</div>
+    <div style="font-size:28px;font-weight:900;color:var(--text);margin-bottom:6px">${p.name}</div>
+    <div style="font-size:14px;font-weight:700;color:var(--text2);margin-bottom:18px">${descs[p.id]||''}</div>
+    <div style="background:rgba(255,107,53,.05);border:2px solid rgba(255,107,53,.15);border-radius:14px;padding:14px">
+      <div style="font-size:11px;font-weight:700;letter-spacing:2px;color:var(--orange);margin-bottom:8px">📋 قواعد سريعة</div>
+      <div class="rules-grid">${(rulesets[p.id]||[]).map(r=>`<div class="rule-item"><div class="rule-icon">${r[0]}</div><div class="rule-text">${r[1]}</div></div>`).join('')}</div>
+    </div>`;
+  const cc=document.getElementById('choicesModeCard');
+  cc.style.display=p.hasChoices?'block':'none';
+  if(p.hasChoices)setChoicesMode(GS.choicesMode);
+  showScreen('phaseIntroScreen');
+}
+
+function renderProgressSteps(){
+  document.getElementById('progressSteps').innerHTML=GS.phases.map((p,i)=>{
+    const d=i<GS.curPhase,c=i===GS.curPhase;
+    return `<div class="p-step ${d?'done':c?'cur':''}"><div style="font-size:${c?22:16}px;filter:${d||c?'none':'grayscale(1) opacity(.4)'}">${d?'✅':p.icon}</div><div style="font-size:9px;font-weight:700;color:${d?'var(--green)':c?'var(--orange)':'var(--text3)'};max-width:52px;line-height:1.2;text-align:center">${p.name.split(' ')[0]}</div></div>${i<GS.phases.length-1?`<div class="p-conn ${d?'done':''}"></div>`:''}`;
+  }).join('');
+}
+
+function setChoicesMode(m){
+  GS.choicesMode=m;
+  document.getElementById('btnWith').className=`btn ${m==='with'?'btn-green':'btn-outline'}`;
+  document.getElementById('btnWithout').className=`btn ${m==='without'?'btn-red':'btn-outline'}`;
+}
+
+// ══ بدء المرحلة ══
+function startPhase(){
+  const p=ph();
+  GS.curTeam=0; GS.curRound=0; GS.phaseTurns=[];
+  GS.teams.forEach(t=>t.curPlayerIdx=0);
+  if(p.id==='shock'){launchShock();return}
+  startTeamTurn();
+}
+
+// ══ منطق الأدوار ══
+let tTimer=null,tLeft=60,tMax=60,curContent=null;
+
+function startTeamTurn(){
+  const p=ph(),t=tm();
+  curContent=null;
+  if(p.id==='acting')   setupActing(p,t);
+  else if(p.id==='silent')   setupSilent(p,t);
+  else if(p.id==='decision') setupDecision(p,t);
+  else if(p.id==='memory')   setupMemory(p,t);
+  showScreen('turnScreen');
+}
+
+function setTurnHeader(t,p){
+  // اللاعب الحالي داخل الفريق
+  const member = t.members && t.members.length
+    ? t.members[t.curPlayerIdx % t.members.length]
+    : null;
+
+  // وصف دور اللاعب حسب المرحلة
+  let roleHtml = '';
+  if(member){
+    const isActing = (p.id==='acting' || p.id==='silent');
+    if(isActing){
+      roleHtml = `<div style="margin-top:10px;background:${t.hex}22;border-radius:12px;padding:10px 16px;display:inline-block">
+        <span style="font-size:13px;color:var(--text2);font-weight:700">🎭 يُمثّل الآن: </span>
+        <span style="font-size:18px;font-weight:900;color:${t.hex}">${member.name}</span>
+        <span style="font-size:12px;color:var(--text2);display:block;margin-top:3px">والفريق يخمّن ✋</span>
+      </div>`;
+    }
+  }
+
+  document.getElementById('turnHeader').style.cssText=`background:${t.hex}12;border-color:${t.hex}55;border-radius:18px;padding:18px;text-align:center;margin-bottom:16px;border:3px solid`;
+  document.getElementById('turnHeader').innerHTML=`
+    <div style="font-size:12px;font-weight:700;letter-spacing:2px;color:${t.hex};margin-bottom:5px">${p.icon} ${p.name} — ج${(GS.curRound||0)+1}/${3} | فريق ${GS.curTeam+1}/${GS.teams.length}</div>
+    <div class="turn-team-name" style="color:${t.hex}">${t.emoji} ${t.name}</div>
+    ${roleHtml}
+  `;
+}
+
+function initTimer(max,hex){
+  tMax=max;tLeft=max;stopTurnTimer();
+  setTimerUI(max,max,hex);
+  document.getElementById('dispTimer').textContent=max;
+  document.getElementById('dispTimer').style.display='block';
+}
+
+function startTurnTimer(){if(tTimer)return;tTimer=setInterval(()=>{tLeft--;setTimerUI(tLeft,tMax);document.getElementById('dispTimer').textContent=tLeft;if(tLeft<=0)stopTurnTimer();},1000)}
+function stopTurnTimer(){clearInterval(tTimer);tTimer=null}
+function resetTurnTimer(){stopTurnTimer();tLeft=tMax;setTimerUI(tMax,tMax);document.getElementById('dispTimer').textContent=tMax}
+
+function setTimerUI(left,max,hex){
+  const CIRC=2*Math.PI*55;
+  const pct=Math.max(0,left/max);
+  const col=pct<.3?'var(--red)':pct<.6?'var(--orange)':hex||'var(--orange)';
+  document.getElementById('timerProg').style.strokeDashoffset=CIRC*(1-pct);
+  document.getElementById('timerProg').style.stroke=col;
+  document.getElementById('timerNum').textContent=Math.max(0,left);
+  document.getElementById('timerNum').style.color=col;
+}
+
+// ══ المرحلة ١: تمثيل الشخصيات ══
+function setupActing(p,t){
+  setTurnHeader(t,p);
+  initTimer(60,p.hex);
+  const cats=Object.keys(LIB.characters),cat=cats[Math.floor(Math.random()*cats.length)];
+  const pool=LIB.characters[cat],item=pool[Math.floor(Math.random()*pool.length)];
+  const correct=item.a;
+  const wrongs=Object.values(LIB.characters).flat().map(x=>x.a).filter(a=>a!==correct).sort(()=>Math.random()-.5).slice(0,3);
+  const choices=[correct,...wrongs].sort(()=>Math.random()-.5);
+  curContent={type:'acting',cat,correct,choices};
+  document.getElementById('dispCat').textContent=`الفئة: ${cat}`;
+  document.getElementById('dispMain').textContent=GS.choicesMode==='with'?'خمّنوا الشخصية!':'مَن يمثّل الفريق؟';
+  const letters=['أ','ب','ج','د'];
+  if(GS.choicesMode==='with'){
+    document.getElementById('dispChoices').innerHTML=choices.map((c,i)=>`<div class="choice-btn-disp" id="ch${i}" onclick="pickCh(${i},'${c.replace(/'/g,"\'")}')" ><strong style="color:var(--yellow)">${letters[i]}.</strong> ${c}</div>`).join('');
+    document.getElementById('dispChoices').style.display='grid';
+  }else{document.getElementById('dispChoices').style.display='none'}
+  document.getElementById('hostSecret').style.display='block';
+  document.getElementById('hostSecret').innerHTML=`<div style="font-size:11px;color:var(--text2);margin-bottom:5px">${cat}</div><div style="font-size:20px;font-weight:900;color:var(--orange)">${item.q}</div><div style="font-size:13px;color:var(--text2);margin-top:4px">الإجابة: <b style="color:var(--green)">${correct}</b></div>`;
+  document.getElementById('awardSection').innerHTML=`<p style="font-size:13px;color:var(--text2);margin-bottom:12px;font-weight:600">هل خمّن الفريق الشخصية بشكل صحيح؟</p><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-green btn-lg" style="flex:1" onclick="recordResult(true)">✅ خمّن صح!</button><button class="btn btn-red btn-lg" style="flex:1" onclick="recordResult(false)">❌ ما خمّن</button></div>`;
+}
+function pickCh(i,a){document.querySelectorAll('[id^=ch]').forEach(b=>b.classList.remove('chosen'));document.getElementById('ch'+i)?.classList.add('chosen')}
+
+// ══ المرحلة ٢: التمثيل الصامت ══
+function setupSilent(p,t){
+  setTurnHeader(t,p);
+  initTimer(60,p.hex);
+  const cats=Object.keys(LIB.films),cat=cats[Math.floor(Math.random()*cats.length)];
+  const title=LIB.films[cat][Math.floor(Math.random()*LIB.films[cat].length)];
+  curContent={type:'silent',cat,title};
+  document.getElementById('dispCat').textContent=`الفئة: ${cat}`;
+  document.getElementById('dispMain').textContent='مثّلوا بدون كلام — خمّنوا العنوان!';
+  document.getElementById('dispChoices').style.display='none';
+  document.getElementById('hostSecret').style.display='block';
+  document.getElementById('hostSecret').innerHTML=`<div style="font-size:11px;color:var(--text2);margin-bottom:5px">${cat}</div><div style="font-size:22px;font-weight:900;color:var(--blue)">${title}</div>`;
+  document.getElementById('awardSection').innerHTML=`<p style="font-size:13px;color:var(--text2);margin-bottom:12px;font-weight:600">هل خمّن الفريق الإجابة؟</p><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-green btn-lg" style="flex:1" onclick="recordResult(true)">✅ خمّن صح!</button><button class="btn btn-red btn-lg" style="flex:1" onclick="recordResult(false)">❌ ما خمّن</button></div><p style="font-size:12px;color:var(--text3);margin-top:8px;text-align:center">النقاط تتناقص مع الوقت</p>`;
+}
+
+// ══ المرحلة ٣: القرارات السريعة ══
+function setupDecision(p,t){
+  setTurnHeader(t,p);
+  initTimer(30,p.hex);
+  const levels=Object.keys(LIB.questions),level=levels[Math.floor(Math.random()*levels.length)];
+  const item=LIB.questions[level][Math.floor(Math.random()*LIB.questions[level].length)];
+  curContent={type:'decision',level,item};
+  document.getElementById('dispCat').textContent=`مستوى: ${level}`;
+  document.getElementById('dispMain').textContent=item.q;
+  document.getElementById('dispCat').textContent=`⚡ دور فريق ${t.name} — مستوى: ${level}`;
+  document.getElementById('dispChoices').style.display='none';
+  document.getElementById('hostSecret').style.display='block';
+  document.getElementById('hostSecret').innerHTML=`<div style="font-size:11px;color:var(--text2);margin-bottom:5px">الإجابة الصحيحة</div><div style="font-size:24px;font-weight:900;color:#CC8800">${item.a}</div>`;
+  document.getElementById('awardSection').innerHTML=`<p style="font-size:13px;color:var(--text2);margin-bottom:12px;font-weight:600">هل أجاب الفريق بشكل صحيح؟</p><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-green btn-lg" style="flex:1" onclick="recordResult(true)">✅ إجابة صحيحة!</button><button class="btn btn-red btn-lg" style="flex:1" onclick="recordResult(false)">❌ إجابة خاطئة</button></div>`;
+}
+
+// ══ المرحلة ٤: الذاكرة الجماعية ══
+function setupMemory(p,t){
+  setTurnHeader(t,p);
+  initTimer(30,p.hex);
+  const item=LIB.memory[Math.floor(Math.random()*LIB.memory.length)];
+  curContent={type:'memory',item};
+  document.getElementById('dispCat').textContent=`الفئة: ${item.cat}`;
+  document.getElementById('dispMain').textContent=item.hint;
+  document.getElementById('dispCat').textContent=`🧠 دور فريق ${t.name} — ${item.cat}`;
+  document.getElementById('dispChoices').style.display='none';
+  document.getElementById('hostSecret').style.display='block';
+  document.getElementById('hostSecret').innerHTML=`<div style="font-size:11px;color:var(--text2);margin-bottom:5px">الهدف المطلوب</div><div style="font-size:20px;font-weight:900;color:var(--purple)">${item.target} إجابات صحيحة</div><div style="font-size:12px;color:var(--text2);margin-top:4px">عدّها واكتب الرقم بعد الانتهاء</div>`;
+  document.getElementById('awardSection').innerHTML=`<p style="font-size:13px;color:var(--text2);margin-bottom:12px;font-weight:600">بعد انتهاء الوقت — كم إجابة صحيحة؟</p><button class="btn btn-purple btn-lg" onclick="openMemModal()">🔢 إدخال العدد</button>`;
+}
+
+function openMemModal(){
+  document.getElementById('memInfo').textContent=`الهدف: ${curContent.item.target} إجابات — كل إجابة صحيحة = نقطتان (حد أقصى 20)`;
+  document.getElementById('memInput').value='';
+  document.getElementById('memModal').classList.add('open');
+}
+function submitMem(){
+  const val=parseInt(document.getElementById('memInput').value)||0;
+  document.getElementById('memModal').classList.remove('open');
+  recordResult(val>0, Math.min(val*2,20));
+}
+
+// ══ تسجيل النتيجة ══
+function recordResult(success, forcePts){
+  stopTurnTimer();
+  const t=tm();
+  const earnedPts = forcePts !== undefined ? forcePts : (success ? pts(tLeft,tMax) : 0);
+  const timeUsed=tMax-tLeft;
+  GS.phaseTurns.push({teamId:t.id,teamName:t.name,teamEmoji:t.emoji,teamHex:t.hex,pts:earnedPts,success,timeUsed});
+  t.score+=earnedPts;
+  updateScoreboard();
+  const isLast=GS.curTeam>=GS.teams.length-1;
+  const nextTeamName=!isLast?GS.teams[GS.curTeam+1].name.split(' ')[0]:'';
+  const btn=isLast?`<button class="btn btn-orange btn-lg" style="width:100%" onclick="nextTeamTurn()">🏁 ملخص المرحلة</button>`:`<button class="btn btn-orange btn-lg" style="width:100%" onclick="nextTeamTurn()">⏭ دور ${nextTeamName} التالي</button>`;
+  const msg=success
+    ?`<div style="background:rgba(107,203,119,.1);border:2px solid var(--green);border-radius:13px;padding:15px;text-align:center;margin-bottom:12px"><div style="font-size:30px;font-weight:900;color:var(--green)">+${earnedPts} نقطة! 🎉</div><div style="font-size:12px;color:var(--text2)">الوقت المستخدم: ${timeUsed}ث</div></div>`
+    :`<div style="background:rgba(255,69,69,.07);border:2px solid var(--red);border-radius:13px;padding:15px;text-align:center;margin-bottom:12px"><div style="font-size:22px;font-weight:900;color:var(--red)">صفر نقاط 😔</div></div>`;
+  document.getElementById('awardSection').innerHTML=msg+btn;
+  showToast(`${t.emoji} +${earnedPts} نقطة!`);
+}
+
+function nextTeamTurn(){
+  const t=tm();
+  if(t) t.curPlayerIdx=(t.curPlayerIdx+1) % t.members.length;
+  GS.curTeam++;
+  if(GS.curTeam>=GS.teams.length){
+    // انتهت جولة كاملة — هل نبدأ جولة جديدة؟
+    GS.curRound = (GS.curRound||0) + 1;
+    if(GS.curRound < 3){
+      GS.curTeam=0;
+      startTeamTurn();
+    } else {
+      showPhaseSummary();
+    }
+  } else {
+    startTeamTurn();
+  }
+}
+
+// ══ ملخص المرحلة ══
+function showPhaseSummary(){
+  const p=ph();
+  const sorted=[...GS.phaseTurns].sort((a,b)=>b.pts-a.pts);
+  const medals=['🥇','🥈','🥉','🏅'];
+  document.getElementById('sumEmoji').textContent=p.icon;
+  document.getElementById('sumTitle').textContent=`انتهت ${p.name}!`;
+  document.getElementById('sumSub').textContent='نتائج الفرق في هذه المرحلة';
+  document.getElementById('sumRows').innerHTML=sorted.map((r,i)=>`
+    <div class="summary-row">
+      <div style="font-size:22px;min-width:30px;text-align:center">${medals[i]||'#'+(i+1)}</div>
+      <div style="flex:1"><div style="font-size:15px;font-weight:900;color:${r.teamHex}">${r.teamEmoji} ${r.teamName}</div><div style="font-size:11px;color:var(--text2)">${r.success?`✅ نجح في ${r.timeUsed}ث`:'❌ لم ينجح'}</div></div>
+      <div style="font-size:22px;font-weight:900;color:${r.teamHex}">+${r.pts}</div>
+    </div>`).join('');
+  const ts=[...GS.teams].sort((a,b)=>b.score-a.score);
+  document.getElementById('sumScores').innerHTML=`<div class="card-title"><div class="card-icon" style="background:rgba(255,217,61,.15)">📊</div>النقاط الكلية</div>${ts.map((t,i)=>`<div style="display:flex;align-items:center;gap:11px;margin-bottom:9px"><div style="font-size:19px">${medals[i]||''}</div><div style="flex:1;font-size:14px;font-weight:900;color:${t.hex}">${t.emoji} ${t.name}</div><div style="font-size:19px;font-weight:900;color:${t.hex}">${t.score}</div></div>`).join('')}`;
+  const isLast=GS.curPhase>=GS.phases.length-1;
+  const nextPh=GS.phases[GS.curPhase+1];
+  document.getElementById('sumNextBtn').textContent=isLast?'🏆 عرض النتائج':`▶ المرحلة التالية: ${nextPh?.name}`;
+  showScreen('phaseSummaryScreen');
+}
+
+function goNextPhase(){
+  GS.curPhase++; GS.curTeam=0; GS.phaseTurns=[];
+  if(GS.curPhase>=GS.phases.length){endTournament();return}
+  updateScoreboard(); showPhaseIntro();
+}
+
+// ══ الصدمة النهائية ══
+let shTimer=null,shLeft=30;
+function launchShock(){
+  shockRound = 0;
+  shockUsedIdx = [];
+  loadShockRound();
+  showScreen('shockScreen');
+}
+
+function loadShockRound(){
+  // اختر تحدياً غير مكرر
+  var available = LIB.shock.map(function(_,i){return i;}).filter(function(i){return shockUsedIdx.indexOf(i)<0;});
+  if(!available.length) available = LIB.shock.map(function(_,i){return i;});
+  var idx = available[Math.floor(Math.random()*available.length)];
+  shockUsedIdx.push(idx);
+  var ch = LIB.shock[idx];
+
+  // عنوان الجولة
+  document.getElementById('shockRoundLabel').textContent = 'الجولة ' + (shockRound+1) + ' من ' + SHOCK_ROUNDS;
+
+  // نوع التحدي
+  var typeIcon = ch.type==='act' ? '🎭 تحدي تمثيل — الكل معاً!' : '📋 تحدي تسمية — الكل معاً!';
+  document.getElementById('shockTypeLabel').textContent = typeIcon;
+
+  // السؤال
+  document.getElementById('shockChallenge').textContent = ch.q;
+
+  // التلميح
+  document.getElementById('shockHint').textContent = ch.hint || '';
+
+  // الهدف
+  document.getElementById('shockTarget').textContent = ch.target>0 ? ('🎯 الهدف: ' + ch.target + ' إجابة صحيحة') : '';
+
+  // العدّاد
+  document.getElementById('shockDispTimer').textContent = 30;
+  document.getElementById('shockNum').textContent = 30;
+  shLeft = 30; setShockUI(30, 30);
+
+  // أزرار منح النقاط
+  var SHOCK_PTS = [20, 10, 5, 2];
+  document.getElementById('shockAward').innerHTML = GS.teams.map(function(t){
+    return [
+      '<button onclick="awardShock(' + t.id + ')" ',
+      'style="display:flex;align-items:center;gap:10px;width:100%;margin-bottom:8px;',
+      'background:' + t.hex + '10;border:2px solid ' + t.hex + '55;',
+      'border-radius:14px;padding:14px 16px;cursor:pointer;font-family:Cairo,sans-serif;transition:all .2s">',
+      '<span style="font-size:22px">' + t.emoji + '</span>',
+      '<div style="text-align:right;flex:1">',
+        '<div style="font-size:15px;font-weight:900;color:' + t.hex + '">' + t.name + '</div>',
+        '<div style="font-size:12px;color:var(--text2)">اضغط لمنح +20 نقطة</div>',
+      '</div>',
+      '<span style="font-size:20px;font-weight:900;color:#FFD93D">+20</span>',
+      '</button>'
+    ].join('');
+  }).join('');
+
+  // أخفِ بطاقة النتائج
+  document.getElementById('shockResultsCard').style.display = 'none';
+}
+function startShockTimer(){if(shTimer)return;shTimer=setInterval(()=>{shLeft--;setShockUI(shLeft,30);document.getElementById('shockDispTimer').textContent=shLeft;if(shLeft<=0){clearInterval(shTimer);shTimer=null}},1000)}
+function setShockUI(l,m){
+  const CIRC=2*Math.PI*55,pct=Math.max(0,l/m),col=pct<.3?'var(--red)':pct<.6?'var(--orange)':'var(--red)';
+  document.getElementById('shockProg').style.strokeDashoffset=CIRC*(1-pct);
+  document.getElementById('shockProg').style.stroke=col;
+  document.getElementById('shockNum').textContent=Math.max(0,l);
+  document.getElementById('shockNum').style.color=col;
+}
+function awardShock(id){
+  var t = GS.teams.find(function(t){return t.id===id;});
+  if(!t) return;
+  t.score += 20;
+  updateScoreboard();
+  showToast(t.emoji + ' +20 نقطة! 🔥');
+
+  // أظهر بطاقة النتائج مع زر التالي
+  document.getElementById('shockResultsCard').style.display = 'block';
+  var rows = GS.teams.slice().sort(function(a,b){return b.score-a.score;});
+  document.getElementById('shockScoreRows').innerHTML =
+    '<div style="font-size:13px;color:var(--text2);font-weight:700;margin-bottom:10px">📊 النقاط بعد الجولة ' + (shockRound+1) + '</div>' +
+    rows.map(function(tm, i){
+      var medals = ['🥇','🥈','🥉','🏅'];
+      return '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">'
+        + '<span style="font-size:18px">' + (medals[i]||'') + '</span>'
+        + '<span style="font-size:15px;font-weight:900;color:' + tm.hex + ';flex:1">' + tm.emoji + ' ' + tm.name + '</span>'
+        + '<span style="font-size:16px;font-weight:900;color:var(--orange)">' + tm.score + '</span>'
+      + '</div>';
+    }).join('');
+
+  // زر التالي أو الإنهاء
+  var nextDiv = document.getElementById('shockNextBtn');
+  if(shockRound + 1 < SHOCK_ROUNDS){
+    nextDiv.innerHTML = '<button class="btn btn-blue btn-lg" style="width:100%" onclick="nextShockRound()">التحدي التالي (' + (shockRound+2) + '/' + SHOCK_ROUNDS + ') ⏭</button>';
+  } else {
+    nextDiv.innerHTML = '<button class="btn btn-orange btn-xl" style="width:100%" onclick="endTournament()">🏆 عرض النتائج النهائية!</button>';
+  }
+}
+
+function nextShockRound(){
+  shockRound++;
+  loadShockRound();
+}
+
+// ══ نهاية البطولة ══
+function endTournament(){
+  showScreen('championScreen');
+  document.getElementById('globalHeader').style.display='none';
+  document.getElementById('scoreboardEl').style.display='none';
+  const sorted=[...GS.teams].sort((a,b)=>b.score-a.score);
+  document.getElementById('champName').textContent=sorted[0].name;
+  const medals=['🥇','🥈','🥉','🏅'],rc=['rank-gold','rank-silver','rank-bronze',''];
+  document.getElementById('finalBody').innerHTML=sorted.map((t,i)=>`<tr><td class="${rc[i]}" style="border-radius:13px 0 0 13px">${medals[i]||'#'+(i+1)}</td><td><span style="color:${t.hex};font-weight:900">${t.emoji}</span> ${t.name}</td><td class="${rc[i]}" style="border-radius:0 13px 13px 0;font-size:18px;font-weight:900">${t.score} نقطة</td></tr>`).join('');
+  launchConfetti();
+}
+
+function restartGame(){
+  // نُعيد اللعبة مع الاحتفاظ باللاعبين
+  GS.teams=[];GS.numTeams=2;GS.curPhase=0;GS.curTeam=0;GS.phaseTurns=[];
+  GS.teams.forEach(function(t){t.curPlayerIdx=0;t.score=0;});
+  document.getElementById('globalHeader').style.display='none';
+  document.getElementById('scoreboardEl').style.display='none';
+  renderPlayers();renderTeamsPreview();showScreen('setupScreen');
+}
+function restartFresh(){
+  // بدء من الصفر — مسح كل شيء
+  GS.players=[];GS.teams=[];GS.numTeams=2;GS.curPhase=0;GS.curTeam=0;GS.phaseTurns=[];
+  savePlayersLS([]);
+  document.getElementById('globalHeader').style.display='none';
+  document.getElementById('scoreboardEl').style.display='none';
+  renderPlayers();renderTeamsPreview();showScreen('setupScreen');
+}
+
+// ══ مساعدات ══
+function launchConfetti(){
+  const w=document.getElementById('confettiWrap');w.innerHTML='';
+  const c=['#FF9500','#FF6B35','#00C896','#4D96FF','#FF6B9D','#FFD93D','#C77DFF'];
+  for(let i=0;i<80;i++){const p=document.createElement('div');p.className='confetti-piece';p.style.cssText=`left:${Math.random()*100}vw;background:${c[i%7]};animation-duration:${2+Math.random()*4}s;animation-delay:${Math.random()*2}s;width:${8+Math.random()*10}px;height:${10+Math.random()*14}px`;w.appendChild(p)}
+  setTimeout(()=>w.innerHTML='',9000);
+}
+function showToast(m){document.querySelectorAll('.toast').forEach(t=>t.remove());const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2800)}
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}
+
+
+
+// == Shock helpers ==
+function shockTeamButtons(t, state) {
+  if (state.done) {
+    return '<div style="text-align:center;font-size:13px;color:var(--green);font-weight:900">✅ انتهى!</div>';
+  }
+  if (!state.startTime) {
+    return '<button onclick="shockStart(' + t.id + ')" style="width:100%;padding:12px;background:' + t.hex + ';color:white;border:none;border-radius:12px;font-size:14px;font-weight:900;font-family:Cairo,sans-serif;cursor:pointer">▶️ ابدأ</button>';
+  }
+  return '<div style="display:flex;gap:8px">' +
+    '<button onclick="shockDone(' + t.id + ')" style="flex:1;padding:12px;background:var(--green);color:white;border:none;border-radius:12px;font-size:14px;font-weight:900;font-family:Cairo,sans-serif;cursor:pointer">✅ انتهينا!</button>' +
+    '<button onclick="shockFail(' + t.id + ')" style="padding:12px 16px;background:var(--border);color:var(--text2);border:none;border-radius:12px;font-size:13px;font-weight:700;font-family:Cairo,sans-serif;cursor:pointer">❌</button>' +
+    '</div>';
+}
+
+function renderShockTeams(){
+  const allDone = GS.teams.every(function(t){ return shockTeamState[t.id].done; });
+  document.getElementById('shockBuzzers').innerHTML = GS.teams.map(function(t) {
+    const state    = shockTeamState[t.id];
+    const ch       = state.challenge;
+    const rank     = shockResults.findIndex(function(r){ return r.teamId === t.id; });
+    const rankLabel = rank >= 0 ? (['🥇','🥈','🥉','🏅'][rank] + ' ' + state.elapsed.toFixed(1) + 'ث') : '';
+    const hintHTML  = ch.hint ? ('<div style="font-size:11px;color:var(--text2);margin-top:4px">💡 ' + ch.hint + '</div>') : '';
+    const rankHTML  = rankLabel ? ('<div style="font-size:14px;font-weight:900;color:' + t.hex + '">' + rankLabel + '</div>') : '';
+    return '<div style="background:' + t.hex + '10;border:2px solid ' + t.hex + '33;border-radius:16px;padding:14px 16px;margin-bottom:6px">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">' +
+        '<div style="font-size:15px;font-weight:900;color:' + t.hex + '">' + t.emoji + ' ' + t.name + '</div>' +
+        rankHTML +
+      '</div>' +
+      '<div style="font-size:13px;font-weight:700;color:var(--text);background:' + t.hex + '15;border-radius:10px;padding:8px 12px;margin-bottom:10px">' +
+        ch.q + hintHTML +
+      '</div>' +
+      shockTeamButtons(t, state) +
+    '</div>';
+  }).join('');
+  if(allDone) finishShockRound();
+}
+
+function shockStart(teamId){
+  const state = shockTeamState[teamId];
+  if(state.startTime) return;
+  state.startTime = Date.now();
+  renderShockTeams();
+}
+
+function shockDone(teamId){
+  const state = shockTeamState[teamId];
+  if(!state.startTime || state.done) return;
+  state.done    = true;
+  state.elapsed = (Date.now() - state.startTime) / 1000;
+  shockResults.push({teamId: teamId, elapsed: state.elapsed});
+  renderShockTeams();
+}
+
+function shockFail(teamId){
+  const state = shockTeamState[teamId];
+  if(state.done) return;
+  state.done    = true;
+  state.elapsed = 999;
+  shockResults.push({teamId: teamId, elapsed: state.elapsed});
+  renderShockTeams();
+}
+
+function finishShockRound(){
+  const SHOCK_PTS = [20, 10, 5, 2];
+  const sorted = shockResults.slice().sort(function(a,b){ return a.elapsed - b.elapsed; });
+  sorted.forEach(function(r, i){
+    var pts = SHOCK_PTS[i] || 0;
+    const t   = GS.teams.find(function(t){ return t.id === r.teamId; });
+    if(t && r.elapsed < 999){ t.score += pts; }
+  });
+  updateScoreboard();
+  const medals = ['🥇','🥈','🥉','🏅'];
+  document.getElementById('shockScoreRows').innerHTML =
+    '<div style="font-size:14px;font-weight:900;color:var(--text2);margin-bottom:10px;text-align:center">🏁 نتائج التحدي ' + (shockRound+1) + '</div>' +
+    sorted.map(function(r,i){
+      const t   = GS.teams.find(function(t){ return t.id === r.teamId; });
+      var pts = SHOCK_PTS[i] || 0;
+      const failed = r.elapsed >= 999;
+      return '<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:' + t.hex + '10;border:2px solid ' + t.hex + '30;border-radius:12px;margin-bottom:7px">' +
+        '<div style="font-size:20px">' + (medals[i]||'') + '</div>' +
+        '<div style="flex:1;font-size:14px;font-weight:900;color:' + t.hex + '">' + t.emoji + ' ' + t.name + '</div>' +
+        '<div style="font-size:12px;color:var(--text2)">' + (failed ? '❌ لم يكمل' : r.elapsed.toFixed(1) + 'ث') + '</div>' +
+        '<div style="font-size:16px;font-weight:900;color:' + t.hex + '">+' + (failed?0:pts) + '</div>' +
+        '</div>';
+    }).join('');
+
+  setTimeout(function(){
+    shockRound++;
+    if(shockRound >= SHOCK_ROUNDS){
+      document.getElementById('shockEndBtn').style.display = 'inline-flex';
+      document.getElementById('shockChallenge').textContent = '🏁 انتهى السباق!';
+    } else {
+      const nextBtn = document.createElement('button');
+      nextBtn.className = 'btn btn-blue btn-lg';
+      nextBtn.style.cssText = 'width:100%;margin-top:10px';
+      nextBtn.textContent = 'التحدي التالي (' + (shockRound+1) + '/' + SHOCK_ROUNDS + ') ⏭';
+      nextBtn.onclick = function(){ nextBtn.remove(); loadShockRound(); };
+      document.getElementById('shockScoreRows').appendChild(nextBtn);
+    }
+  }, 800);
+}
+
+
+
+function updateTeamNames(){
+  GS.teams.forEach(function(t,i){
+    var el = document.getElementById('teamNameInput_'+i);
+    if(el) t.name = el.value || t.name;
+  });
+}
+
+// ربط الأزرار
+(function(){
+  var addBtn = document.getElementById('addPlayerBtn');
+  var randBtn = document.getElementById('randomizeTeamsBtn');
+  var startBtn = document.getElementById('startTournamentBtn');
+  if(addBtn)   addBtn.addEventListener('click', addPlayer);
+  if(randBtn)  randBtn.addEventListener('click', randomizeTeams);
+  if(startBtn) startBtn.addEventListener('click', startTournament);
+})();
+
+
+// == تصدير للـ window لضمان الوصول من onclick ==
+window.addPlayer        = addPlayer;
+window.removePlayer     = removePlayer;
+window.randomizeTeams   = randomizeTeams;
+window.startTournament  = startTournament;
+window.setChoicesMode   = setChoicesMode;
+window.startPhase       = startPhase;
+window.startTurnTimer   = startTurnTimer;
+window.stopTurnTimer    = stopTurnTimer;
+window.resetTurnTimer   = resetTurnTimer;
+window.goNextPhase      = goNextPhase;
+window.startShockTimer  = typeof startShockTimer !== 'undefined' ? startShockTimer : function(){};
+window.endTournament    = endTournament;
+window.restartGame      = restartGame;
+window.submitMem        = submitMem;
+window.shockStart       = shockStart;
+window.shockDone        = shockDone;
+window.shockFail        = shockFail;
+
+try {
+  renderPlayers();
+  updateTeamNames();
+} catch(e) {
+  document.body.innerHTML += '<div style="position:fixed;top:0;left:0;right:0;background:red;color:white;padding:20px;z-index:9999;font-size:16px;direction:ltr"><b>ERROR:</b> ' + e.message + '<br>' + (e.stack||'').substring(0,300) + '</div>';
+  console.error('Game init error:', e);
+}
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>
