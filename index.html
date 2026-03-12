@@ -259,7 +259,8 @@ input:focus,select:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(25
     <div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:12px;text-align:center">اضغط على اسم الشخص للتصويت</div>
     <div id="whoVotes" style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px"></div>
     <div id="whoResultDiv" style="display:none"></div>
-    <button id="whoNextBtn" class="btn btn-orange btn-xl" style="width:100%;display:none;margin-top:16px" onclick="whoNext()">▶ ابدأ المرحلة التالية</button>
+    <button id="whoRevealBtn" class="btn btn-lg" style="background:var(--text2);color:#fff;width:100%;margin-top:12px;padding:14px;border-radius:13px;font-size:15px;font-weight:900;cursor:pointer" onclick="showWhoResult()">👁 كشف النتيجة الآن</button>
+    <button id="whoNextBtn" class="btn btn-orange btn-xl" style="width:100%;display:none;margin-top:12px" onclick="whoNext()">▶ ابدأ المرحلة التالية</button>
   </div>
 </div>
 
@@ -2189,36 +2190,43 @@ function submitNaming(){
 
 // == فقرة: مين أكثر ==
 var _whoVoteCounts={};
+var _whoVoted={};
 function showWhoScreen(){
-  _whoVoteCounts={};
+  _whoVoteCounts={};_whoVoted={};
   var q=pickUnused(LIB.who,GS.whoUsed);
   GS._currentWho=q;
   document.getElementById('whoQuestion').textContent=q;
   var players=GS.players.length?GS.players:GS.teams.flatMap(function(t){return t.members||[];});
   document.getElementById('whoVotes').innerHTML=players.map(function(pl,i){
-    return '<button class="btn" id="whoBtn_'+i+'" onclick="castWhoVote('+i+',this)" style="background:var(--bg3);border:2px solid var(--border);border-radius:14px;padding:14px 16px;font-size:16px;font-weight:700;width:100%;text-align:center;cursor:pointer">'+pl.name+'</button>';
+    return '<button id="whoBtn_'+i+'" onclick="castWhoVote('+i+',this)" style="background:var(--bg3);border:2px solid var(--border);border-radius:14px;padding:14px 16px;font-size:16px;font-weight:700;width:100%;text-align:center;cursor:pointer;font-family:Cairo,sans-serif;color:var(--text)">'+pl.name+'</button>';
   }).join('');
   document.getElementById('whoResultDiv').style.display='none';
   document.getElementById('whoNextBtn').style.display='none';
+  var rb=document.getElementById('whoRevealBtn');
+  if(rb) rb.style.display='block';
   showScreen('whoScreen');
 }
 function castWhoVote(idx,btn){
+  if(_whoVoted[idx]) return;
+  _whoVoted[idx]=true;
   var players=GS.players.length?GS.players:GS.teams.flatMap(function(t){return t.members||[];});
   var name=players[idx].name;
   _whoVoteCounts[name]=(_whoVoteCounts[name]||0)+1;
-  btn.style.background='var(--orange)';btn.style.color='#fff';btn.disabled=true;
-  var total=Object.values(_whoVoteCounts).reduce(function(a,b){return a+b;},0);
-  if(total>=players.length) showWhoResult();
+  btn.style.background='var(--orange)';btn.style.color='#fff';btn.style.borderColor='var(--orange)';
+  if(Object.keys(_whoVoted).length>=players.length) showWhoResult();
 }
 function showWhoResult(){
+  if(!Object.keys(_whoVoteCounts).length) return;
+  var rb=document.getElementById('whoRevealBtn');if(rb)rb.style.display='none';
   var sorted=Object.entries(_whoVoteCounts).sort(function(a,b){return b[1]-a[1];});
   var winner=sorted[0];
+  var totalVotes=Object.values(_whoVoteCounts).reduce(function(a,b){return a+b;},0);
   GS.whoResults.push({q:GS._currentWho,winner:winner[0],votes:winner[1]});
   document.getElementById('whoResultDiv').innerHTML=
     '<div style="background:var(--orange);color:#fff;border-radius:16px;padding:20px;text-align:center;margin-top:16px">'+
     '<div style="font-size:13px;font-weight:700;margin-bottom:6px">النتيجة بالتصويت</div>'+
-    '<div style="font-size:34px;font-weight:900">'+winner[0]+'</div>'+
-    '<div style="font-size:13px;margin-top:4px">'+winner[1]+' من '+(Object.values(_whoVoteCounts).reduce(function(a,b){return a+b;},0))+' أصوات</div>'+
+    '<div style="font-size:36px;font-weight:900;margin:8px 0">'+winner[0]+'</div>'+
+    '<div style="font-size:13px;margin-top:4px">'+winner[1]+' من '+totalVotes+' أصوات</div>'+
     '</div>';
   document.getElementById('whoResultDiv').style.display='block';
   document.getElementById('whoNextBtn').style.display='block';
@@ -2695,4 +2703,5 @@ try {
 
 </body>
 </html>
+
 
