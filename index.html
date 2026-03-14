@@ -109,6 +109,64 @@ input:focus,select:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(25
   .container{padding:14px 12px}.display-main{font-size:20px}.choices-display{grid-template-columns:1fr}
   .display-timer-big{font-size:48px}.btn-xl{padding:14px 28px;font-size:16px}.rules-grid{grid-template-columns:1fr 1fr}
 }
+
+/* ══ وضع التلفاز ══ */
+body.tv-mode .host-panel,
+body.tv-mode #awardCard,
+body.tv-mode .phase-progress,
+body.tv-mode #turnHeader,
+body.tv-mode #whoRevealBtn,
+body.tv-mode #whoNextBtn,
+body.tv-mode #whoFinishBtn,
+body.tv-mode #whoProgressBar,
+body.tv-mode #valTeamRows,
+body.tv-mode #valNextBtn,
+body.tv-mode #shockAward,
+body.tv-mode #shockResultsCard,
+body.tv-mode #headerDots,
+body.tv-mode .phase-badge,
+body.tv-mode #shockScreen .card:not(.display-board-wrap),
+body.tv-mode #shockScreen .tc
+{ display:none !important; }
+
+body.tv-mode { background:#1a1a2e !important; }
+body.tv-mode .screen.active { min-height:100vh; }
+body.tv-mode .scoreboard { background:#1a1a2e; border:none; justify-content:center; }
+body.tv-mode .score-chip { background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.2); color:#fff; font-size:16px; padding:10px 22px; }
+body.tv-mode .score-chip.leading { transform:scale(1.08); box-shadow:0 4px 20px rgba(255,107,53,.4); }
+
+body.tv-mode .display-board { padding:40px 36px; margin-bottom:0; }
+body.tv-mode .display-main  { font-size:52px !important; line-height:1.35 !important; }
+body.tv-mode .display-cat   { font-size:20px; letter-spacing:2px; }
+body.tv-mode .display-timer-big { font-size:120px !important; margin-top:16px; }
+body.tv-mode .choice-btn-disp { font-size:24px; padding:24px 16px; }
+
+body.tv-mode #whoScreen .container { max-width:960px; padding:32px 24px; }
+body.tv-mode #whoScreen > div > div:first-child { margin-bottom:12px; }
+body.tv-mode #whoQuestion { font-size:54px !important; line-height:1.3; }
+body.tv-mode #whoVotes { display:none !important; }
+body.tv-mode #whoResultDiv { display:block; }
+body.tv-mode #whoResultDiv > div { padding:36px; border-radius:24px; }
+body.tv-mode #whoResultDiv > div > div:nth-child(2) { font-size:72px !important; margin:12px 0; }
+body.tv-mode #whoResultDiv > div > div:nth-child(3) { font-size:20px; }
+
+body.tv-mode #valuesScreen .container { max-width:960px; padding:32px 24px; }
+body.tv-mode #valuesScreen > div > div:first-child { margin-bottom:8px; }
+body.tv-mode #valName { font-size:72px !important; margin-bottom:16px; }
+body.tv-mode #valDesc { font-size:26px !important; margin-bottom:12px; }
+body.tv-mode #valExample { font-size:20px !important; padding:14px 20px; }
+body.tv-mode #valuesScreen .card { display:none !important; }
+
+body.tv-mode #shockScreen .display-board { border-color:rgba(255,69,69,.6); }
+body.tv-mode #shockChallenge { font-size:42px !important; }
+body.tv-mode #shockDispTimer { font-size:120px !important; }
+body.tv-mode #shockScreen .timer-wrap { display:none !important; }
+body.tv-mode #shockScreen .card { display:none !important; }
+body.tv-mode #shockScreen .tc { display:none !important; }
+
+body.tv-mode #globalHeader { background:#111827 !important; border-bottom:2px solid rgba(255,255,255,.08) !important; }
+body.tv-mode .logo { color:#fff !important; }
+body.tv-mode #tvToggleBtn { background:rgba(107,203,119,.15); border-color:#6BCB77; color:#6BCB77; }
 </style>
 </head>
 <body>
@@ -120,7 +178,7 @@ input:focus,select:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(25
   <div class="logo"><span class="logo-icon">🏆</span> بطولة العائلة</div>
   <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
     <div id="phaseBadge" class="phase-badge">إعداد</div>
-    <button onclick="openTVMode()" style="background:rgba(255,107,53,.12);border:1.5px solid var(--orange);color:var(--orange);border-radius:10px;padding:3px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:Cairo,sans-serif">📺 وضع التلفاز</button>
+    <button id="tvToggleBtn" onclick="toggleTVMode()" style="background:rgba(255,107,53,.12);border:1.5px solid var(--orange);color:var(--orange);border-radius:10px;padding:3px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:Cairo,sans-serif">📺 وضع التلفاز</button>
   </div>
     <div id="headerDots" style="display:flex;gap:4px;direction:ltr"></div>
   </div>
@@ -2713,157 +2771,22 @@ function updateTeamNames(){
 }
 
 // ══ وضع التلفاز ══
-var _tvWin = null;
+var _tvModeOn = false;
 
-function openTVMode(){
-  var html = '<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>📺 شاشة التلفاز</title>' +
-  '<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">' +
-  '<style>' +
-  '*{box-sizing:border-box;margin:0;padding:0}' +
-  'body{background:#1a1a2e;color:#fff;font-family:Cairo,sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;direction:rtl}' +
-  '#tv-scores{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-bottom:28px}' +
-  '.tv-chip{padding:10px 24px;border-radius:20px;font-size:18px;font-weight:900;border:3px solid rgba(255,255,255,.3);background:rgba(255,255,255,.07)}' +
-  '#tv-cat{font-size:16px;font-weight:700;letter-spacing:3px;color:rgba(255,217,61,.8);text-align:center;margin-bottom:12px;min-height:24px}' +
-  '#tv-main{font-size:38px;font-weight:900;text-align:center;line-height:1.4;color:#fff;margin-bottom:20px;min-height:60px}' +
-  '#tv-choices{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;max-width:800px;margin-bottom:20px}' +
-  '.tv-choice{background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.18);border-radius:16px;padding:18px;font-size:20px;font-weight:700;color:#fff;text-align:center}' +
-  '.tv-choice.chosen{background:rgba(107,203,119,.3);border-color:#6BCB77}' +
-  '#tv-timer{font-size:100px;font-weight:900;color:#FFD93D;text-align:center;line-height:1;min-height:110px}' +
-  '#tv-badge{font-size:13px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.4);text-align:center;margin-bottom:18px}' +
-  '</style></head><body>' +
-  '<div id="tv-badge">📺 بطولة العائلة — شاشة العرض</div>' +
-  '<div id="tv-scores"></div>' +
-  '<div id="tv-cat"></div>' +
-  '<div id="tv-main">في انتظار بدء اللعبة...</div>' +
-  '<div id="tv-choices" style="display:none"></div>' +
-  '<div id="tv-timer" style="display:none"></div>' +
-  '</body></html>';
-
-  _tvWin = window.open('','_blank','width=1280,height=720,menubar=no,toolbar=no,location=no,status=no');
-  if(!_tvWin){ showToast('⚠️ السماح بالنوافذ المنبثقة في المتصفح'); return; }
-  _tvWin.document.write(html);
-  _tvWin.document.close();
-  showToast('📺 تم فتح شاشة التلفاز!');
-  updateTVMode();
-}
-
-function updateTVMode(){
-  if(!_tvWin || _tvWin.closed) return;
-  var doc = _tvWin.document;
-
-  // النقاط دائماً
-  var scEl = doc.getElementById('tv-scores');
-  if(scEl && GS.teams && GS.teams.length){
-    scEl.innerHTML = GS.teams.map(function(t){
-      return '<div class="tv-chip" style="color:'+t.hex+';border-color:'+t.hex+'55">'+t.emoji+' '+t.name+' — '+t.score+'</div>';
-    }).join('');
-  }
-
-  var catEl  = doc.getElementById('tv-cat');
-  var mainEl = doc.getElementById('tv-main');
-  var choEl  = doc.getElementById('tv-choices');
-  var timEl  = doc.getElementById('tv-timer');
-  if(!catEl||!mainEl) return;
-
-  // اكتشاف الشاشة النشطة
-  var whoActive    = document.getElementById('whoScreen')    && document.getElementById('whoScreen').classList.contains('active');
-  var valuesActive = document.getElementById('valuesScreen') && document.getElementById('valuesScreen').classList.contains('active');
-  var shockActive  = document.getElementById('shockScreen')  && document.getElementById('shockScreen').classList.contains('active');
-
-  // ── شاشة مين أكثر ──
-  if(whoActive){
-    choEl.style.display='none';
-    timEl.style.display='none';
-    var prog = document.getElementById('whoProgressBar');
-    catEl.textContent  = '😄 مين أكثر' + (prog ? '  —  ' + prog.textContent : '');
-    var qEl = document.getElementById('whoQuestion');
-    mainEl.textContent = qEl ? qEl.textContent : '';
-
-    // عرض نتيجة التصويت إن ظهرت
-    var resDiv = document.getElementById('whoResultDiv');
-    if(resDiv && resDiv.style.display !== 'none'){
-      var winnerEl = resDiv.querySelector('div[style*="font-size:36px"]');
-      var votesEl  = resDiv.querySelector('div[style*="font-size:13px"][style*="margin-top:4px"]');
-      if(winnerEl){
-        choEl.style.display = 'grid';
-        choEl.innerHTML =
-          '<div class="tv-choice chosen" style="grid-column:1/-1;font-size:32px;padding:24px">🏆 '+winnerEl.textContent+'</div>' +
-          (votesEl ? '<div class="tv-choice" style="grid-column:1/-1;font-size:18px">'+votesEl.textContent+'</div>' : '');
-      }
-    }
-    return;
-  }
-
-  // ── شاشة القيم ──
-  if(valuesActive){
-    choEl.style.display='none';
-    timEl.style.display='none';
-    catEl.textContent = '🌟 فقرة القيم';
-    var valNameEl = document.getElementById('valName');
-    var valDescEl = document.getElementById('valDesc');
-    var valExEl   = document.getElementById('valExample');
-    var name = valNameEl ? valNameEl.textContent : '';
-    var desc = valDescEl ? valDescEl.textContent : '';
-    var ex   = valExEl   ? valExEl.textContent   : '';
-    mainEl.textContent = name;
-    if(desc || ex){
-      choEl.style.display = 'grid';
-      choEl.innerHTML =
-        (desc ? '<div class="tv-choice" style="grid-column:1/-1;font-size:18px">'+desc+'</div>' : '') +
-        (ex   ? '<div class="tv-choice" style="grid-column:1/-1;font-size:16px;color:rgba(255,255,255,.7)">'+ex+'</div>' : '');
-    }
-    return;
-  }
-
-  // ── شاشة الصدمة ──
-  if(shockActive){
-    choEl.style.display='none';
-    catEl.textContent = '💥 الصدمة النهائية';
-    var shLabel = document.getElementById('shockRoundLabel');
-    var shChall = document.getElementById('shockChallenge');
-    var shHint  = document.getElementById('shockHint');
-    var shNum   = document.getElementById('shockNum');
-    mainEl.textContent = shChall ? shChall.textContent : '';
-    if(shHint && shHint.textContent){ catEl.textContent += '  —  ' + shHint.textContent; }
-    if(shNum){
-      timEl.style.display='block';
-      timEl.textContent = shNum.textContent;
-    } else {
-      timEl.style.display='none';
-    }
-    return;
-  }
-
-  // ── الشاشة العادية (دور الفريق) ──
-  var srcCat   = document.getElementById('dispCat');
-  var srcMain  = document.getElementById('dispMain');
-  var srcCho   = document.getElementById('dispChoices');
-  var srcTimer = document.getElementById('dispTimer');
-
-  catEl.textContent  = srcCat  ? srcCat.textContent  : '';
-  mainEl.textContent = srcMain ? srcMain.textContent : '';
-
-  if(srcCho && srcCho.style.display!=='none'){
-    choEl.style.display='grid';
-    choEl.innerHTML = Array.from(srcCho.querySelectorAll('.choice-btn-disp')).map(function(b){
-      return '<div class="tv-choice'+(b.classList.contains('chosen')?' chosen':'')+'">'+b.textContent+'</div>';
-    }).join('');
+function toggleTVMode(){
+  _tvModeOn = !_tvModeOn;
+  var btn = document.getElementById('tvToggleBtn');
+  if(_tvModeOn){
+    document.body.classList.add('tv-mode');
+    if(btn){ btn.textContent = '🎮 وضع المنسّق'; }
+    showToast('📺 وضع التلفاز — شارك الشاشة الآن');
   } else {
-    choEl.style.display='none';
-  }
-
-  if(srcTimer && srcTimer.style.display!=='none'){
-    timEl.style.display='block';
-    timEl.textContent = srcTimer.textContent;
-  } else {
-    timEl.style.display='none';
+    document.body.classList.remove('tv-mode');
+    if(btn){ btn.textContent = '📺 وضع التلفاز'; }
+    showToast('🎮 وضع المنسّق');
   }
 }
-
-// تحديث التلفاز كل ثانية تلقائياً
-setInterval(updateTVMode, 1000);
-
-window.openTVMode = openTVMode;
+window.toggleTVMode = toggleTVMode;
 (function(){
   var addBtn = document.getElementById('addPlayerBtn');
   var randBtn = document.getElementById('randomizeTeamsBtn');
