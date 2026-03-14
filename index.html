@@ -120,6 +120,8 @@ input:focus,select:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(25
   <div class="logo"><span class="logo-icon">🏆</span> بطولة العائلة</div>
   <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
     <div id="phaseBadge" class="phase-badge">إعداد</div>
+    <button onclick="openTVMode()" style="background:rgba(255,107,53,.12);border:1.5px solid var(--orange);color:var(--orange);border-radius:10px;padding:3px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:Cairo,sans-serif">📺 وضع التلفاز</button>
+  </div>
     <div id="headerDots" style="display:flex;gap:4px;direction:ltr"></div>
   </div>
 </div>
@@ -259,8 +261,10 @@ input:focus,select:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(25
     <div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:12px;text-align:center">اضغط على اسم الشخص للتصويت</div>
     <div id="whoVotes" style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px"></div>
     <div id="whoResultDiv" style="display:none"></div>
+    <div id="whoProgressBar" style="text-align:center;font-size:13px;font-weight:700;color:var(--text2);margin-bottom:8px"></div>
     <button id="whoRevealBtn" class="btn btn-lg" style="background:var(--text2);color:#fff;width:100%;margin-top:12px;padding:14px;border-radius:13px;font-size:15px;font-weight:900;cursor:pointer" onclick="showWhoResult()">👁 كشف النتيجة الآن</button>
-    <button id="whoNextBtn" class="btn btn-orange btn-xl" style="width:100%;display:none;margin-top:12px" onclick="whoNext()">▶ ابدأ المرحلة التالية</button>
+    <button id="whoNextBtn" class="btn btn-orange btn-xl" style="width:100%;display:none;margin-top:12px" onclick="whoNext()">▶ السؤال التالي</button>
+    <button id="whoFinishBtn" class="btn btn-green btn-xl" style="width:100%;display:none;margin-top:12px" onclick="whoFinish()">✅ ابدأ المرحلة التالية</button>
   </div>
 </div>
 
@@ -773,7 +777,40 @@ var LIB = {
     "مين أكثر واحد مخلص",
     "مين أكثر واحد يحب الانتباه",
     "مين أكثر واحد يهتم بمظهره",
-    "مين أكثر واحد يضحك على نفسه"
+    "مين أكثر واحد يضحك على نفسه",
+    "مين أكثر واحد يعرف يحافظ على السر",
+    "مين أكثر واحد يحب يعلّم غيره",
+    "مين أكثر واحد يتأثر بكلام الناس",
+    "مين أكثر واحد يخطط مسبقاً",
+    "مين أكثر واحد يتصرف بعفوية",
+    "مين أكثر واحد يحب الطبيعة والبر",
+    "مين أكثر واحد يتعب من الضوضاء",
+    "مين أكثر واحد دايم يتأخر في قراراته",
+    "مين أكثر واحد يتبرع بوقته للغير",
+    "مين أكثر واحد يحب المزح في أوقات الجدية",
+    "مين أكثر واحد يتضايق بسرعة",
+    "مين أكثر واحد يحب يرتّب ويضبط الأشياء",
+    "مين أكثر واحد دايم متحمس لأشياء جديدة",
+    "مين أكثر واحد يقدر يقنع الناس بسرعة",
+    "مين أكثر واحد ما يندم على قراراته",
+    "مين أكثر واحد يحب يشارك تجاربه",
+    "مين أكثر واحد ينام مبكر",
+    "مين أكثر واحد يحب الأفلام الرومانسية",
+    "مين أكثر واحد يحب الأفلام المرعبة",
+    "مين أكثر واحد لو قطع الكهرباء راح يتلق طريقه",
+    "مين أكثر واحد يحب يتفاوض على السعر",
+    "مين أكثر واحد يبكي في الأفلام",
+    "مين أكثر واحد يعرف يخبي مشاعره",
+    "مين أكثر واحد لو صار شيء كلنا نطلع له",
+    "مين أكثر واحد يطلع عقله على أهله",
+    "مين أكثر واحد ما يغير رأيه أبد",
+    "مين أكثر واحد يفكر بصوت عالي",
+    "مين أكثر واحد يشيل هموم الثاني",
+    "مين أكثر واحد يحب الروتين",
+    "مين أكثر واحد ما يقدر يكتم خبر",
+    "مين أكثر واحد يحب يساعد بدون ما يطلب منه",
+    "مين أكثر واحد يتجنب المواجهة",
+    "مين أكثر واحد لو صار مشكلة أول واحد يهدّي الجو"
   ],
   values:[
     {name:"الصدق",desc:"قول الحق حتى لو كان صعباً",example:"مثال: إخبار صديقك بحقيقة تؤلمه لكنها تنفعه"},
@@ -2191,17 +2228,27 @@ function submitNaming(){
 // == فقرة: مين أكثر ==
 var _whoVoteCounts={};
 var _whoVoted={};
+var _whoRoundQ=0;      // السؤال الحالي في الجولة (0-4)
+var WHO_PER_ROUND=5;   // عدد الأسئلة لكل مرحلة
+
 function showWhoScreen(){
+  _whoRoundQ=0;
+  loadWhoQuestion();
+}
+
+function loadWhoQuestion(){
   _whoVoteCounts={};_whoVoted={};
   var q=pickUnused(LIB.who,GS.whoUsed);
   GS._currentWho=q;
   document.getElementById('whoQuestion').textContent=q;
+  document.getElementById('whoProgressBar').textContent='السؤال '+(_whoRoundQ+1)+' من '+WHO_PER_ROUND;
   var players=GS.players.length?GS.players:GS.teams.flatMap(function(t){return t.members||[];});
   document.getElementById('whoVotes').innerHTML=players.map(function(pl,i){
     return '<button id="whoBtn_'+i+'" onclick="castWhoVote('+i+',this)" style="background:var(--bg3);border:2px solid var(--border);border-radius:14px;padding:14px 16px;font-size:16px;font-weight:700;width:100%;text-align:center;cursor:pointer;font-family:Cairo,sans-serif;color:var(--text)">'+pl.name+'</button>';
   }).join('');
   document.getElementById('whoResultDiv').style.display='none';
   document.getElementById('whoNextBtn').style.display='none';
+  document.getElementById('whoFinishBtn').style.display='none';
   var rb=document.getElementById('whoRevealBtn');
   if(rb) rb.style.display='block';
   showScreen('whoScreen');
@@ -2229,9 +2276,18 @@ function showWhoResult(){
     '<div style="font-size:13px;margin-top:4px">'+winner[1]+' من '+totalVotes+' أصوات</div>'+
     '</div>';
   document.getElementById('whoResultDiv').style.display='block';
-  document.getElementById('whoNextBtn').style.display='block';
+  var isLastQ=(_whoRoundQ>=WHO_PER_ROUND-1);
+  if(isLastQ){
+    document.getElementById('whoFinishBtn').style.display='block';
+  } else {
+    document.getElementById('whoNextBtn').style.display='block';
+  }
 }
 function whoNext(){
+  _whoRoundQ++;
+  loadWhoQuestion();
+}
+function whoFinish(){
   showPhaseIntro();
 }
 
@@ -2383,8 +2439,9 @@ function goNextPhase(){
   GS.curPhase++; GS.curTeam=0; GS.curRound=0; GS.phaseTurns=[];
   if(GS.curPhase>=GS.phases.length){endTournament();return;}
   updateScoreboard();
-  if(just===0||just===2){ showWhoScreen(); }
-  else if(just===1||just===3){ showValuesScreen(); }
+  // مين أكثر: بعد انسان حيوان جماد (index 0) وبعد الذاكرة (index 3)
+  if(just===0||just===3){ showWhoScreen(); }
+  else if(just===1||just===2){ showValuesScreen(); }
   else{ showPhaseIntro(); }
 }
 
@@ -2655,7 +2712,158 @@ function updateTeamNames(){
   });
 }
 
-// ربط الأزرار
+// ══ وضع التلفاز ══
+var _tvWin = null;
+
+function openTVMode(){
+  var html = '<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>📺 شاشة التلفاز</title>' +
+  '<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">' +
+  '<style>' +
+  '*{box-sizing:border-box;margin:0;padding:0}' +
+  'body{background:#1a1a2e;color:#fff;font-family:Cairo,sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;direction:rtl}' +
+  '#tv-scores{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-bottom:28px}' +
+  '.tv-chip{padding:10px 24px;border-radius:20px;font-size:18px;font-weight:900;border:3px solid rgba(255,255,255,.3);background:rgba(255,255,255,.07)}' +
+  '#tv-cat{font-size:16px;font-weight:700;letter-spacing:3px;color:rgba(255,217,61,.8);text-align:center;margin-bottom:12px;min-height:24px}' +
+  '#tv-main{font-size:38px;font-weight:900;text-align:center;line-height:1.4;color:#fff;margin-bottom:20px;min-height:60px}' +
+  '#tv-choices{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;max-width:800px;margin-bottom:20px}' +
+  '.tv-choice{background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.18);border-radius:16px;padding:18px;font-size:20px;font-weight:700;color:#fff;text-align:center}' +
+  '.tv-choice.chosen{background:rgba(107,203,119,.3);border-color:#6BCB77}' +
+  '#tv-timer{font-size:100px;font-weight:900;color:#FFD93D;text-align:center;line-height:1;min-height:110px}' +
+  '#tv-badge{font-size:13px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.4);text-align:center;margin-bottom:18px}' +
+  '</style></head><body>' +
+  '<div id="tv-badge">📺 بطولة العائلة — شاشة العرض</div>' +
+  '<div id="tv-scores"></div>' +
+  '<div id="tv-cat"></div>' +
+  '<div id="tv-main">في انتظار بدء اللعبة...</div>' +
+  '<div id="tv-choices" style="display:none"></div>' +
+  '<div id="tv-timer" style="display:none"></div>' +
+  '</body></html>';
+
+  _tvWin = window.open('','_blank','width=1280,height=720,menubar=no,toolbar=no,location=no,status=no');
+  if(!_tvWin){ showToast('⚠️ السماح بالنوافذ المنبثقة في المتصفح'); return; }
+  _tvWin.document.write(html);
+  _tvWin.document.close();
+  showToast('📺 تم فتح شاشة التلفاز!');
+  updateTVMode();
+}
+
+function updateTVMode(){
+  if(!_tvWin || _tvWin.closed) return;
+  var doc = _tvWin.document;
+
+  // النقاط دائماً
+  var scEl = doc.getElementById('tv-scores');
+  if(scEl && GS.teams && GS.teams.length){
+    scEl.innerHTML = GS.teams.map(function(t){
+      return '<div class="tv-chip" style="color:'+t.hex+';border-color:'+t.hex+'55">'+t.emoji+' '+t.name+' — '+t.score+'</div>';
+    }).join('');
+  }
+
+  var catEl  = doc.getElementById('tv-cat');
+  var mainEl = doc.getElementById('tv-main');
+  var choEl  = doc.getElementById('tv-choices');
+  var timEl  = doc.getElementById('tv-timer');
+  if(!catEl||!mainEl) return;
+
+  // اكتشاف الشاشة النشطة
+  var whoActive    = document.getElementById('whoScreen')    && document.getElementById('whoScreen').classList.contains('active');
+  var valuesActive = document.getElementById('valuesScreen') && document.getElementById('valuesScreen').classList.contains('active');
+  var shockActive  = document.getElementById('shockScreen')  && document.getElementById('shockScreen').classList.contains('active');
+
+  // ── شاشة مين أكثر ──
+  if(whoActive){
+    choEl.style.display='none';
+    timEl.style.display='none';
+    var prog = document.getElementById('whoProgressBar');
+    catEl.textContent  = '😄 مين أكثر' + (prog ? '  —  ' + prog.textContent : '');
+    var qEl = document.getElementById('whoQuestion');
+    mainEl.textContent = qEl ? qEl.textContent : '';
+
+    // عرض نتيجة التصويت إن ظهرت
+    var resDiv = document.getElementById('whoResultDiv');
+    if(resDiv && resDiv.style.display !== 'none'){
+      var winnerEl = resDiv.querySelector('div[style*="font-size:36px"]');
+      var votesEl  = resDiv.querySelector('div[style*="font-size:13px"][style*="margin-top:4px"]');
+      if(winnerEl){
+        choEl.style.display = 'grid';
+        choEl.innerHTML =
+          '<div class="tv-choice chosen" style="grid-column:1/-1;font-size:32px;padding:24px">🏆 '+winnerEl.textContent+'</div>' +
+          (votesEl ? '<div class="tv-choice" style="grid-column:1/-1;font-size:18px">'+votesEl.textContent+'</div>' : '');
+      }
+    }
+    return;
+  }
+
+  // ── شاشة القيم ──
+  if(valuesActive){
+    choEl.style.display='none';
+    timEl.style.display='none';
+    catEl.textContent = '🌟 فقرة القيم';
+    var valNameEl = document.getElementById('valName');
+    var valDescEl = document.getElementById('valDesc');
+    var valExEl   = document.getElementById('valExample');
+    var name = valNameEl ? valNameEl.textContent : '';
+    var desc = valDescEl ? valDescEl.textContent : '';
+    var ex   = valExEl   ? valExEl.textContent   : '';
+    mainEl.textContent = name;
+    if(desc || ex){
+      choEl.style.display = 'grid';
+      choEl.innerHTML =
+        (desc ? '<div class="tv-choice" style="grid-column:1/-1;font-size:18px">'+desc+'</div>' : '') +
+        (ex   ? '<div class="tv-choice" style="grid-column:1/-1;font-size:16px;color:rgba(255,255,255,.7)">'+ex+'</div>' : '');
+    }
+    return;
+  }
+
+  // ── شاشة الصدمة ──
+  if(shockActive){
+    choEl.style.display='none';
+    catEl.textContent = '💥 الصدمة النهائية';
+    var shLabel = document.getElementById('shockRoundLabel');
+    var shChall = document.getElementById('shockChallenge');
+    var shHint  = document.getElementById('shockHint');
+    var shNum   = document.getElementById('shockNum');
+    mainEl.textContent = shChall ? shChall.textContent : '';
+    if(shHint && shHint.textContent){ catEl.textContent += '  —  ' + shHint.textContent; }
+    if(shNum){
+      timEl.style.display='block';
+      timEl.textContent = shNum.textContent;
+    } else {
+      timEl.style.display='none';
+    }
+    return;
+  }
+
+  // ── الشاشة العادية (دور الفريق) ──
+  var srcCat   = document.getElementById('dispCat');
+  var srcMain  = document.getElementById('dispMain');
+  var srcCho   = document.getElementById('dispChoices');
+  var srcTimer = document.getElementById('dispTimer');
+
+  catEl.textContent  = srcCat  ? srcCat.textContent  : '';
+  mainEl.textContent = srcMain ? srcMain.textContent : '';
+
+  if(srcCho && srcCho.style.display!=='none'){
+    choEl.style.display='grid';
+    choEl.innerHTML = Array.from(srcCho.querySelectorAll('.choice-btn-disp')).map(function(b){
+      return '<div class="tv-choice'+(b.classList.contains('chosen')?' chosen':'')+'">'+b.textContent+'</div>';
+    }).join('');
+  } else {
+    choEl.style.display='none';
+  }
+
+  if(srcTimer && srcTimer.style.display!=='none'){
+    timEl.style.display='block';
+    timEl.textContent = srcTimer.textContent;
+  } else {
+    timEl.style.display='none';
+  }
+}
+
+// تحديث التلفاز كل ثانية تلقائياً
+setInterval(updateTVMode, 1000);
+
+window.openTVMode = openTVMode;
 (function(){
   var addBtn = document.getElementById('addPlayerBtn');
   var randBtn = document.getElementById('randomizeTeamsBtn');
@@ -2684,6 +2892,7 @@ window.submitMem        = submitMem;
 window.shockStart       = shockStart;
 window.shockDone        = shockDone;
 window.shockFail        = shockFail;
+window.whoFinish        = whoFinish;
 
 try {
   renderPlayers();
@@ -2703,5 +2912,3 @@ try {
 
 </body>
 </html>
-
-
