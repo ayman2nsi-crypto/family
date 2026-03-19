@@ -216,6 +216,18 @@ body.tv-mode #tvToggleBtn { background:rgba(107,203,119,.15); border-color:#6BCB
       </div>
       <div id="teamsPreview" class="teams-grid mt12"></div>
     </div>
+    <div class="card">
+      <div class="card-title"><div class="card-icon" style="background:rgba(255,215,0,.15)">⚙️</div>إعدادات الجولات</div>
+      <div style="font-size:12px;font-weight:700;color:var(--text2);letter-spacing:1px;margin-bottom:12px">🔄 عدد الجولات لكل مرحلة</div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:9px"><div style="min-width:130px;font-size:13px;font-weight:700;color:var(--text2)">🔤 انسان حيوان جماد</div><div style="display:flex;gap:6px"><button id="rb_naming_1" onclick="setPhaseRounds('naming',1)" class="rb-btn">1</button><button id="rb_naming_2" onclick="setPhaseRounds('naming',2)" class="rb-btn">2</button><button id="rb_naming_3" onclick="setPhaseRounds('naming',3)" class="rb-btn  rb-active">3</button><button id="rb_naming_4" onclick="setPhaseRounds('naming',4)" class="rb-btn">4</button><button id="rb_naming_5" onclick="setPhaseRounds('naming',5)" class="rb-btn">5</button></div></div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:9px"><div style="min-width:130px;font-size:13px;font-weight:700;color:var(--text2)">🎬 التمثيل الصامت</div><div style="display:flex;gap:6px"><button id="rb_silent_1" onclick="setPhaseRounds('silent',1)" class="rb-btn">1</button><button id="rb_silent_2" onclick="setPhaseRounds('silent',2)" class="rb-btn">2</button><button id="rb_silent_3" onclick="setPhaseRounds('silent',3)" class="rb-btn  rb-active">3</button><button id="rb_silent_4" onclick="setPhaseRounds('silent',4)" class="rb-btn">4</button><button id="rb_silent_5" onclick="setPhaseRounds('silent',5)" class="rb-btn">5</button></div></div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:9px"><div style="min-width:130px;font-size:13px;font-weight:700;color:var(--text2)">⚡ القرارات السريعة</div><div style="display:flex;gap:6px"><button id="rb_decision_1" onclick="setPhaseRounds('decision',1)" class="rb-btn">1</button><button id="rb_decision_2" onclick="setPhaseRounds('decision',2)" class="rb-btn">2</button><button id="rb_decision_3" onclick="setPhaseRounds('decision',3)" class="rb-btn  rb-active">3</button><button id="rb_decision_4" onclick="setPhaseRounds('decision',4)" class="rb-btn">4</button><button id="rb_decision_5" onclick="setPhaseRounds('decision',5)" class="rb-btn">5</button></div></div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:9px"><div style="min-width:130px;font-size:13px;font-weight:700;color:var(--text2)">🧠 الذاكرة الجماعية</div><div style="display:flex;gap:6px"><button id="rb_memory_1" onclick="setPhaseRounds('memory',1)" class="rb-btn">1</button><button id="rb_memory_2" onclick="setPhaseRounds('memory',2)" class="rb-btn">2</button><button id="rb_memory_3" onclick="setPhaseRounds('memory',3)" class="rb-btn  rb-active">3</button><button id="rb_memory_4" onclick="setPhaseRounds('memory',4)" class="rb-btn">4</button><button id="rb_memory_5" onclick="setPhaseRounds('memory',5)" class="rb-btn">5</button></div></div>
+      <div style="border-top:1px solid var(--border);padding-top:12px;margin-top:4px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <div style="font-size:12px;color:var(--text2)">📚 الأسئلة محفوظة بين الجلسات</div>
+        <button onclick="resetUsedGlobal()" style="background:transparent;border:1.5px solid var(--border);color:var(--text2);border-radius:10px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">🗑 مسح السجل</button>
+      </div>
+    </div>
     <div class="tc mt16 mb16">
       <button class="btn btn-orange btn-xl" onclick="startTournament()">🏆 ابدأ البطولة!</button>
       <p style="font-size:12px;color:var(--text2);margin-top:8px;font-weight:600">يلزم لاعبان على الأقل</p>
@@ -410,19 +422,7 @@ body.tv-mode #tvToggleBtn { background:rgba(107,203,119,.15); border-color:#6BCB
 <!-- ══ شاشة البطل ══ -->
 <div id="championScreen" class="screen">
   <div style="background:linear-gradient(135deg,#FFF8F0,#FFF3E0,#FFFDE7);min-height:100vh;padding:40px 20px;position:relative;z-index:1">
-        <div class="card" style="margin-bottom:16px">
-      <div style="font-size:14px;font-weight:800;color:var(--text);margin-bottom:14px">⚙️ إعدادات الليلة</div>
-      <div style="font-size:12px;font-weight:700;color:var(--text2);letter-spacing:1px;margin-bottom:10px">🔄 عدد الجولات لكل مرحلة</div>
-<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div style="min-width:105px;font-size:13px;font-weight:700;color:var(--text2)">🔤 انسان حيوان جماد</div><div style="display:flex;gap:6px"><button id="rb_naming_1" onclick="setPhaseRounds('naming',1)" class="rb-btn">1</button><button id="rb_naming_2" onclick="setPhaseRounds('naming',2)" class="rb-btn">2</button><button id="rb_naming_3" onclick="setPhaseRounds('naming',3)" class="rb-btn  rb-active">3</button><button id="rb_naming_4" onclick="setPhaseRounds('naming',4)" class="rb-btn">4</button><button id="rb_naming_5" onclick="setPhaseRounds('naming',5)" class="rb-btn">5</button></div></div>
-<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div style="min-width:105px;font-size:13px;font-weight:700;color:var(--text2)">🎬 التمثيل الصامت</div><div style="display:flex;gap:6px"><button id="rb_silent_1" onclick="setPhaseRounds('silent',1)" class="rb-btn">1</button><button id="rb_silent_2" onclick="setPhaseRounds('silent',2)" class="rb-btn">2</button><button id="rb_silent_3" onclick="setPhaseRounds('silent',3)" class="rb-btn  rb-active">3</button><button id="rb_silent_4" onclick="setPhaseRounds('silent',4)" class="rb-btn">4</button><button id="rb_silent_5" onclick="setPhaseRounds('silent',5)" class="rb-btn">5</button></div></div>
-<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div style="min-width:105px;font-size:13px;font-weight:700;color:var(--text2)">⚡ القرارات السريعة</div><div style="display:flex;gap:6px"><button id="rb_decision_1" onclick="setPhaseRounds('decision',1)" class="rb-btn">1</button><button id="rb_decision_2" onclick="setPhaseRounds('decision',2)" class="rb-btn">2</button><button id="rb_decision_3" onclick="setPhaseRounds('decision',3)" class="rb-btn  rb-active">3</button><button id="rb_decision_4" onclick="setPhaseRounds('decision',4)" class="rb-btn">4</button><button id="rb_decision_5" onclick="setPhaseRounds('decision',5)" class="rb-btn">5</button></div></div>
-<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div style="min-width:105px;font-size:13px;font-weight:700;color:var(--text2)">🧠 الذاكرة الجماعية</div><div style="display:flex;gap:6px"><button id="rb_memory_1" onclick="setPhaseRounds('memory',1)" class="rb-btn">1</button><button id="rb_memory_2" onclick="setPhaseRounds('memory',2)" class="rb-btn">2</button><button id="rb_memory_3" onclick="setPhaseRounds('memory',3)" class="rb-btn  rb-active">3</button><button id="rb_memory_4" onclick="setPhaseRounds('memory',4)" class="rb-btn">4</button><button id="rb_memory_5" onclick="setPhaseRounds('memory',5)" class="rb-btn">5</button></div></div>
-      <div style="border-top:1px solid var(--border);padding-top:12px;margin-top:8px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
-        <div style="font-size:12px;color:var(--text2)">📚 الأسئلة المستخدمة محفوظة لتجنب التكرار</div>
-        <button onclick="resetUsedGlobal()" style="background:transparent;border:1.5px solid var(--border);color:var(--text2);border-radius:10px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">🗑 مسح السجل</button>
-      </div>
-    </div>
-<div class="tc" style="max-width:660px;margin:0 auto">
+    <div class="tc" style="max-width:660px;margin:0 auto">
       <div style="font-size:88px;animation:trophyBounce 1s ease infinite;display:inline-block">🏆</div>
       <div style="font-size:12px;font-weight:700;letter-spacing:3px;color:var(--text2);margin-top:14px">بطل البطولة</div>
       <div id="champName" style="font-size:40px;font-weight:900;background:linear-gradient(135deg,var(--orange),var(--yellow),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:12px 0;line-height:1.1"></div>
@@ -2003,176 +2003,68 @@ var LIB = {
 // == حالة اللعبة ==
 // -- localStorage helpers --
 function savePlayersLS(players){ try{localStorage.setItem('btPlayers', JSON.stringify(players));}catch(e){} }
+function loadPlayersLS(){ try{const d=localStorage.getItem('btPlayers');return d?JSON.parse(d):[]}catch(e){return []} }
 
-function saveUsedGlobal(){
-  try{localStorage.setItem('btUsed',JSON.stringify(GS.usedIdx));}catch(e){}
+var shockRound = 0;
+var shockUsedIdx = [];
+var SHOCK_ROUNDS = 3;
+
+// ══ محرك الصوت — الليلة الكبيرة ══
+var _AC=null;
+function getAC(){if(!_AC){try{_AC=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}}return _AC;}
+function _tone(freq,dur,type,vol,delay,slide){
+  var ctx=getAC();if(!ctx)return;
+  try{var o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);
+  o.type=type||'sine';var t0=ctx.currentTime+(delay||0);
+  o.frequency.setValueAtTime(freq,t0);if(slide)o.frequency.linearRampToValueAtTime(slide,t0+dur);
+  g.gain.setValueAtTime(vol||0.25,t0);g.gain.exponentialRampToValueAtTime(0.001,t0+dur);
+  o.start(t0);o.stop(t0+dur);}catch(e){}
 }
+function _noise(dur,vol,delay){
+  var ctx=getAC();if(!ctx)return;
+  try{var buf=ctx.createBuffer(1,ctx.sampleRate*dur,ctx.sampleRate),d=buf.getChannelData(0);
+  for(var i=0;i<d.length;i++)d[i]=Math.random()*2-1;
+  var src=ctx.createBufferSource(),g=ctx.createGain();src.buffer=buf;
+  g.gain.setValueAtTime(vol||0.1,ctx.currentTime+(delay||0));
+  g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+(delay||0)+dur);
+  src.connect(g);g.connect(ctx.destination);src.start(ctx.currentTime+(delay||0));}catch(e){}
+}
+var SFX={
+  correct:function(){_tone(440,.08,'sine',.2,0);_tone(554,.08,'sine',.25,.08);_tone(659,.08,'sine',.3,.16);_tone(880,.08,'sine',.35,.24);_tone(1108,.35,'sine',.3,.32);_tone(1108,.35,'triangle',.15,.32);},
+  wrong:function(){_noise(.06,.25,0);_tone(200,.08,'sawtooth',.3,.02);_tone(180,.12,'sawtooth',.25,.1);_tone(150,.4,'sawtooth',.2,.22,100);},
+  tick:function(){_tone(900,.03,'square',.12,0);_noise(.02,.06,0);},
+  timerWarn:function(){_tone(700,.05,'square',.2,0);_tone(700,.05,'square',.2,.12);_noise(.04,.08,0);},
+  timeUp:function(){_noise(.08,.3,0);_tone(300,.1,'sawtooth',.35,.05,150);_tone(200,.15,'sawtooth',.3,.15,100);_tone(130,.5,'sawtooth',.25,.3,80);},
+  phaseStart:function(){_tone(261,.12,'triangle',.2,0);_tone(329,.12,'triangle',.22,.1);_tone(392,.12,'triangle',.25,.2);_tone(523,.12,'triangle',.28,.3);_tone(659,.2,'sine',.3,.42);},
+  naming:function(){_tone(880,.06,'triangle',.2,0);_tone(1108,.08,'triangle',.18,.08);_tone(1320,.12,'triangle',.22,.18);},
+  acting:function(){_noise(.04,.15,0);_tone(220,.1,'triangle',.2,.05);_tone(440,.1,'triangle',.18,.18);_tone(330,.15,'triangle',.2,.3);_noise(.03,.1,.45);},
+  decision:function(){_noise(.04,.2,0);_tone(600,.04,'square',.25,0);_tone(800,.04,'square',.2,.05);_tone(1000,.08,'square',.2,.1);},
+  memory:function(){_tone(1047,.06,'sine',.2,0);_tone(880,.06,'sine',.18,.08);_tone(659,.06,'sine',.2,.16);_tone(880,.1,'sine',.25,.24);_tone(1047,.15,'sine',.2,.36);},
+  shock:function(){_noise(.1,.4,0);_tone(80,.15,'sawtooth',.4,.05);_tone(60,.3,'sawtooth',.35,.2);_tone(440,.08,'square',.2,.08);_tone(220,.08,'square',.15,.16);},
+  roundEnd:function(){_noise(.05,.2,0);_tone(392,.1,'triangle',.25,.05);_tone(330,.1,'triangle',.2,.18);_tone(261,.35,'triangle',.25,.3);},
+  whoVote:function(){_noise(.03,.1,0);_tone(660,.06,'sine',.15,.02);_tone(880,.08,'sine',.12,.08);},
+  champion:function(){
+    [130,130,146,164].forEach(function(n,i){_tone(n,.2,'sawtooth',.15,i*.2);});
+    [523,523,587,659,698,784,880,1047].forEach(function(n,i){_tone(n,.18,'sine',.25,.1+i*.15);});
+    setTimeout(function(){var c=[523,659,784,1047];c.forEach(function(n,i){_tone(n,.8,'sine',.2+i*.05,0);});_noise(.1,.15,0);},1400);
+    setTimeout(function(){[1047,1175,1319,1047,1319,1568].forEach(function(n,i){_tone(n,.12,'sine',.35,i*.1);});},2200);
+  },
+};
+
 function loadUsedGlobal(){
   try{var d=localStorage.getItem('btUsed');return d?JSON.parse(d):{naming:[],silent:[],decision:[],memory:[]};}
-  catch(e){return {naming:[],silent:[],decision:[],memory:[]};}
+  catch(e){return{naming:[],silent:[],decision:[],memory:[]};}
+}
+function saveUsedGlobal(){
+  try{localStorage.setItem('btUsed',JSON.stringify(GS.usedIdx));}catch(e){}
 }
 function resetUsedGlobal(){
   GS.usedIdx={naming:[],silent:[],decision:[],memory:[]};
   saveUsedGlobal();
   showToast('✅ تم مسح سجل الأسئلة');
 }
-function loadPlayersLS(){ try{const d=localStorage.getItem('btPlayers');return d?JSON.parse(d):[]}catch(e){return []} }
-
-var shockRound = 0;
-var shockUsedIdx = [];
-var SHOCK_ROUNDS = 3;
-// ══ محرك الصوت — الليلة الكبيرة ══
-var _AC = null;
-function getAC(){
-  if(!_AC){try{_AC=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}}
-  return _AC;
-}
-function _tone(freq,dur,type,vol,delay,slide){
-  var ctx=getAC();if(!ctx)return;
-  try{
-    var o=ctx.createOscillator(),g=ctx.createGain();
-    o.connect(g);g.connect(ctx.destination);
-    o.type=type||'sine';
-    var t0=ctx.currentTime+(delay||0);
-    o.frequency.setValueAtTime(freq,t0);
-    if(slide)o.frequency.linearRampToValueAtTime(slide,t0+dur);
-    g.gain.setValueAtTime(vol||0.25,t0);
-    g.gain.exponentialRampToValueAtTime(0.001,t0+dur);
-    o.start(t0);o.stop(t0+dur);
-  }catch(e){}
-}
-function _noise(dur,vol,delay){
-  var ctx=getAC();if(!ctx)return;
-  try{
-    var buf=ctx.createBuffer(1,ctx.sampleRate*dur,ctx.sampleRate);
-    var d=buf.getChannelData(0);
-    for(var i=0;i<d.length;i++)d[i]=(Math.random()*2-1);
-    var src=ctx.createBufferSource(),g=ctx.createGain();
-    src.buffer=buf;
-    g.gain.setValueAtTime(vol||0.1,ctx.currentTime+(delay||0));
-    g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+(delay||0)+dur);
-    src.connect(g);g.connect(ctx.destination);src.start(ctx.currentTime+(delay||0));
-  }catch(e){}
-}
-var SFX={
-  // صح: نغمة سينمائية صاعدة مع ريفرب
-  correct:function(){
-    _tone(440,0.08,'sine',0.2,0);
-    _tone(554,0.08,'sine',0.25,0.08);
-    _tone(659,0.08,'sine',0.3,0.16);
-    _tone(880,0.08,'sine',0.35,0.24);
-    _tone(1108,0.35,'sine',0.3,0.32);
-    _tone(1108,0.35,'triangle',0.15,0.32);
-  },
-  // خطأ: صوت طبل + هبوط مسرحي
-  wrong:function(){
-    _noise(0.06,0.25,0);
-    _tone(200,0.08,'sawtooth',0.3,0.02);
-    _tone(180,0.12,'sawtooth',0.25,0.1);
-    _tone(150,0.4,'sawtooth',0.2,0.22,100);
-  },
-  // التايمر — نقر آلة كاتبة
-  tick:function(){
-    _tone(900,0.03,'square',0.12,0);
-    _noise(0.02,0.06,0);
-  },
-  // تحذير — إيقاع متسارع
-  timerWarn:function(){
-    _tone(700,0.05,'square',0.2,0);
-    _tone(700,0.05,'square',0.2,0.12);
-    _noise(0.04,0.08,0);
-  },
-  // انتهى الوقت — صوت مسرحي كبير
-  timeUp:function(){
-    _noise(0.08,0.3,0);
-    _tone(300,0.1,'sawtooth',0.35,0.05,150);
-    _tone(200,0.15,'sawtooth',0.3,0.15,100);
-    _tone(130,0.5,'sawtooth',0.25,0.3,80);
-    _tone(130,0.5,'square',0.1,0.3);
-  },
-  // بداية مرحلة — نفخة أوركسترالية
-  phaseStart:function(){
-    _tone(261,0.12,'triangle',0.2,0);
-    _tone(329,0.12,'triangle',0.22,0.1);
-    _tone(392,0.12,'triangle',0.25,0.2);
-    _tone(523,0.12,'triangle',0.28,0.3);
-    _tone(659,0.2,'sine',0.3,0.42);
-    _tone(523,0.15,'sine',0.2,0.42);
-  },
-  // التمثيل الصامت — صوت كاميرا سينمائية
-  acting:function(){
-    _noise(0.04,0.15,0);
-    _tone(220,0.1,'triangle',0.2,0.05);
-    _tone(440,0.1,'triangle',0.18,0.18);
-    _tone(330,0.15,'triangle',0.2,0.3);
-    _noise(0.03,0.1,0.45);
-  },
-  // فوز — نشيد ضخم متصاعد
-  champion:function(){
-    var bass=[130,130,146,164];
-    bass.forEach(function(n,i){_tone(n,0.2,'sawtooth',0.15,i*0.2);});
-    var mel=[523,523,587,659,698,784,880,1047];
-    mel.forEach(function(n,i){_tone(n,0.18,'sine',0.25,0.1+i*0.15);});
-    setTimeout(function(){
-      var chord=[523,659,784,1047];
-      chord.forEach(function(n,i){_tone(n,0.8,'sine',0.2+(i*0.05),0);});
-      _tone(523,0.8,'triangle',0.1,0);
-      _noise(0.1,0.15,0);
-    },1400);
-    setTimeout(function(){
-      [1047,1175,1319,1047,1319,1568].forEach(function(n,i){
-        _tone(n,0.12,'sine',0.35,i*0.1);
-      });
-    },2200);
-  },
-  // نهاية جولة — طبل ختامي
-  roundEnd:function(){
-    _noise(0.05,0.2,0);
-    _tone(392,0.1,'triangle',0.25,0.05);
-    _tone(330,0.1,'triangle',0.2,0.18);
-    _tone(261,0.35,'triangle',0.25,0.3);
-    _tone(196,0.35,'sawtooth',0.15,0.3);
-  },
-  // تصويت مين أكثر — صوت بوبكورن خفيف
-  whoVote:function(){
-    _noise(0.03,0.1,0);
-    _tone(660,0.06,'sine',0.15,0.02);
-    _tone(880,0.08,'sine',0.12,0.08);
-  },
-  // الصدمة النهائية — صوت درامي
-  shock:function(){
-    _noise(0.1,0.4,0);
-    _tone(80,0.15,'sawtooth',0.4,0.05);
-    _tone(60,0.3,'sawtooth',0.35,0.2);
-    _tone(440,0.08,'square',0.2,0.08);
-    _tone(220,0.08,'square',0.15,0.16);
-  },
-  // ذاكرة جماعية — صوت ذاكرة/فلاش
-  memory:function(){
-    _tone(1047,0.06,'sine',0.2,0);
-    _tone(880,0.06,'sine',0.18,0.08);
-    _tone(659,0.06,'sine',0.2,0.16);
-    _tone(880,0.1,'sine',0.25,0.24);
-    _tone(1047,0.15,'sine',0.2,0.36);
-  },
-  // انسان حيوان جماد — نقرة خفيفة
-  naming:function(){
-    _tone(880,0.06,'triangle',0.2,0);
-    _tone(1108,0.08,'triangle',0.18,0.08);
-    _tone(1320,0.12,'triangle',0.22,0.18);
-  },
-  // قرارات سريعة — صوت برق
-  decision:function(){
-    _noise(0.04,0.2,0);
-    _tone(600,0.04,'square',0.25,0);
-    _tone(800,0.04,'square',0.2,0.05);
-    _tone(1000,0.08,'square',0.2,0.1);
-  },
-};
-
 
 var GS = {
-
   players: loadPlayersLS(), teams:[], numTeams:2,
   phases:[
     {id:'naming',  icon:'🔤',name:'انسان حيوان جماد', hex:'#00C896',hasChoices:false,timerMax:60},
@@ -2284,7 +2176,6 @@ function updateDots(){
 function showPhaseIntro(){
   updateScoreboard();
   const p=ph();
-  // صوت حسب المرحلة
   if(p.id==='naming')SFX.naming();
   else if(p.id==='silent')SFX.acting();
   else if(p.id==='decision')SFX.decision();
@@ -2370,15 +2261,16 @@ function setTurnHeader(t,p){
   }
 
   document.getElementById('turnHeader').style.cssText=`background:${t.hex}12;border-color:${t.hex}55;border-radius:18px;padding:18px;text-align:center;margin-bottom:16px;border:3px solid`;
-  var _rnd=GS.phaseRounds&&GS.phaseRounds[p.id]?GS.phaseRounds[p.id]:3;
+  const _rnd=GS.phaseRounds&&GS.phaseRounds[p.id]?GS.phaseRounds[p.id]:3;
   document.getElementById('turnHeader').innerHTML=`
     <div style="font-size:12px;font-weight:700;letter-spacing:2px;color:${t.hex};margin-bottom:5px">${p.icon} ${p.name} — ج${(GS.curRound||0)+1}/${_rnd} | فريق ${GS.curTeam+1}/${GS.teams.length}</div>
     <div class="turn-team-name" style="color:${t.hex}">${t.emoji} ${t.name}</div>
     ${roleHtml}
   `;
-  // بث للـ TV
   if(typeof broadcastTV==='function'){
-    broadcastTV({screen:'question',phase:p.name,team:t.emoji+' '+t.name,teamColor:t.hex,roundInfo:'ج'+((GS.curRound||0)+1)+'/'+_rnd+' | فريق '+(GS.curTeam+1)+'/'+GS.teams.length,answer:'',showAnswer:false,choices:[],timerVal:p.timerMax||30,timerMax:p.timerMax||30});
+    broadcastTV({screen:'question',phase:p.name,team:t.emoji+' '+t.name,teamColor:t.hex,
+      roundInfo:'ج'+((GS.curRound||0)+1)+'/'+_rnd+' | فريق '+(GS.curTeam+1)+'/'+GS.teams.length,
+      answer:'',showAnswer:false,choices:[],timerVal:p.timerMax||30,timerMax:p.timerMax||30});
   }
 }
 
@@ -2456,7 +2348,6 @@ function pickUnused(arr,used){
   for(var i=0;i<arr.length;i++) if(used.indexOf(i)<0) avail.push(i);
   var idx=avail[Math.floor(Math.random()*avail.length)];
   used.push(idx);
-  // حفظ تلقائي لتجنب التكرار بين الجلسات
   if(typeof saveUsedGlobal==='function')saveUsedGlobal();
   return arr[idx];
 }
@@ -2649,7 +2540,7 @@ function recordResult(success, forcePts){
   t.score+=earnedPts;
   if(success)SFX.correct();else SFX.wrong();
   updateScoreboard();
-  broadcastTV({answer:success?'✅ صحيح!':'❌ خطأ',showAnswer:true,teamColor:t.hex,teams:GS.teams.map(function(tm){return{name:tm.name,emoji:tm.emoji,hex:tm.hex,score:tm.score||0};})});
+  if(typeof broadcastTV==='function')broadcastTV({answer:success?'✅ صحيح!':'❌ خطأ',showAnswer:true});
   const isLast=GS.curTeam>=GS.teams.length-1;
   const nextTeamName=!isLast?GS.teams[GS.curTeam+1].name.split(' ')[0]:'';
   const btn=isLast?`<button class="btn btn-orange btn-lg" style="width:100%" onclick="nextTeamTurn()">🏁 ملخص المرحلة</button>`:`<button class="btn btn-orange btn-lg" style="width:100%" onclick="nextTeamTurn()">⏭ دور ${nextTeamName} التالي</button>`;
@@ -2998,46 +2889,33 @@ function toggleTVMode(){
     showToast('🎮 وضع المنسّق');
   }
 }
+
 function openTVWindow(){
   window.open(window.location.href+'?tv=1','layla_tv','width=1280,height=800');
 }
-window.openTVWindow=openTVWindow;
-window.toggleTVMode = toggleTVMode;
 
-function setPhaseRounds(phaseId, n){
-  if(phaseId==='all'){
-    Object.keys(GS.phaseRounds).forEach(function(k){GS.phaseRounds[k]=n;});
-    ['naming','silent','decision','memory'].forEach(function(pid){
-      [1,2,3,4,5].forEach(function(i){
-        var btn=document.getElementById('rb_'+pid+'_'+i);
-        if(!btn)return;
-        if(i===n)btn.classList.add('rb-active');else btn.classList.remove('rb-active');
-      });
-    });
-    showToast('✅ '+n+' جولات لكل المراحل');
-  } else {
-    GS.phaseRounds[phaseId]=n;
-    [1,2,3,4,5].forEach(function(i){
-      var btn=document.getElementById('rb_'+phaseId+'_'+i);
-      if(!btn)return;
-      if(i===n)btn.classList.add('rb-active');else btn.classList.remove('rb-active');
-    });
-    showToast('✅ '+n+' جولات');
-  }
-}
-window.setPhaseRounds=setPhaseRounds;
-
-// ══ TV Broadcast ══
 var _tvState={screen:'idle',phase:'',team:'',question:'',answer:'',showAnswer:false,choices:[],teamColor:'',teams:[]};
 function broadcastTV(u){
   Object.assign(_tvState,u);
-  if(GS.teams&&GS.teams.length){
-    _tvState.teams=GS.teams.map(function(t){return{name:t.name,emoji:t.emoji,hex:t.hex,score:t.score||0};});
-  }
+  if(GS.teams&&GS.teams.length)_tvState.teams=GS.teams.map(function(t){return{name:t.name,emoji:t.emoji,hex:t.hex,score:t.score||0};});
   try{localStorage.setItem('layla_tv',JSON.stringify(_tvState));}catch(e){}
 }
-window.broadcastTV=broadcastTV;
-window.resetUsedGlobal=resetUsedGlobal;
+
+function setPhaseRounds(phaseId,n){
+  GS.phaseRounds[phaseId]=n;
+  [1,2,3,4,5].forEach(function(i){
+    var btn=document.getElementById('rb_'+phaseId+'_'+i);
+    if(!btn)return;
+    if(i===n)btn.classList.add('rb-active');else btn.classList.remove('rb-active');
+  });
+  showToast('✅ '+n+' جولات');
+}
+
+window.toggleTVMode = toggleTVMode;
+window.openTVWindow = openTVWindow;
+window.broadcastTV = broadcastTV;
+window.setPhaseRounds = setPhaseRounds;
+window.resetUsedGlobal = resetUsedGlobal;
 (function(){
   var addBtn = document.getElementById('addPlayerBtn');
   var randBtn = document.getElementById('randomizeTeamsBtn');
@@ -3089,26 +2967,29 @@ try {
   if(window.location.search.indexOf('tv=1')<0)return;
   document.addEventListener('DOMContentLoaded',function(){
     document.head.innerHTML+='<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0612;font-family:Cairo,sans-serif;direction:rtl;overflow:hidden;height:100vh}@keyframes fadeQ{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}</style>';
-    document.body.innerHTML=`<div id="tv" style="height:100vh;display:flex;flex-direction:column;position:relative;overflow:hidden">
-      <div id="tvBg" style="position:absolute;inset:0;transition:background 1.2s;background:radial-gradient(ellipse at 40% 30%,rgba(255,149,0,.12) 0%,transparent 55%),radial-gradient(ellipse at 70% 80%,rgba(77,150,255,.08) 0%,transparent 50%),#0a0612"></div>
+    document.body.innerHTML=`<div style="height:100vh;display:flex;flex-direction:column;position:relative;overflow:hidden">
+      <div id="tvBg" style="position:absolute;inset:0;transition:background 1.2s;background:radial-gradient(ellipse at 40% 30%,rgba(255,149,0,.12) 0%,transparent 55%),#0a0612"></div>
       <div style="position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:14px 40px;background:rgba(0,0,0,.5);border-bottom:1px solid rgba(255,255,255,.06);backdrop-filter:blur(8px)">
-        <div style="font-size:15px;font-weight:900;color:rgba(255,215,0,.7);letter-spacing:1px">🌟 الليلة الكبيرة</div>
+        <div style="font-size:15px;font-weight:900;color:rgba(255,215,0,.7)">🌟 الليلة الكبيرة</div>
         <div id="tvPhase" style="font-size:17px;font-weight:900;color:#FFD700"></div>
         <div id="tvRound" style="font-size:13px;color:rgba(255,255,255,.35);font-weight:700"></div>
       </div>
       <div id="tvScoreBars" style="position:relative;z-index:2;padding:8px 40px;background:rgba(0,0,0,.35);border-bottom:1px solid rgba(255,255,255,.04)"></div>
       <div style="flex:1;position:relative;z-index:2;display:flex;flex-direction:column;padding:28px 60px 16px">
         <div id="tvTeam" style="font-size:38px;font-weight:900;color:#FFD700;margin-bottom:8px;transition:color .6s"></div>
-        <div id="tvQ" style="flex:1;display:flex;align-items:center;font-size:58px;font-weight:900;color:#fff;line-height:1.3;animation:fadeQ .5s ease"></div>
+        <div id="tvQ" style="flex:1;display:flex;align-items:center;font-size:58px;font-weight:900;color:#fff;line-height:1.3"></div>
         <div id="tvChoices" style="display:none;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px"></div>
         <div id="tvAns" style="display:none;font-size:48px;font-weight:900;color:#00C896;margin-top:16px;animation:fadeQ .4s ease"></div>
       </div>
       <div style="position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:14px 60px;background:rgba(0,0,0,.5);border-top:1px solid rgba(255,255,255,.06)">
         <div style="display:flex;align-items:center;gap:14px">
-          <svg width="72" height="72" style="transform:rotate(-90deg)"><circle cx="36" cy="36" r="30" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="5"/><circle id="tvRing" cx="36" cy="36" r="30" fill="none" stroke="#FFD700" stroke-width="5" stroke-linecap="round" stroke-dasharray="188" stroke-dashoffset="0" style="transition:stroke-dashoffset .9s linear,stroke .5s"/></svg>
+          <svg width="72" height="72" style="transform:rotate(-90deg)">
+            <circle cx="36" cy="36" r="30" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="5"/>
+            <circle id="tvRing" cx="36" cy="36" r="30" fill="none" stroke="#FFD700" stroke-width="5" stroke-linecap="round" stroke-dasharray="188" stroke-dashoffset="0" style="transition:stroke-dashoffset .9s linear,stroke .5s"/>
+          </svg>
           <div id="tvTimer" style="font-size:68px;font-weight:900;color:#FFD700;line-height:1;min-width:90px;transition:color .3s"></div>
         </div>
-        <div style="font-size:13px;color:rgba(255,255,255,.25);font-weight:700">📺 شاشة العرض</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.2)">📺 شاشة العرض</div>
       </div>
     </div>`;
     var tMax=60;
@@ -3122,8 +3003,15 @@ try {
       var qEl=document.getElementById('tvQ');
       if(qEl){var nq=s.question||'';if(qEl.textContent!==nq){qEl.textContent=nq;qEl.style.animation='none';requestAnimationFrame(function(){qEl.style.animation='fadeQ .5s ease';});}}
       var chEl=document.getElementById('tvChoices');
-      if(chEl){if(s.choices&&s.choices.length&&s.screen!=='acting'){chEl.style.display='grid';var L=['أ','ب','ج','د','A','B','C','D'];chEl.innerHTML=s.choices.map(function(c,i){var ok=s.showAnswer&&c===s.answer;return '<div style="background:'+(ok?'rgba(0,200,150,.22)':'rgba(255,255,255,.06)')+';border:2px solid '+(ok?'#00C896':'rgba(255,255,255,.1)')+';border-radius:14px;padding:14px 18px;font-size:19px;font-weight:700;color:'+(ok?'#00C896':'#fff')+'"><span style="color:#FFD700;margin-left:6px">'+L[i]+'.</span>'+c+'</div>';}).join('');}else{chEl.style.display='none';}}
-      var an=document.getElementById('tvAns');if(an){if(s.showAnswer&&s.answer&&(!s.choices||!s.choices.length)){an.style.display='block';an.textContent=s.answer;}else{an.style.display='none';}}
+      if(chEl){
+        if(s.choices&&s.choices.length){
+          chEl.style.display='grid';
+          var L=['أ','ب','ج','د','A','B','C','D'];
+          chEl.innerHTML=s.choices.map(function(c,i){var ok=s.showAnswer&&c===s.answer;return '<div style="background:'+(ok?'rgba(0,200,150,.22)':'rgba(255,255,255,.06)')+';border:2px solid '+(ok?'#00C896':'rgba(255,255,255,.1)')+';border-radius:14px;padding:14px 18px;font-size:19px;font-weight:700;color:'+(ok?'#00C896':'#fff')+'"><span style="color:#FFD700;margin-left:6px">'+L[i]+'.</span>'+c+'</div>';}).join('');
+        }else{chEl.style.display='none';}
+      }
+      var an=document.getElementById('tvAns');
+      if(an){if(s.showAnswer&&s.answer&&(!s.choices||!s.choices.length)){an.style.display='block';an.textContent=s.answer;}else{an.style.display='none';}}
       if(s.timerVal!==undefined){
         if(s.timerMax)tMax=s.timerMax;
         var t=Math.max(0,s.timerVal),p=t/(tMax||60),c=2*Math.PI*30;
@@ -3132,9 +3020,18 @@ try {
       }
       if(s.teams&&s.teams.length){
         var sb=document.getElementById('tvScoreBars');
-        if(sb){var mx=Math.max.apply(null,s.teams.map(function(t){return t.score||0;}))||1;var srt=[].concat(s.teams).sort(function(a,b){return(b.score||0)-(a.score||0);});sb.innerHTML=srt.map(function(t){var w=Math.max(3,Math.round(((t.score||0)/mx)*100));return '<div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><div style="min-width:110px;font-size:12px;font-weight:800;color:'+(t.hex||'#FFD700')+'">'+t.emoji+' '+t.name.split(' ')[0]+'</div><div style="flex:1;background:rgba(255,255,255,.07);border-radius:20px;height:8px;overflow:hidden"><div style="height:100%;width:'+w+'%;background:'+(t.hex||'#FFD700')+';border-radius:20px;transition:width 1s"></div></div><div style="min-width:40px;text-align:left;font-size:13px;font-weight:900;color:'+(t.hex||'#FFD700')+'">'+(t.score||0)+'</div></div>';}).join('');}
+        if(sb){
+          var mx=Math.max.apply(null,s.teams.map(function(t){return t.score||0;}))||1;
+          var srt=[].concat(s.teams).sort(function(a,b){return(b.score||0)-(a.score||0);});
+          sb.innerHTML=srt.map(function(t){
+            var w=Math.max(3,Math.round(((t.score||0)/mx)*100));
+            return '<div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><div style="min-width:120px;font-size:12px;font-weight:800;color:'+(t.hex||'#FFD700')+'">'+t.emoji+' '+t.name.split(' ')[0]+'</div><div style="flex:1;background:rgba(255,255,255,.07);border-radius:20px;height:8px;overflow:hidden"><div style="height:100%;width:'+w+'%;background:'+(t.hex||'#FFD700')+';border-radius:20px;transition:width 1s"></div></div><div style="min-width:40px;text-align:left;font-size:13px;font-weight:900;color:'+(t.hex||'#FFD700')+'">'+(t.score||0)+'</div></div>';
+          }).join('');
+        }
       }
-      if(s.screen==='champion'){var qe=document.getElementById('tvQ');if(qe){qe.textContent='🏆 '+s.team;qe.style.color='#FFD700';qe.style.fontSize='72px';}}
+      if(s.screen==='champion'){
+        var qe=document.getElementById('tvQ');if(qe){qe.textContent='🏆 '+s.team;qe.style.color='#FFD700';qe.style.fontSize='72px';}
+      }
     }
     render({screen:'idle',question:'🌟 الليلة الكبيرة',phase:'في انتظار البدء...',timerVal:0,timerMax:60});
     setInterval(function(){try{var r=localStorage.getItem('layla_tv');if(r)render(JSON.parse(r));}catch(e){}},400);
