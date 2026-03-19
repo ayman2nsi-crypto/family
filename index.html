@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -7,31 +8,32 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#FFF8F0;--bg3:#FFF3E8;--card:#FFFFFF;--border:#F0E4D4;
-  --shadow:rgba(255,107,53,.10);--orange:#FF6B35;--yellow:#FFD93D;
-  --green:#6BCB77;--blue:#4D96FF;--pink:#FF6B9D;--purple:#C77DFF;
-  --text:#2D1B0E;--text2:#9B7B5E;--text3:#C4A882;--red:#FF4545;
+  --bg:#F0FAFA;--bg3:#E8F7F7;--card:#FFFFFF;--border:#C0E8E6;
+  --shadow:rgba(94,196,192,.12);--orange:#5EC4C0;--yellow:#7DD8D5;
+  --green:#2DC6A8;--blue:#4D96FF;--pink:#FF6B9D;--purple:#C77DFF;
+  --text:#1A4744;--text2:#4A8B88;--text3:#8ABFBD;--red:#FF4545;
+  --font:Cairo,sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--text);font-family:'Cairo',sans-serif;min-height:100vh;direction:rtl}
-body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle at 15% 20%,rgba(255,217,61,.12) 0%,transparent 40%),radial-gradient(circle at 85% 80%,rgba(255,107,53,.10) 0%,transparent 40%);pointer-events:none;z-index:0}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle at 15% 20%,rgba(255,217,61,.12) 0%,transparent 40%),radial-gradient(circle at 85% 80%,rgba(94,196,192,.10) 0%,transparent 40%);pointer-events:none;z-index:0}
 .screen{display:none;position:relative;z-index:1}
 .screen.active{display:block;animation:fadeIn .4s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 @keyframes popIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 @keyframes trophyBounce{0%,100%{transform:scale(1) rotate(-4deg)}50%{transform:scale(1.12) rotate(4deg)}}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,107,53,.4)}50%{box-shadow:0 0 0 12px rgba(255,107,53,0)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(94,196,192,.40)}50%{box-shadow:0 0 0 12px rgba(94,196,192,0)}}
 .header{background:var(--card);border-bottom:3px solid var(--border);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px var(--shadow)}
 .logo{font-size:19px;font-weight:900;color:var(--orange);display:flex;align-items:center;gap:8px}
 .logo-icon{font-size:26px;animation:bounce 2s ease infinite;display:inline-block}
 .phase-badge{background:linear-gradient(135deg,var(--orange),var(--yellow));color:#fff;font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:1px}
 .scoreboard{display:flex;gap:8px;flex-wrap:wrap;padding:10px 20px;background:var(--bg3);border-bottom:2px solid var(--border);justify-content:center}
 .rb-btn{background:rgba(255,255,255,.08);color:var(--text2);border:1.5px solid rgba(255,255,255,.12);border-radius:10px;padding:7px 13px;font-size:14px;font-weight:800;cursor:pointer;font-family:var(--font);transition:all .2s}
-.rb-btn:hover{border-color:var(--gold);color:var(--gold)}
-.rb-active{background:var(--gold)!important;color:#000!important;border-color:var(--gold)!important}
+.rb-btn:hover{border-color:#5EC4C0;color:#5EC4C0}
+.rb-active{background:#5EC4C0!important;color:#000!important;border-color:#5EC4C0!important}
 .score-chip{display:flex;align-items:center;gap:8px;padding:7px 14px;border-radius:20px;font-size:13px;font-weight:700;background:var(--card);border:2px solid var(--border);box-shadow:0 2px 8px var(--shadow);transition:all .3s}
-.score-chip.leading{box-shadow:0 4px 16px rgba(255,107,53,.25);transform:scale(1.05)}
+.score-chip.leading{box-shadow:0 4px 16px rgba(94,196,192,.25);transform:scale(1.05)}
 .dot{width:11px;height:11px;border-radius:50%}
 .container{max-width:940px;margin:0 auto;padding:22px 18px}
 .card{background:var(--card);border:2px solid var(--border);border-radius:20px;padding:22px;margin-bottom:16px;box-shadow:0 4px 20px var(--shadow)}
@@ -39,14 +41,14 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle
 .card-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:11px 22px;border-radius:14px;border:none;cursor:pointer;font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;transition:all .2s}
 .btn:active{transform:scale(.96)}
-.btn-orange{background:linear-gradient(135deg,var(--orange),#FF8C5A);color:#fff;box-shadow:0 4px 14px rgba(255,107,53,.35)}
-.btn-orange:hover{box-shadow:0 6px 20px rgba(255,107,53,.5);transform:translateY(-1px)}
+.btn-orange{background:linear-gradient(135deg,var(--orange),#7DD8D5);color:#fff;box-shadow:0 4px 14px rgba(94,196,192,.35)}
+.btn-orange:hover{box-shadow:0 6px 20px rgba(94,196,192,.5);transform:translateY(-1px)}
 .btn-green{background:linear-gradient(135deg,var(--green),#4CAF50);color:#fff;box-shadow:0 4px 14px rgba(107,203,119,.35)}
 .btn-green:hover{transform:translateY(-1px)}
 .btn-blue{background:linear-gradient(135deg,var(--blue),#2979FF);color:#fff;box-shadow:0 4px 14px rgba(77,150,255,.35)}
 .btn-blue:hover{transform:translateY(-1px)}
 .btn-pink{background:linear-gradient(135deg,var(--pink),#E91E8C);color:#fff}
-.btn-yellow{background:linear-gradient(135deg,var(--yellow),#FFC107);color:var(--text);box-shadow:0 4px 14px rgba(255,217,61,.35)}
+.btn-yellow{background:linear-gradient(135deg,var(--yellow),#7DD8D5);color:var(--text);box-shadow:0 4px 14px rgba(255,217,61,.35)}
 .btn-red{background:linear-gradient(135deg,var(--red),#D32F2F);color:#fff;box-shadow:0 4px 14px rgba(255,69,69,.35)}
 .btn-purple{background:linear-gradient(135deg,var(--purple),#9C27B0);color:#fff}
 .btn-outline{background:transparent;border:2px solid var(--border);color:var(--text2)}
@@ -55,7 +57,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle
 .btn-xl{padding:18px 42px;font-size:19px;border-radius:20px}
 .btn:disabled{opacity:.4;cursor:not-allowed;transform:none!important;box-shadow:none!important}
 input,select{background:var(--bg3);border:2px solid var(--border);border-radius:13px;color:var(--text);padding:10px 15px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:600;outline:none;transition:border-color .2s;width:100%;direction:rtl}
-input:focus,select:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,107,53,.12)}
+input:focus,select:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(94,196,192,.12)}
 .player-item{display:flex;align-items:center;gap:11px;padding:9px 13px;background:var(--bg3);border-radius:12px;border:2px solid var(--border);margin-bottom:7px;animation:fadeIn .3s ease}
 .player-avatar{width:33px;height:33px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;flex-shrink:0}
 .teams-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:13px}
@@ -71,7 +73,7 @@ input:focus,select:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(25
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(45,27,14,.55);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
 .modal-overlay.open{display:flex}
 .modal{background:var(--card);border:3px solid var(--border);border-radius:24px;padding:30px;max-width:460px;width:92%;animation:popIn .35s cubic-bezier(.34,1.56,.64,1);box-shadow:0 20px 60px rgba(45,27,14,.2)}
-.display-board{background:linear-gradient(135deg,#1a1a2e,#16213e);border:3px solid rgba(255,107,53,.4);border-radius:22px;padding:28px;margin-bottom:16px;color:#fff;box-shadow:0 8px 32px rgba(0,0,0,.2)}
+.display-board{background:linear-gradient(135deg,#1a1a2e,#16213e);border:3px solid rgba(94,196,192,.40);border-radius:22px;padding:28px;margin-bottom:16px;color:#fff;box-shadow:0 8px 32px rgba(0,0,0,.2)}
 .display-label{font-size:11px;font-weight:700;letter-spacing:3px;color:rgba(255,255,255,.5);margin-bottom:16px;text-align:center}
 .display-main{font-size:26px;font-weight:900;text-align:center;line-height:1.4;color:#fff}
 .display-cat{font-size:14px;font-weight:700;color:var(--yellow);text-align:center;margin-bottom:10px}
@@ -80,16 +82,16 @@ input:focus,select:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(25
 .choice-btn-disp:hover{background:rgba(255,255,255,.15)}
 .choice-btn-disp.chosen{background:rgba(107,203,119,.3);border-color:var(--green)}
 .display-timer-big{font-size:64px;font-weight:900;text-align:center;color:var(--yellow);margin-top:14px;line-height:1}
-.host-panel{background:rgba(255,107,53,.06);border:2px dashed rgba(255,107,53,.3);border-radius:16px;padding:18px;margin-top:12px}
+.host-panel{background:rgba(94,196,192,.06);border:2px dashed rgba(94,196,192,.30);border-radius:16px;padding:18px;margin-top:12px}
 .host-label{font-size:11px;font-weight:700;letter-spacing:2px;color:var(--orange);margin-bottom:10px}
-.secret-box{background:linear-gradient(135deg,#FFF8E1,#FFF3E0);border:2px solid rgba(255,107,53,.3);border-radius:14px;padding:16px;text-align:center;margin-bottom:12px}
+.secret-box{background:linear-gradient(135deg,#E4F7F7,#E8F7F7);border:2px solid rgba(94,196,192,.30);border-radius:14px;padding:16px;text-align:center;margin-bottom:12px}
 .team-turn-header{border-radius:18px;padding:20px;text-align:center;margin-bottom:16px;border:3px solid}
 .turn-team-name{font-size:28px;font-weight:900;margin-bottom:4px}
 .phase-progress{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:14px 18px;margin-bottom:16px}
 .progress-steps{display:flex;align-items:center;justify-content:center;flex-wrap:wrap}
 .p-step{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 7px;border-radius:10px;min-width:56px}
 .p-step.done{background:rgba(107,203,119,.1)}
-.p-step.cur{background:rgba(255,107,53,.1);animation:pulse 2s infinite}
+.p-step.cur{background:rgba(94,196,192,.10);animation:pulse 2s infinite}
 .p-conn{width:14px;height:2px;background:var(--border);margin-bottom:10px;flex-shrink:0}
 .p-conn.done{background:var(--green)}
 .summary-row{display:flex;align-items:center;gap:14px;padding:13px 16px;background:var(--bg3);border-radius:13px;margin-bottom:9px;border:2px solid var(--border)}
@@ -98,7 +100,7 @@ input:focus,select:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(25
 .results-table td{padding:13px 15px;background:var(--bg3);font-weight:700;font-size:14px}
 .results-table td:first-child{border-radius:13px 0 0 13px}
 .results-table td:last-child{border-radius:0 13px 13px 0}
-.rank-gold{color:#FF9500}.rank-silver{color:#9B9B9B}.rank-bronze{color:#CD7F32}
+.rank-gold{color:#3AABA7}.rank-silver{color:#9B9B9B}.rank-bronze{color:#CD7F32}
 .confetti-piece{position:fixed;top:-20px;border-radius:3px;animation:fall linear forwards}
 @keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:var(--text);color:#fff;padding:12px 24px;border-radius:50px;font-size:14px;font-weight:700;z-index:999;animation:fadeIn .3s ease;white-space:nowrap;box-shadow:0 6px 24px rgba(45,27,14,.25)}
@@ -136,7 +138,7 @@ body.tv-mode { background:#1a1a2e !important; }
 body.tv-mode .screen.active { min-height:100vh; }
 body.tv-mode .scoreboard { background:#1a1a2e; border:none; justify-content:center; }
 body.tv-mode .score-chip { background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.2); color:#fff; font-size:16px; padding:10px 22px; }
-body.tv-mode .score-chip.leading { transform:scale(1.08); box-shadow:0 4px 20px rgba(255,107,53,.4); }
+body.tv-mode .score-chip.leading { transform:scale(1.08); box-shadow:0 4px 20px rgba(94,196,192,.40); }
 
 body.tv-mode .display-board { padding:40px 36px; margin-bottom:0; }
 body.tv-mode .display-main  { font-size:52px !important; line-height:1.35 !important; }
@@ -181,8 +183,8 @@ body.tv-mode #tvToggleBtn { background:rgba(107,203,119,.15); border-color:#6BCB
   <div class="logo"><span class="logo-icon">🌟</span> الليلة الكبيرة</div>
   <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
     <div id="phaseBadge" class="phase-badge">إعداد</div>
-    <button onclick="openTVWindow()" style="background:rgba(255,215,0,.12);border:1.5px solid rgba(255,215,0,.3);color:var(--gold);border-radius:9px;padding:3px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font);margin-left:6px">📺 شاشة العرض</button>
-    <button id="tvToggleBtn" onclick="toggleTVMode()" style="background:rgba(255,107,53,.12);border:1.5px solid var(--orange);color:var(--orange);border-radius:10px;padding:3px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:Cairo,sans-serif">📺 وضع التلفاز</button>
+    <button onclick="openTVWindow()" style="background:rgba(94,196,192,.12);border:1.5px solid rgba(94,196,192,.4);color:#5EC4C0;border-radius:9px;padding:3px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font);margin-left:6px">📺 شاشة العرض</button>
+    <button id="tvToggleBtn" onclick="toggleTVMode()" style="background:rgba(94,196,192,.12);border:1.5px solid var(--orange);color:var(--orange);border-radius:10px;padding:3px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:Cairo,sans-serif">📺 وضع التلفاز</button>
   </div>
     <div id="headerDots" style="display:flex;gap:4px;direction:ltr"></div>
   </div>
@@ -198,7 +200,7 @@ body.tv-mode #tvToggleBtn { background:rgba(107,203,119,.15); border-color:#6BCB
   </div>
   <div class="container">
     <div class="card">
-      <div class="card-title"><div class="card-icon" style="background:rgba(255,107,53,.1)">➕</div>إضافة المشاركين</div>
+      <div class="card-title"><div class="card-icon" style="background:rgba(94,196,192,.10)">➕</div>إضافة المشاركين</div>
       <div class="row">
         <div class="col"><div class="label">اسم اللاعب</div><input type="text" id="playerNameInput" placeholder="أدخل الاسم..." maxlength="20"/></div>
         <div style="padding-top:26px"><button class="btn btn-orange" onclick="addPlayer()">إضافة ➕</button></div>
@@ -217,7 +219,7 @@ body.tv-mode #tvToggleBtn { background:rgba(107,203,119,.15); border-color:#6BCB
       <div id="teamsPreview" class="teams-grid mt12"></div>
     </div>
     <div class="card">
-      <div class="card-title"><div class="card-icon" style="background:rgba(255,215,0,.15)">⚙️</div>إعدادات الجولات</div>
+      <div class="card-title"><div class="card-icon" style="background:rgba(94,196,192,.15)">⚙️</div>إعدادات الجولات</div>
       <div style="font-size:12px;font-weight:700;color:var(--text2);letter-spacing:1px;margin-bottom:12px">🔄 عدد الجولات لكل مرحلة</div>
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:9px"><div style="min-width:130px;font-size:13px;font-weight:700;color:var(--text2)">🔤 انسان حيوان جماد</div><div style="display:flex;gap:6px"><button id="rb_naming_1" onclick="setPhaseRounds('naming',1)" class="rb-btn">1</button><button id="rb_naming_2" onclick="setPhaseRounds('naming',2)" class="rb-btn">2</button><button id="rb_naming_3" onclick="setPhaseRounds('naming',3)" class="rb-btn  rb-active">3</button><button id="rb_naming_4" onclick="setPhaseRounds('naming',4)" class="rb-btn">4</button><button id="rb_naming_5" onclick="setPhaseRounds('naming',5)" class="rb-btn">5</button></div></div>
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:9px"><div style="min-width:130px;font-size:13px;font-weight:700;color:var(--text2)">🎬 التمثيل الصامت</div><div style="display:flex;gap:6px"><button id="rb_silent_1" onclick="setPhaseRounds('silent',1)" class="rb-btn">1</button><button id="rb_silent_2" onclick="setPhaseRounds('silent',2)" class="rb-btn">2</button><button id="rb_silent_3" onclick="setPhaseRounds('silent',3)" class="rb-btn  rb-active">3</button><button id="rb_silent_4" onclick="setPhaseRounds('silent',4)" class="rb-btn">4</button><button id="rb_silent_5" onclick="setPhaseRounds('silent',5)" class="rb-btn">5</button></div></div>
@@ -328,7 +330,7 @@ body.tv-mode #tvToggleBtn { background:rgba(107,203,119,.15); border-color:#6BCB
       <div style="font-size:13px;font-weight:700;letter-spacing:3px;color:var(--text2);margin-bottom:6px">فقرة ترفيهية — بدون نقاط</div>
       <div style="font-size:11px;color:var(--text3);background:var(--bg3);border-radius:10px;padding:6px 14px;display:inline-block">كل واحد يصوّت — الأكثر أصواتاً يفوز!</div>
     </div>
-    <div style="background:linear-gradient(135deg,#FF950022,#FF6B3522);border:3px solid var(--orange);border-radius:20px;padding:24px;text-align:center;margin-bottom:24px">
+    <div style="background:linear-gradient(135deg,#3AABA722,#5EC4C022);border:3px solid var(--orange);border-radius:20px;padding:24px;text-align:center;margin-bottom:24px">
       <div style="font-size:13px;font-weight:700;color:var(--text2);margin-bottom:10px">السؤال</div>
       <div id="whoQuestion" style="font-size:26px;font-weight:900;color:var(--orange);line-height:1.3"></div>
     </div>
@@ -376,7 +378,7 @@ body.tv-mode #tvToggleBtn { background:rgba(107,203,119,.15); border-color:#6BCB
 
     <!-- التحدي -->
     <div class="display-board" style="border-color:rgba(255,69,69,.5)">
-      <div id="shockTypeLabel" class="display-label" style="color:rgba(255,150,100,.7)">💥 التحدي — الكل معاً!</div>
+      <div id="shockTypeLabel" class="display-label" style="color:rgba(94,196,192,.7)">💥 التحدي — الكل معاً!</div>
       <div id="shockChallenge" class="display-main" style="font-size:22px;line-height:1.5"></div>
       <div id="shockHint" style="font-size:13px;color:rgba(255,255,255,.55);margin-top:8px;font-weight:600"></div>
       <div id="shockTarget" style="margin-top:10px;font-size:15px;color:var(--yellow);font-weight:800"></div>
@@ -421,7 +423,7 @@ body.tv-mode #tvToggleBtn { background:rgba(107,203,119,.15); border-color:#6BCB
 
 <!-- ══ شاشة البطل ══ -->
 <div id="championScreen" class="screen">
-  <div style="background:linear-gradient(135deg,#FFF8F0,#FFF3E0,#FFFDE7);min-height:100vh;padding:40px 20px;position:relative;z-index:1">
+  <div style="background:linear-gradient(135deg,#F0FAFA,#E8F7F7,#F0FAFA);min-height:100vh;padding:40px 20px;position:relative;z-index:1">
     <div class="tc" style="max-width:660px;margin:0 auto">
       <div style="font-size:88px;animation:trophyBounce 1s ease infinite;display:inline-block">🏆</div>
       <div style="font-size:12px;font-weight:700;letter-spacing:3px;color:var(--text2);margin-top:14px">بطل البطولة</div>
@@ -437,7 +439,7 @@ body.tv-mode #tvToggleBtn { background:rgba(107,203,119,.15); border-color:#6BCB
       
       <!-- نتائج مين أكثر -->
       <div class="card mt16" id="whoResultsCard" style="text-align:right;display:none">
-        <div class="card-title"><div class="card-icon" style="background:rgba(255,149,0,.15)">😄</div>نتائج مين أكثر</div>
+        <div class="card-title"><div class="card-icon" style="background:rgba(94,196,192,.15)">😄</div>نتائج مين أكثر</div>
         <div id="whoResultsList"></div>
       </div>
 <div style="display:flex;flex-direction:column;gap:10px;max-width:340px;margin:0 auto">
@@ -452,7 +454,7 @@ body.tv-mode #tvToggleBtn { background:rgba(107,203,119,.15); border-color:#6BCB
 <div id="secretModal" class="modal-overlay">
   <div class="modal">
     <div style="font-size:19px;font-weight:900;color:var(--orange);margin-bottom:14px">🔒 للمنسّق فقط!</div>
-    <div style="background:linear-gradient(135deg,#FFF8E1,#FFF3E0);border:2px dashed var(--yellow);border-radius:14px;padding:24px;text-align:center;margin-bottom:14px">
+    <div style="background:linear-gradient(135deg,#E4F7F7,#E8F7F7);border:2px dashed var(--yellow);border-radius:14px;padding:24px;text-align:center;margin-bottom:14px">
       <div style="font-size:11px;color:var(--text2);letter-spacing:2px;margin-bottom:8px" id="modalCat"></div>
       <div style="font-size:28px;font-weight:900;color:var(--orange)" id="modalSecret"></div>
     </div>
@@ -2077,7 +2079,7 @@ var GS = {
   usedIdx:loadUsedGlobal(),
   whoUsed:[], valUsed:[], whoResults:[], valResults:[],
   phaseRounds:{naming:3,silent:3,decision:3,memory:3},
-  teamHex:['#FF9500','#FF6B35','#00C896','#4D96FF'],
+  teamHex:['#5EC4C0','#5EC4C0','#00C896','#4D96FF'],
   teamNames:['الفريق الذهبي 🌟','الفريق المرجاني 🪸','الفريق الزمردي 💚','الفريق السماوي 💙'],
   teamEmojis:['🌟','🪸','💚','💙'],
 };
@@ -2103,7 +2105,7 @@ function removePlayer(id){GS.players=GS.players.filter(p=>p.id!==id);savePlayers
 function renderPlayers(){
   const list=document.getElementById('playerList'), cnt=document.getElementById('playerCount');
   cnt.textContent=`${GS.players.length} / 15 لاعب`;
-  const colors=['#FF9500','#FF6B35','#00C896','#4D96FF','#FF6B9D','#C77DFF','#FFD93D','#6BCB77'];
+  const colors=['#3AABA7','#5EC4C0','#00C896','#4D96FF','#FF6B9D','#C77DFF','#7DD8D5','#6BCB77'];
   list.innerHTML=GS.players.length
     ? GS.players.map((p,i)=>`<div class="player-item"><div class="player-avatar" style="background:${colors[i%8]}22;color:${colors[i%8]};border:2px solid ${colors[i%8]}44">${p.name[0]}</div><span style="font-weight:700;flex:1">${p.name}</span><button class="btn btn-outline" style="padding:3px 10px;font-size:11px" onclick="removePlayer(${p.id})">✕</button></div>`).join('')
     : '<p style="text-align:center;color:var(--text2);padding:16px;font-size:13px">لم يُضَف لاعبون بعد 🎮</p>';
@@ -2196,7 +2198,7 @@ function showPhaseIntro(){
     <div style="font-size:11px;font-weight:700;letter-spacing:3px;color:var(--text2);margin-bottom:6px">المرحلة ${GS.curPhase+1} من ${GS.phases.length}</div>
     <div style="font-size:28px;font-weight:900;color:var(--text);margin-bottom:6px">${p.name}</div>
     <div style="font-size:14px;font-weight:700;color:var(--text2);margin-bottom:18px">${descs[p.id]||''}</div>
-    <div style="background:rgba(255,107,53,.05);border:2px solid rgba(255,107,53,.15);border-radius:14px;padding:14px">
+    <div style="background:rgba(94,196,192,.05);border:2px solid rgba(94,196,192,.15);border-radius:14px;padding:14px">
       <div style="font-size:11px;font-weight:700;letter-spacing:2px;color:var(--orange);margin-bottom:8px">📋 قواعد سريعة</div>
       <div class="rules-grid">${(rulesets[p.id]||[]).map(r=>`<div class="rule-item"><div class="rule-icon">${r[0]}</div><div class="rule-text">${r[1]}</div></div>`).join('')}</div>
     </div>`;
@@ -2654,7 +2656,7 @@ function loadShockRound(){
         '<div style="font-size:15px;font-weight:900;color:' + t.hex + '">' + t.name + '</div>',
         '<div style="font-size:12px;color:var(--text2)">اضغط لمنح +20 نقطة</div>',
       '</div>',
-      '<span style="font-size:20px;font-weight:900;color:#FFD93D">+20</span>',
+      '<span style="font-size:20px;font-weight:900;color:#7DD8D5">+20</span>',
       '</button>'
     ].join('');
   }).join('');
@@ -2752,7 +2754,7 @@ function restartFresh(){
 // ══ مساعدات ══
 function launchConfetti(){
   const w=document.getElementById('confettiWrap');w.innerHTML='';
-  const c=['#FF9500','#FF6B35','#00C896','#4D96FF','#FF6B9D','#FFD93D','#C77DFF'];
+  const c=['#3AABA7','#5EC4C0','#00C896','#4D96FF','#FF6B9D','#7DD8D5','#C77DFF'];
   for(let i=0;i<80;i++){const p=document.createElement('div');p.className='confetti-piece';p.style.cssText=`left:${Math.random()*100}vw;background:${c[i%7]};animation-duration:${2+Math.random()*4}s;animation-delay:${Math.random()*2}s;width:${8+Math.random()*10}px;height:${10+Math.random()*14}px`;w.appendChild(p)}
   setTimeout(()=>w.innerHTML='',9000);
 }
@@ -2966,17 +2968,17 @@ try {
 (function(){
   if(window.location.search.indexOf('tv=1')<0)return;
   document.addEventListener('DOMContentLoaded',function(){
-    document.head.innerHTML+='<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0612;font-family:Cairo,sans-serif;direction:rtl;overflow:hidden;height:100vh}@keyframes fadeQ{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}</style>';
+    document.head.innerHTML+='<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#05100F;font-family:Cairo,sans-serif;direction:rtl;overflow:hidden;height:100vh}@keyframes fadeQ{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}</style>';
     document.body.innerHTML=`<div style="height:100vh;display:flex;flex-direction:column;position:relative;overflow:hidden">
-      <div id="tvBg" style="position:absolute;inset:0;transition:background 1.2s;background:radial-gradient(ellipse at 40% 30%,rgba(255,149,0,.12) 0%,transparent 55%),#0a0612"></div>
+      <div id="tvBg" style="position:absolute;inset:0;transition:background 1.2s;background:radial-gradient(ellipse at 40% 30%,rgba(94,196,192,.15) 0%,transparent 55%),#05100F"></div>
       <div style="position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:14px 40px;background:rgba(0,0,0,.5);border-bottom:1px solid rgba(255,255,255,.06);backdrop-filter:blur(8px)">
-        <div style="font-size:15px;font-weight:900;color:rgba(255,215,0,.7)">🌟 الليلة الكبيرة</div>
-        <div id="tvPhase" style="font-size:17px;font-weight:900;color:#FFD700"></div>
+        <div style="font-size:15px;font-weight:900;color:rgba(94,196,192,.8)">🌟 الليلة الكبيرة</div>
+        <div id="tvPhase" style="font-size:17px;font-weight:900;color:#5EC4C0"></div>
         <div id="tvRound" style="font-size:13px;color:rgba(255,255,255,.35);font-weight:700"></div>
       </div>
       <div id="tvScoreBars" style="position:relative;z-index:2;padding:8px 40px;background:rgba(0,0,0,.35);border-bottom:1px solid rgba(255,255,255,.04)"></div>
       <div style="flex:1;position:relative;z-index:2;display:flex;flex-direction:column;padding:28px 60px 16px">
-        <div id="tvTeam" style="font-size:38px;font-weight:900;color:#FFD700;margin-bottom:8px;transition:color .6s"></div>
+        <div id="tvTeam" style="font-size:38px;font-weight:900;color:#5EC4C0;margin-bottom:8px;transition:color .6s"></div>
         <div id="tvQ" style="flex:1;display:flex;align-items:center;font-size:58px;font-weight:900;color:#fff;line-height:1.3"></div>
         <div id="tvChoices" style="display:none;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px"></div>
         <div id="tvAns" style="display:none;font-size:48px;font-weight:900;color:#00C896;margin-top:16px;animation:fadeQ .4s ease"></div>
@@ -2985,9 +2987,9 @@ try {
         <div style="display:flex;align-items:center;gap:14px">
           <svg width="72" height="72" style="transform:rotate(-90deg)">
             <circle cx="36" cy="36" r="30" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="5"/>
-            <circle id="tvRing" cx="36" cy="36" r="30" fill="none" stroke="#FFD700" stroke-width="5" stroke-linecap="round" stroke-dasharray="188" stroke-dashoffset="0" style="transition:stroke-dashoffset .9s linear,stroke .5s"/>
+            <circle id="tvRing" cx="36" cy="36" r="30" fill="none" stroke="#A8EDEA" stroke-width="5" stroke-linecap="round" stroke-dasharray="188" stroke-dashoffset="0" style="transition:stroke-dashoffset .9s linear,stroke .5s"/>
           </svg>
-          <div id="tvTimer" style="font-size:68px;font-weight:900;color:#FFD700;line-height:1;min-width:90px;transition:color .3s"></div>
+          <div id="tvTimer" style="font-size:68px;font-weight:900;color:#5EC4C0;line-height:1;min-width:90px;transition:color .3s"></div>
         </div>
         <div style="font-size:12px;color:rgba(255,255,255,.2)">📺 شاشة العرض</div>
       </div>
@@ -2996,10 +2998,10 @@ try {
     function render(s){
       if(!s||!s.screen)return;
       var bg=document.getElementById('tvBg');
-      if(bg&&s.teamColor)bg.style.background='radial-gradient(ellipse at 40% 30%,'+s.teamColor+'20 0%,transparent 55%),radial-gradient(ellipse at 70% 80%,'+s.teamColor+'10 0%,transparent 55%),#0a0612';
+      if(bg&&s.teamColor)bg.style.background='radial-gradient(ellipse at 40% 30%,'+s.teamColor+'20 0%,transparent 55%),radial-gradient(ellipse at 70% 80%,'+s.teamColor+'10 0%,transparent 55%),#05100F';
       var ph=document.getElementById('tvPhase');if(ph&&s.phase)ph.textContent=s.phase;
       var rn=document.getElementById('tvRound');if(rn&&s.roundInfo)rn.textContent=s.roundInfo;
-      var tm=document.getElementById('tvTeam');if(tm){tm.textContent=s.team||'';tm.style.color=s.teamColor||'#FFD700';}
+      var tm=document.getElementById('tvTeam');if(tm){tm.textContent=s.team||'';tm.style.color=s.teamColor||'#A8EDEA';}
       var qEl=document.getElementById('tvQ');
       if(qEl){var nq=s.question||'';if(qEl.textContent!==nq){qEl.textContent=nq;qEl.style.animation='none';requestAnimationFrame(function(){qEl.style.animation='fadeQ .5s ease';});}}
       var chEl=document.getElementById('tvChoices');
@@ -3007,7 +3009,7 @@ try {
         if(s.choices&&s.choices.length){
           chEl.style.display='grid';
           var L=['أ','ب','ج','د','A','B','C','D'];
-          chEl.innerHTML=s.choices.map(function(c,i){var ok=s.showAnswer&&c===s.answer;return '<div style="background:'+(ok?'rgba(0,200,150,.22)':'rgba(255,255,255,.06)')+';border:2px solid '+(ok?'#00C896':'rgba(255,255,255,.1)')+';border-radius:14px;padding:14px 18px;font-size:19px;font-weight:700;color:'+(ok?'#00C896':'#fff')+'"><span style="color:#FFD700;margin-left:6px">'+L[i]+'.</span>'+c+'</div>';}).join('');
+          chEl.innerHTML=s.choices.map(function(c,i){var ok=s.showAnswer&&c===s.answer;return '<div style="background:'+(ok?'rgba(0,200,150,.22)':'rgba(255,255,255,.06)')+';border:2px solid '+(ok?'#00C896':'rgba(255,255,255,.1)')+';border-radius:14px;padding:14px 18px;font-size:19px;font-weight:700;color:'+(ok?'#00C896':'#fff')+'"><span style="color:#5EC4C0;margin-left:6px">'+L[i]+'.</span>'+c+'</div>';}).join('');
         }else{chEl.style.display='none';}
       }
       var an=document.getElementById('tvAns');
@@ -3015,8 +3017,8 @@ try {
       if(s.timerVal!==undefined){
         if(s.timerMax)tMax=s.timerMax;
         var t=Math.max(0,s.timerVal),p=t/(tMax||60),c=2*Math.PI*30;
-        var tc=document.getElementById('tvTimer');if(tc){tc.textContent=t;tc.style.color=p<.3?'#FF4545':p<.6?'#FFB800':'#FFD700';}
-        var ring=document.getElementById('tvRing');if(ring){ring.style.strokeDashoffset=c*(1-p);ring.style.stroke=p<.3?'#FF4545':p<.6?'#FFB800':'#FFD700';}
+        var tc=document.getElementById('tvTimer');if(tc){tc.textContent=t;tc.style.color=p<.3?'#FF4545':p<.6?'#7DD8D5':'#A8EDEA';}
+        var ring=document.getElementById('tvRing');if(ring){ring.style.strokeDashoffset=c*(1-p);ring.style.stroke=p<.3?'#FF4545':p<.6?'#7DD8D5':'#A8EDEA';}
       }
       if(s.teams&&s.teams.length){
         var sb=document.getElementById('tvScoreBars');
@@ -3025,12 +3027,12 @@ try {
           var srt=[].concat(s.teams).sort(function(a,b){return(b.score||0)-(a.score||0);});
           sb.innerHTML=srt.map(function(t){
             var w=Math.max(3,Math.round(((t.score||0)/mx)*100));
-            return '<div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><div style="min-width:120px;font-size:12px;font-weight:800;color:'+(t.hex||'#FFD700')+'">'+t.emoji+' '+t.name.split(' ')[0]+'</div><div style="flex:1;background:rgba(255,255,255,.07);border-radius:20px;height:8px;overflow:hidden"><div style="height:100%;width:'+w+'%;background:'+(t.hex||'#FFD700')+';border-radius:20px;transition:width 1s"></div></div><div style="min-width:40px;text-align:left;font-size:13px;font-weight:900;color:'+(t.hex||'#FFD700')+'">'+(t.score||0)+'</div></div>';
+            return '<div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><div style="min-width:120px;font-size:12px;font-weight:800;color:'+(t.hex||'#A8EDEA')+'">'+t.emoji+' '+t.name.split(' ')[0]+'</div><div style="flex:1;background:rgba(255,255,255,.07);border-radius:20px;height:8px;overflow:hidden"><div style="height:100%;width:'+w+'%;background:'+(t.hex||'#A8EDEA')+';border-radius:20px;transition:width 1s"></div></div><div style="min-width:40px;text-align:left;font-size:13px;font-weight:900;color:'+(t.hex||'#A8EDEA')+'">'+(t.score||0)+'</div></div>';
           }).join('');
         }
       }
       if(s.screen==='champion'){
-        var qe=document.getElementById('tvQ');if(qe){qe.textContent='🏆 '+s.team;qe.style.color='#FFD700';qe.style.fontSize='72px';}
+        var qe=document.getElementById('tvQ');if(qe){qe.textContent='🏆 '+s.team;qe.style.color='#A8EDEA';qe.style.fontSize='72px';}
       }
     }
     render({screen:'idle',question:'🌟 الليلة الكبيرة',phase:'في انتظار البدء...',timerVal:0,timerMax:60});
